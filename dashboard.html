@@ -1,0 +1,1674 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard — Treelink</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800;900&family=Roboto:wght@300;400;500;600&display=swap"
+    rel="stylesheet" />
+
+  <style>
+    /* ============================================================
+       DESIGN TOKENS
+       ============================================================ */
+    :root {
+      --bg: #F5F7FB;
+      --bg2: #EDF1F7;
+      --bg3: #E4E9F2;
+      --accent: #22B193;
+      --accent-hover: #1B8A76;
+      --text: #111827;
+      --muted: #6B7280;
+      --danger: #EF4444;
+      --border-color: #D7DDE8;
+      --radius: 8px;
+      --sidebar-w: 280px;
+      --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* ============================================================
+       RESET & BASE
+       ============================================================ */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Roboto', sans-serif;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* ============================================================
+       LOADING SCREEN
+       ============================================================ */
+    #loading-screen {
+      position: fixed;
+      inset: 0;
+      background: var(--bg);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    #loading-screen .logo {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .spinner {
+      width: 32px;
+      height: 32px;
+      border: 2px solid rgba(34, 177, 147, 0.2);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* ============================================================
+       APP SHELL (hidden until auth confirmed)
+       ============================================================ */
+    #app {
+      display: none;
+      min-height: 100vh;
+    }
+
+    #app.visible {
+      display: flex;
+    }
+
+    /* ============================================================
+       SIDEBAR
+       ============================================================ */
+    .sidebar {
+      width: var(--sidebar-w);
+      background: var(--bg2);
+      border-right: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      z-index: 50;
+      transform: translateX(-100%);
+      transition: transform var(--transition);
+    }
+
+    .sidebar.open {
+      transform: translateX(0);
+    }
+
+    @media (min-width: 900px) {
+      .sidebar {
+        transform: translateX(0);
+        position: sticky;
+        height: 100vh;
+        top: 0;
+      }
+    }
+
+    .sidebar-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 1.5rem 1.5rem 1rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .sidebar-logo-icon {
+      width: 32px;
+      height: 32px;
+      background: var(--accent);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+    }
+
+    .sidebar-logo-text {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+
+    /* User info in sidebar */
+    .sidebar-user {
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .sidebar-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      background: var(--accent);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      overflow: hidden;
+    }
+
+    .sidebar-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .sidebar-name {
+      font-weight: 600;
+      font-size: 0.9rem;
+      line-height: 1.2;
+    }
+
+    .sidebar-username {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    /* Sidebar nav links */
+    .sidebar-nav {
+      padding: 1rem 0.75rem;
+      flex: 1;
+    }
+
+    .sidebar-nav a {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      padding: 0.65rem 0.75rem;
+      border-radius: 8px;
+      color: var(--muted);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.9rem;
+      transition: var(--transition);
+      margin-bottom: 2px;
+    }
+
+    .sidebar-nav a:hover {
+      background: rgba(34, 177, 147, 0.06);
+      color: var(--text);
+    }
+
+    .sidebar-nav a.active {
+      background: rgba(34, 177, 147, 0.1);
+      color: var(--accent);
+    }
+
+    /* Public profile link pill */
+    .sidebar-profile-link {
+      margin: 0 1rem 1rem;
+      background: rgba(34, 177, 147, 0.06);
+      border: 1px solid rgba(34, 177, 147, 0.18);
+      border-radius: 8px;
+      padding: 0.75rem;
+    }
+
+    .sidebar-profile-link .profile-link-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .sidebar-profile-link a {
+      font-size: 0.85rem;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .sidebar-profile-link a:hover {
+      text-decoration: underline;
+    }
+
+    .copy-link-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: rgba(34, 177, 147, 0.08);
+      border: 1px solid rgba(34, 177, 147, 0.2);
+      border-radius: 6px;
+      padding: 0.35rem 0.65rem;
+      font-family: 'Roboto', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--accent);
+      cursor: pointer;
+      transition: var(--transition);
+      width: 100%;
+      justify-content: center;
+    }
+
+    .copy-link-btn:hover {
+      background: rgba(34, 177, 147, 0.15);
+      border-color: var(--accent);
+    }
+
+    .copy-link-btn.copied {
+      color: #188038;
+      border-color: rgba(24, 128, 56, 0.3);
+      background: rgba(24, 128, 56, 0.08);
+    }
+
+    /* Logout button */
+    .sidebar-logout {
+      margin: 0 1rem 1.5rem;
+      background: transparent;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 0.6rem 1rem;
+      color: var(--muted);
+      font-family: 'Roboto', sans-serif;
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .sidebar-logout:hover {
+      border-color: var(--danger);
+      color: var(--danger);
+    }
+
+    /* ============================================================
+       SIDEBAR OVERLAY (mobile)
+       ============================================================ */
+    #sidebar-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 40;
+    }
+
+    #sidebar-overlay.visible {
+      display: block;
+    }
+
+    /* ============================================================
+       MAIN CONTENT
+       ============================================================ */
+    .main {
+      flex: 1;
+      padding: 0;
+      min-width: 0;
+    }
+
+    @media (min-width: 900px) {
+      .main {
+        margin-left: var(--sidebar-w);
+      }
+    }
+
+    /* ============================================================
+       TOP BAR (mobile)
+       ============================================================ */
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--border-color);
+      background: var(--bg2);
+      position: sticky;
+      top: 0;
+      z-index: 30;
+    }
+
+    @media (min-width: 900px) {
+      .topbar {
+        display: none;
+      }
+    }
+
+    .topbar-logo {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .menu-btn {
+      background: transparent;
+      border: none;
+      color: var(--text);
+      cursor: pointer;
+      padding: 0.3rem;
+      font-size: 1.4rem;
+    }
+
+    /* ============================================================
+       PAGE CONTENT WRAPPER
+       ============================================================ */
+    .content {
+      padding: 2rem 1.5rem;
+      max-width: 780px;
+    }
+
+    @media (min-width: 1200px) {
+      .content {
+        padding: 2.5rem 3rem;
+      }
+    }
+
+    /* ============================================================
+       PAGE SECTION HEADERS
+       ============================================================ */
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .section-title {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+
+    /* ============================================================
+       STATS ROW
+       ============================================================ */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .stat-card {
+      background: var(--bg2);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 1.1rem 1.25rem;
+    }
+
+    .stat-value {
+      font-family: 'Poppins', sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 0.25rem;
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    /* ============================================================
+       BUTTONS
+       ============================================================ */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      padding: 0.6rem 1.2rem;
+      border-radius: var(--radius);
+      font-family: 'Roboto', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition);
+      border: none;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #FFFFFF;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-hover);
+      transform: translateY(-1px);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      border: 1px solid var(--border-color);
+      color: var(--muted);
+    }
+
+    .btn-ghost:hover {
+      border-color: #D1D5DB;
+      color: var(--text);
+      background: #F9FAFB;
+    }
+
+    .btn-danger {
+      background: transparent;
+      border: 1px solid rgba(239, 68, 68, 0.2);
+      color: var(--danger);
+      font-size: 0.8rem;
+    }
+
+    .btn-danger:hover {
+      background: rgba(239, 68, 68, 0.06);
+      border-color: rgba(239, 68, 68, 0.3);
+    }
+
+    .btn-sm {
+      padding: 0.4rem 0.85rem;
+      font-size: 0.8rem;
+    }
+
+    /* ============================================================
+       ADD LINK FORM
+       ============================================================ */
+    .add-link-form {
+      background: var(--bg2);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    @media (min-width: 600px) {
+      .form-row {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .form-group label {
+      font-size: 0.8rem;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .form-group input,
+    .form-group select {
+      background: var(--bg3);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 0.65rem 0.9rem;
+      color: var(--text);
+      font-family: 'Roboto', sans-serif;
+      font-size: 0.9rem;
+      outline: none;
+      transition: var(--transition);
+      width: 100%;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+    }
+
+    .form-group input::placeholder {
+      color: var(--muted);
+    }
+
+    .form-actions {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    #form-error {
+      color: var(--danger);
+      font-size: 0.82rem;
+    }
+
+    /* ============================================================
+       LINK ITEMS LIST
+       ============================================================ */
+    #links-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .link-item {
+      background: var(--bg2);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 1rem 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      transition: var(--transition);
+      position: relative;
+      /* Drag handle support */
+      cursor: grab;
+    }
+
+    .link-item:hover {
+      border-color: rgba(14, 165, 233, 0.2);
+    }
+
+    .link-item.dragging {
+      opacity: 0.5;
+    }
+
+    .link-item.drag-over {
+      border-color: var(--accent);
+      background: rgba(14, 165, 233, 0.04);
+    }
+
+    .drag-handle {
+      color: var(--muted);
+      font-size: 1rem;
+      cursor: grab;
+      flex-shrink: 0;
+      user-select: none;
+    }
+
+    .link-icon-preview {
+      width: 36px;
+      height: 36px;
+      background: rgba(26, 115, 232, 0.08);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .link-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .link-title-text {
+      font-weight: 600;
+      font-size: 0.9rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .link-url-text {
+      font-size: 0.78rem;
+      color: var(--muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .link-clicks {
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .link-clicks span {
+      display: block;
+      font-weight: 600;
+      color: var(--accent);
+      font-size: 1rem;
+    }
+
+    .link-actions {
+      display: flex;
+      gap: 0.4rem;
+      flex-shrink: 0;
+    }
+
+    /* Inline edit form (hidden by default) */
+    .link-edit-form {
+      display: none;
+      padding: 1rem;
+      background: var(--bg3);
+      border-top: 1px solid var(--border-color);
+      gap: 0.6rem;
+      flex-direction: column;
+    }
+
+    .link-edit-form.visible {
+      display: flex;
+    }
+
+    .link-edit-form input {
+      background: var(--bg2);
+      border: 1px solid var(--border-color);
+      border-radius: 7px;
+      padding: 0.55rem 0.8rem;
+      color: var(--text);
+      font-family: 'Roboto', sans-serif;
+      font-size: 0.875rem;
+      outline: none;
+      width: 100%;
+    }
+
+    .link-edit-form input:focus {
+      border-color: var(--accent);
+    }
+
+    /* Link item wrapper (holds item + edit form) */
+    .link-item-wrapper {
+      background: var(--bg2);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: var(--transition);
+    }
+
+    .link-item-wrapper:hover {
+      border-color: rgba(14, 165, 233, 0.2);
+    }
+
+    .link-item-wrapper .link-item {
+      background: transparent;
+      border: none;
+      border-radius: 0;
+    }
+
+    /* Empty state */
+    .empty-state {
+      text-align: center;
+      padding: 4rem 2rem;
+      color: var(--muted);
+    }
+
+    .empty-state .icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .empty-state p {
+      margin-bottom: 1.5rem;
+    }
+
+    /* ============================================================
+       PROFILE SETTINGS SECTION
+       ============================================================ */
+    .settings-section {
+      margin-top: 3rem;
+    }
+
+    .settings-card {
+      background: var(--bg2);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+    }
+
+    .color-picker-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .color-swatch {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 3px solid transparent;
+      cursor: pointer;
+      transition: var(--transition);
+      flex-shrink: 0;
+    }
+
+    .color-swatch.selected {
+      border-color: white;
+    }
+
+    .color-swatch:hover {
+      transform: scale(1.1);
+    }
+
+    input[type="color"] {
+      background: transparent;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 2px 4px;
+      cursor: pointer;
+      height: 36px;
+      width: 50px;
+    }
+
+    .settings-saved {
+      display: none;
+      color: #188038;
+      font-size: 0.82rem;
+      margin-left: 0.5rem;
+    }
+
+    .settings-saved.visible {
+      display: inline;
+    }
+
+    /* ============================================================
+       TOAST NOTIFICATION
+       ============================================================ */
+    #toast {
+      position: fixed;
+      bottom: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: var(--bg3);
+      border: 1px solid var(--border-color);
+      border-radius: 100px;
+      padding: 0.65rem 1.25rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text);
+      z-index: 999;
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      white-space: nowrap;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    #toast.show {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    #toast.success {
+      border-color: rgba(34, 197, 94, 0.3);
+      color: #16A34A;
+    }
+
+    #toast.error {
+      border-color: rgba(239, 68, 68, 0.3);
+      color: var(--danger);
+    }
+
+    /* ============================================================
+       ANIMATIONS
+       ============================================================ */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .fade-in {
+      animation: fadeIn 0.3s ease both;
+    }
+
+    /* ============================================================
+       RESPONSIVE ADJUSTMENTS
+       ============================================================ */
+    @media (max-width: 899px) {
+      #app {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ============================================================
+       LOADING SCREEN — shown while Firebase checks auth state
+       ============================================================ -->
+  <div id="loading-screen">
+    <div class="logo">🌿 Treelink</div>
+    <div class="spinner"></div>
+  </div>
+
+  <!-- ============================================================
+       TOAST NOTIFICATION
+       ============================================================ -->
+  <div id="toast"></div>
+
+  <!-- ============================================================
+       APP SHELL — hidden until user is confirmed signed in
+       ============================================================ -->
+  <div id="app">
+
+    <!-- ===========================================================
+         SIDEBAR OVERLAY (mobile tap-to-close)
+         =========================================================== -->
+    <div id="sidebar-overlay"></div>
+
+    <!-- ===========================================================
+         SIDEBAR
+         =========================================================== -->
+    <aside class="sidebar" id="sidebar">
+      <!-- Logo -->
+      <div class="sidebar-logo">
+        <div class="sidebar-logo-icon">🌿</div>
+        <span class="sidebar-logo-text">Treelink</span>
+      </div>
+
+      <!-- User profile snapshot -->
+      <div class="sidebar-user">
+        <div class="sidebar-avatar" id="sidebar-avatar-wrap">
+          <span id="sidebar-avatar-emoji">🌿</span>
+        </div>
+        <div>
+          <div class="sidebar-name" id="sidebar-name">Loading…</div>
+          <div class="sidebar-username" id="sidebar-username">@username</div>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <nav class="sidebar-nav">
+        <a href="#" class="active">🔗 &nbsp;My Links</a>
+        <a href="#settings-section">⚙️ &nbsp;Settings</a>
+      </nav>
+
+      <!-- Public profile URL -->
+      <div class="sidebar-profile-link">
+        <div class="profile-link-row">
+          <a href="#" id="sidebar-public-link" target="_blank">🌐 Visit your link</a>
+        </div>
+        <button class="copy-link-btn" id="copy-link-btn">
+          📋 Copy your profile link
+        </button>
+      </div>
+
+      <!-- Logout -->
+      <button class="sidebar-logout" id="logout-btn">
+        ↩ &nbsp;Sign Out
+      </button>
+    </aside>
+
+    <!-- ===========================================================
+         MAIN CONTENT AREA
+         =========================================================== -->
+    <main class="main">
+
+      <!-- Mobile top bar -->
+      <div class="topbar">
+        <span class="topbar-logo">🌿 Treelink</span>
+        <button class="menu-btn" id="menu-btn" aria-label="Open menu">☰</button>
+      </div>
+
+      <div class="content">
+
+        <!-- ---------------------------------------------------------
+             STATS ROW
+             --------------------------------------------------------- -->
+        <div class="stats-row">
+          <div class="stat-card">
+            <div class="stat-value" id="stat-links">0</div>
+            <div class="stat-label">Total Links</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="stat-clicks">0</div>
+            <div class="stat-label">Total Clicks</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="stat-top">—</div>
+            <div class="stat-label">Top Link Clicks</div>
+          </div>
+        </div>
+
+        <!-- ---------------------------------------------------------
+             ADD NEW LINK FORM
+             --------------------------------------------------------- -->
+        <div class="section-header">
+          <h1 class="section-title">My Links</h1>
+          <button class="btn btn-primary" id="toggle-form-btn">＋ Add Link</button>
+        </div>
+
+        <!-- Collapsible form -->
+        <div class="add-link-form" id="add-link-form" style="display:none;">
+          <div class="form-row">
+            <!-- Title field -->
+            <div class="form-group">
+              <label for="link-title">Link Title</label>
+              <input type="text" id="link-title" placeholder="e.g. My Portfolio" maxlength="80" />
+            </div>
+            <!-- Icon field -->
+            <div class="form-group">
+              <label for="link-icon">Icon (emoji)</label>
+              <input type="text" id="link-icon" placeholder="🔗" maxlength="4" />
+            </div>
+          </div>
+
+          <!-- URL field (full row) -->
+          <div class="form-group" style="margin-bottom:1rem;">
+            <label for="link-url">URL</label>
+            <input type="url" id="link-url" placeholder="https://yourwebsite.com" />
+          </div>
+
+          <div class="form-actions">
+            <button class="btn btn-primary" id="save-link-btn">Save Link</button>
+            <button class="btn btn-ghost" id="cancel-form-btn">Cancel</button>
+            <span id="form-error"></span>
+          </div>
+        </div>
+
+        <!-- ---------------------------------------------------------
+             LINKS LIST — populated dynamically from Firestore
+             --------------------------------------------------------- -->
+        <div id="links-list"></div>
+
+        <!-- ---------------------------------------------------------
+             SETTINGS SECTION
+             --------------------------------------------------------- -->
+        <div class="settings-section" id="settings-section">
+          <div class="section-header">
+            <h2 class="section-title">Profile Settings</h2>
+          </div>
+          <div class="settings-card">
+            <!-- Profile Photo -->
+            <div class="form-group" style="margin-bottom:1.25rem;">
+              <label>Profile Photo</label>
+              <div style="display:flex;align-items:center;gap:1rem;margin-top:0.35rem;">
+                <div class="sidebar-avatar" id="settings-avatar-preview"
+                  style="width:56px;height:56px;font-size:1.5rem;">
+                  <span id="settings-avatar-emoji">🌿</span>
+                </div>
+                <div style="flex:1;">
+                  <input type="url" id="profile-photo-url" placeholder="Paste image URL (e.g. https://…/photo.jpg)" />
+                  <p style="font-size:0.72rem;color:var(--muted);margin-top:0.3rem;">Leave empty to use your Google
+                    profile photo</p>
+                </div>
+              </div>
+            </div>
+            <!-- Display Name -->
+            <div class="form-group" style="margin-bottom:1.25rem;">
+              <label for="profile-name">Display Name</label>
+              <input type="text" id="profile-name" placeholder="Your display name" maxlength="50" />
+            </div>
+            <!-- Username -->
+            <div class="form-group" style="margin-bottom:1.25rem;">
+              <label for="profile-username">Username</label>
+              <input type="text" id="profile-username" placeholder="your_username" maxlength="30" />
+              <p style="font-size:0.72rem;color:var(--muted);margin-top:0.3rem;" id="username-hint">Lowercase letters,
+                numbers, and underscores only</p>
+            </div>
+            <!-- Bio -->
+            <div class="form-group" style="margin-bottom:1.25rem;">
+              <label for="profile-bio">Short Bio</label>
+              <input type="text" id="profile-bio" placeholder="A short description about yourself…" maxlength="160" />
+            </div>
+            <!-- Theme color -->
+            <div class="form-group" style="margin-bottom:1rem;">
+              <label>Accent Color</label>
+              <div class="color-picker-row">
+                <!-- Preset swatches -->
+                <div class="color-swatch selected" style="background:#1A73E8;" data-color="#1A73E8"></div>
+                <div class="color-swatch" style="background:#5ec898;" data-color="#5ec898"></div>
+                <div class="color-swatch" style="background:#5e98c8;" data-color="#5e98c8"></div>
+                <div class="color-swatch" style="background:#c85e98;" data-color="#c85e98"></div>
+                <div class="color-swatch" style="background:#e85050;" data-color="#e85050"></div>
+                <!-- Custom color picker -->
+                <input type="color" id="custom-color" value="#1A73E8" title="Pick custom color" />
+                <span id="settings-saved" class="settings-saved">✓ Saved</span>
+              </div>
+            </div>
+            <button class="btn btn-primary btn-sm" id="save-settings-btn">Save Settings</button>
+          </div>
+        </div>
+
+      </div><!-- /content -->
+    </main>
+
+  </div><!-- /app -->
+
+
+  <!-- ============================================================
+       FIREBASE SDK
+       ============================================================ -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
+  <script>
+    /* ============================================================
+       FIREBASE CONFIGURATION
+       Replace with your real credentials from Firebase console.
+       ============================================================ */
+    const firebaseConfig = {
+      apiKey: 'AIzaSyCIQ4tXZo9mibJscDKA5kLY7ndMrYaawp4',
+      authDomain: 'treelink-53452.firebaseapp.com',
+      projectId: 'treelink-53452',
+      storageBucket: 'treelink-53452.firebasestorage.app',
+      messagingSenderId: '298229640699',
+      appId: '1:298229640699:web:bb8e45200d4b76dadfef5e'
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    /* ============================================================
+       GLOBAL STATE
+       ============================================================ */
+    let currentUser = null;
+    let userData = null;       /* Firestore /users/{uid} doc */
+    let links = [];         /* Array of link objects */
+    let unsubscribeLinks = null;    /* Firestore real-time listener */
+
+    /* Drag-and-drop state */
+    let dragSrc = null;
+
+    /* ============================================================
+       DOM REFERENCES
+       ============================================================ */
+    const loadingScreen = document.getElementById('loading-screen');
+    const appShell = document.getElementById('app');
+    const toast = document.getElementById('toast');
+    const sidebar = document.getElementById('sidebar');
+    const sidebarOverlay = document.getElementById('sidebar-overlay');
+    const menuBtn = document.getElementById('menu-btn');
+    const linksList = document.getElementById('links-list');
+    const addLinkForm = document.getElementById('add-link-form');
+    const formError = document.getElementById('form-error');
+
+    /* ============================================================
+       TOAST UTILITY
+       Shows a brief notification at the bottom of the screen.
+       ============================================================ */
+    function showToast(msg, type = 'success') {
+      toast.textContent = msg;
+      toast.className = `show ${type}`;
+      clearTimeout(toast._timer);
+      toast._timer = setTimeout(() => { toast.className = ''; }, 3000);
+    }
+
+    /* ============================================================
+       SIDEBAR TOGGLE (mobile)
+       ============================================================ */
+    menuBtn.addEventListener('click', () => {
+      sidebar.classList.add('open');
+      sidebarOverlay.classList.add('visible');
+    });
+    sidebarOverlay.addEventListener('click', () => {
+      sidebar.classList.remove('open');
+      sidebarOverlay.classList.remove('visible');
+    });
+
+    /* ============================================================
+       AUTH STATE OBSERVER
+       ============================================================ */
+    auth.onAuthStateChanged(async (user) => {
+      if (!user) {
+        /* Not logged in → redirect to landing page */
+        window.location.href = 'index.html';
+        return;
+      }
+
+      currentUser = user;
+
+      /* Load user document from Firestore */
+      await loadUserData();
+
+      /* Start real-time listener for links collection */
+      startLinksListener();
+
+      /* Show the app */
+      loadingScreen.style.display = 'none';
+      appShell.classList.add('visible');
+    });
+
+    /* ============================================================
+       LOAD USER DATA FROM FIRESTORE
+       ============================================================ */
+    async function loadUserData() {
+      const snap = await db.collection('users').doc(currentUser.uid).get();
+      userData = snap.data();
+
+      /* Populate sidebar */
+      document.getElementById('sidebar-name').textContent = userData.name || currentUser.displayName;
+      document.getElementById('sidebar-username').textContent = '@' + (userData.username || 'user');
+
+      /* Populate settings form fields */
+      document.getElementById('profile-bio').value = userData.bio || '';
+      document.getElementById('profile-name').value = userData.name || currentUser.displayName || '';
+      document.getElementById('profile-username').value = userData.username || '';
+      document.getElementById('profile-photo-url').value = userData.photoURL || '';
+
+      /* Avatar: use custom photoURL, then Google photo, then fallback emoji */
+      const photoSrc = userData.photoURL || currentUser.photoURL;
+      const avatarWrap = document.getElementById('sidebar-avatar-wrap');
+      const settingsPreview = document.getElementById('settings-avatar-preview');
+      if (photoSrc) {
+        avatarWrap.innerHTML =
+          `<img src="${photoSrc}" alt="avatar" loading="lazy" referrerpolicy="no-referrer"
+             onerror="this.onerror=null; this.closest('.sidebar-avatar').innerHTML='🌿';" />`;
+        settingsPreview.innerHTML =
+          `<img src="${photoSrc}" alt="avatar" loading="lazy" referrerpolicy="no-referrer"
+             style="width:100%;height:100%;object-fit:cover;border-radius:50%;"
+             onerror="this.onerror=null; this.parentElement.innerHTML='🌿';" />`;
+      }
+
+      /* Public profile URL */
+      const basePath = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/'));
+      const publicUrl = `${window.location.origin}${basePath}/profile.html?u=${userData.username}`;
+      const linkEl = document.getElementById('sidebar-public-link');
+      linkEl.textContent = '🌐 Visit your link';
+      linkEl.href = publicUrl;
+
+      /* Copy link button */
+      const copyBtn = document.getElementById('copy-link-btn');
+      copyBtn._profileUrl = publicUrl;
+      copyBtn.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(copyBtn._profileUrl);
+          copyBtn.classList.add('copied');
+          copyBtn.textContent = '✓ Link copied!';
+          showToast('✓ Profile link copied to clipboard!');
+          setTimeout(() => {
+            copyBtn.classList.remove('copied');
+            copyBtn.textContent = '📋 Copy your profile link';
+          }, 2000);
+        } catch {
+          /* Fallback for older browsers */
+          const ta = document.createElement('textarea');
+          ta.value = copyBtn._profileUrl;
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand('copy');
+          document.body.removeChild(ta);
+          showToast('✓ Profile link copied!');
+        }
+      });
+
+      /* Preset color swatches — mark selected */
+      updateColorSwatches(userData.theme || '#1A73E8');
+      document.getElementById('custom-color').value = userData.theme || '#1A73E8';
+    }
+
+    /* ============================================================
+       REAL-TIME LINKS LISTENER
+       Listens to /users/{uid}/links ordered by `order` field.
+       Updates the UI instantly whenever Firestore data changes.
+       ============================================================ */
+    function startLinksListener() {
+      /* Unsubscribe any existing listener first */
+      if (unsubscribeLinks) unsubscribeLinks();
+
+      unsubscribeLinks = db
+        .collection('users')
+        .doc(currentUser.uid)
+        .collection('links')
+        .orderBy('order', 'asc')
+        .onSnapshot((snapshot) => {
+          links = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+          renderLinks();
+          updateStats();
+        }, (err) => {
+          console.error('Links listener error:', err);
+        });
+    }
+
+    /* ============================================================
+       RENDER LINKS LIST
+       ============================================================ */
+    function renderLinks() {
+      if (links.length === 0) {
+        linksList.innerHTML = `
+          <div class="empty-state fade-in">
+            <div class="icon">🔗</div>
+            <p>No links yet. Add your first link above!</p>
+          </div>`;
+        return;
+      }
+
+      linksList.innerHTML = '';
+
+      links.forEach((link, index) => {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'link-item-wrapper fade-in';
+        wrapper.dataset.id = link.id;
+        wrapper.dataset.index = index;
+
+        wrapper.innerHTML = `
+          <!-- Main link row -->
+          <div class="link-item"
+               draggable="true"
+               data-id="${link.id}">
+            <span class="drag-handle" title="Drag to reorder">⠿</span>
+            <div class="link-icon-preview">${link.icon || '🔗'}</div>
+            <div class="link-info">
+              <div class="link-title-text">${escapeHtml(link.title)}</div>
+              <div class="link-url-text">${escapeHtml(link.url)}</div>
+            </div>
+            <div class="link-clicks">
+              <span>${link.clicks || 0}</span>
+              clicks
+            </div>
+            <div class="link-actions">
+              <button class="btn btn-ghost btn-sm edit-btn" data-id="${link.id}">Edit</button>
+              <button class="btn btn-danger btn-sm delete-btn" data-id="${link.id}">✕</button>
+            </div>
+          </div>
+
+          <!-- Inline edit form (hidden by default) -->
+          <div class="link-edit-form" id="edit-form-${link.id}">
+            <input type="text" class="edit-title" placeholder="Title" value="${escapeHtml(link.title)}" maxlength="80" />
+            <input type="url"  class="edit-url"   placeholder="URL"   value="${escapeHtml(link.url)}" />
+            <input type="text" class="edit-icon"  placeholder="Icon (emoji)" value="${escapeHtml(link.icon || '')}" maxlength="4" />
+            <div style="display:flex;gap:.5rem;">
+              <button class="btn btn-primary btn-sm save-edit-btn" data-id="${link.id}">Save</button>
+              <button class="btn btn-ghost btn-sm cancel-edit-btn" data-id="${link.id}">Cancel</button>
+            </div>
+          </div>
+        `;
+
+        linksList.appendChild(wrapper);
+
+        /* ----- Drag-and-drop events ----- */
+        const linkItem = wrapper.querySelector('.link-item');
+        linkItem.addEventListener('dragstart', onDragStart);
+        linkItem.addEventListener('dragover', onDragOver);
+        linkItem.addEventListener('dragleave', onDragLeave);
+        linkItem.addEventListener('drop', onDrop);
+        linkItem.addEventListener('dragend', onDragEnd);
+      });
+
+      /* ----- Button event delegation ----- */
+      linksList.querySelectorAll('.edit-btn').forEach(btn => {
+        btn.addEventListener('click', () => toggleEditForm(btn.dataset.id));
+      });
+      linksList.querySelectorAll('.delete-btn').forEach(btn => {
+        btn.addEventListener('click', () => deleteLink(btn.dataset.id));
+      });
+      linksList.querySelectorAll('.save-edit-btn').forEach(btn => {
+        btn.addEventListener('click', () => saveEdit(btn.dataset.id));
+      });
+      linksList.querySelectorAll('.cancel-edit-btn').forEach(btn => {
+        btn.addEventListener('click', () => toggleEditForm(btn.dataset.id, false));
+      });
+    }
+
+    /* ============================================================
+       UPDATE STATS
+       ============================================================ */
+    function updateStats() {
+      const totalClicks = links.reduce((sum, l) => sum + (l.clicks || 0), 0);
+      const topClicks = links.length ? Math.max(...links.map(l => l.clicks || 0)) : 0;
+
+      document.getElementById('stat-links').textContent = links.length;
+      document.getElementById('stat-clicks').textContent = totalClicks;
+      document.getElementById('stat-top').textContent = topClicks || '—';
+    }
+
+    /* ============================================================
+       FORM TOGGLE
+       ============================================================ */
+    const toggleFormBtn = document.getElementById('toggle-form-btn');
+    toggleFormBtn.addEventListener('click', () => {
+      const isHidden = addLinkForm.style.display === 'none';
+      addLinkForm.style.display = isHidden ? 'block' : 'none';
+      toggleFormBtn.textContent = isHidden ? '✕ Cancel' : '＋ Add Link';
+      if (isHidden) {
+        document.getElementById('link-title').focus();
+      } else {
+        /* Reset form */
+        clearAddForm();
+      }
+    });
+
+    document.getElementById('cancel-form-btn').addEventListener('click', () => {
+      addLinkForm.style.display = 'none';
+      toggleFormBtn.textContent = '＋ Add Link';
+      clearAddForm();
+    });
+
+    function clearAddForm() {
+      document.getElementById('link-title').value = '';
+      document.getElementById('link-url').value = '';
+      document.getElementById('link-icon').value = '';
+      formError.textContent = '';
+    }
+
+    /* ============================================================
+       SAVE NEW LINK
+       Adds a document to /users/{uid}/links collection.
+       ============================================================ */
+    document.getElementById('save-link-btn').addEventListener('click', async () => {
+      const title = document.getElementById('link-title').value.trim();
+      const url = document.getElementById('link-url').value.trim();
+      const icon = document.getElementById('link-icon').value.trim() || '🔗';
+
+      /* Validate */
+      if (!title) { formError.textContent = 'Please enter a title.'; return; }
+      if (!url) { formError.textContent = 'Please enter a URL.'; return; }
+      if (!isValidUrl(url)) { formError.textContent = 'Please enter a valid URL (include https://).'; return; }
+
+      formError.textContent = '';
+
+      try {
+        await db
+          .collection('users')
+          .doc(currentUser.uid)
+          .collection('links')
+          .add({
+            title,
+            url,
+            icon,
+            clicks: 0,
+            order: links.length,   /* append at end */
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+          });
+
+        clearAddForm();
+        addLinkForm.style.display = 'none';
+        toggleFormBtn.textContent = '＋ Add Link';
+        showToast('✓ Link added!');
+
+      } catch (err) {
+        formError.textContent = 'Error saving link: ' + err.message;
+      }
+    });
+
+    /* ============================================================
+       TOGGLE EDIT FORM
+       ============================================================ */
+    function toggleEditForm(id, show) {
+      const editForm = document.getElementById(`edit-form-${id}`);
+      if (!editForm) return;
+
+      const isVisible = editForm.classList.contains('visible');
+      const shouldShow = show !== undefined ? show : !isVisible;
+
+      editForm.classList.toggle('visible', shouldShow);
+      if (shouldShow) editForm.querySelector('.edit-title').focus();
+    }
+
+    /* ============================================================
+       SAVE EDITED LINK
+       ============================================================ */
+    async function saveEdit(id) {
+      const editForm = document.getElementById(`edit-form-${id}`);
+      const title = editForm.querySelector('.edit-title').value.trim();
+      const url = editForm.querySelector('.edit-url').value.trim();
+      const icon = editForm.querySelector('.edit-icon').value.trim() || '🔗';
+
+      if (!title || !url) { showToast('Title and URL are required.', 'error'); return; }
+      if (!isValidUrl(url)) { showToast('Invalid URL.', 'error'); return; }
+
+      try {
+        await db
+          .collection('users').doc(currentUser.uid)
+          .collection('links').doc(id)
+          .update({ title, url, icon });
+
+        showToast('✓ Link updated!');
+        toggleEditForm(id, false);
+
+      } catch (err) {
+        showToast('Error: ' + err.message, 'error');
+      }
+    }
+
+    /* ============================================================
+       DELETE LINK
+       ============================================================ */
+    async function deleteLink(id) {
+      if (!confirm('Delete this link?')) return;
+
+      try {
+        await db
+          .collection('users').doc(currentUser.uid)
+          .collection('links').doc(id)
+          .delete();
+
+        showToast('Link deleted.');
+      } catch (err) {
+        showToast('Error: ' + err.message, 'error');
+      }
+    }
+
+    /* ============================================================
+       DRAG-AND-DROP REORDERING
+       HTML5 Drag API — reorders links by updating `order` field.
+       ============================================================ */
+    function onDragStart(e) {
+      dragSrc = this.closest('.link-item-wrapper');
+      e.dataTransfer.effectAllowed = 'move';
+      this.classList.add('dragging');
+    }
+    function onDragOver(e) {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+      this.closest('.link-item-wrapper').classList.add('drag-over');
+    }
+    function onDragLeave() {
+      this.closest('.link-item-wrapper').classList.remove('drag-over');
+    }
+    async function onDrop(e) {
+      e.preventDefault();
+      const dropTarget = this.closest('.link-item-wrapper');
+      dropTarget.classList.remove('drag-over');
+
+      if (dragSrc === dropTarget) return;
+
+      /* Re-order: swap positions in DOM then persist */
+      const allWrappers = [...linksList.querySelectorAll('.link-item-wrapper')];
+      const srcIdx = allWrappers.indexOf(dragSrc);
+      const destIdx = allWrappers.indexOf(dropTarget);
+
+      /* Rearrange in-memory links array */
+      const [moved] = links.splice(srcIdx, 1);
+      links.splice(destIdx, 0, moved);
+
+      /* Persist new order to Firestore as a batch */
+      const batch = db.batch();
+      links.forEach((link, idx) => {
+        const ref = db.collection('users').doc(currentUser.uid)
+          .collection('links').doc(link.id);
+        batch.update(ref, { order: idx });
+      });
+      await batch.commit();
+    }
+    function onDragEnd() {
+      this.classList.remove('dragging');
+      linksList.querySelectorAll('.drag-over').forEach(el => el.classList.remove('drag-over'));
+    }
+
+    /* ============================================================
+       SETTINGS — Color Swatches
+       ============================================================ */
+    document.querySelectorAll('.color-swatch').forEach(swatch => {
+      swatch.addEventListener('click', () => {
+        updateColorSwatches(swatch.dataset.color);
+        document.getElementById('custom-color').value = swatch.dataset.color;
+      });
+    });
+
+    document.getElementById('custom-color').addEventListener('input', (e) => {
+      updateColorSwatches(e.target.value);
+    });
+
+    function updateColorSwatches(color) {
+      document.querySelectorAll('.color-swatch').forEach(s => {
+        s.classList.toggle('selected', s.dataset.color === color);
+      });
+    }
+
+    /* ============================================================
+       SAVE SETTINGS
+       ============================================================ */
+    document.getElementById('save-settings-btn').addEventListener('click', async () => {
+      const bio = document.getElementById('profile-bio').value.trim();
+      const theme = document.getElementById('custom-color').value;
+      const newName = document.getElementById('profile-name').value.trim();
+      const newUsername = document.getElementById('profile-username').value.trim().toLowerCase();
+      const newPhotoURL = document.getElementById('profile-photo-url').value.trim();
+      const usernameHint = document.getElementById('username-hint');
+
+      /* Validate name */
+      if (!newName) {
+        showToast('Display name cannot be empty.', 'error');
+        return;
+      }
+
+      /* Validate username format */
+      if (!newUsername) {
+        showToast('Username cannot be empty.', 'error');
+        return;
+      }
+      if (!/^[a-z0-9_]+$/.test(newUsername)) {
+        usernameHint.textContent = '✕ Only lowercase letters, numbers, and underscores allowed';
+        usernameHint.style.color = 'var(--danger)';
+        showToast('Username can only contain lowercase letters, numbers, and underscores.', 'error');
+        return;
+      }
+      if (newUsername.length < 3) {
+        showToast('Username must be at least 3 characters.', 'error');
+        return;
+      }
+
+      /* Check username uniqueness (only if changed) */
+      if (newUsername !== userData.username) {
+        try {
+          const existing = await db.collection('users')
+            .where('username', '==', newUsername)
+            .limit(1)
+            .get();
+          if (!existing.empty) {
+            usernameHint.textContent = '✕ This username is already taken';
+            usernameHint.style.color = 'var(--danger)';
+            showToast('Username "' + newUsername + '" is already taken.', 'error');
+            return;
+          }
+        } catch (err) {
+          showToast('Error checking username: ' + err.message, 'error');
+          return;
+        }
+      }
+
+      /* Reset hint */
+      usernameHint.textContent = 'Lowercase letters, numbers, and underscores only';
+      usernameHint.style.color = 'var(--muted)';
+
+      try {
+        const updateData = { bio, theme, name: newName, username: newUsername };
+        if (newPhotoURL) {
+          updateData.photoURL = newPhotoURL;
+        } else {
+          /* Clear custom photo, will fall back to Google photo */
+          updateData.photoURL = '';
+        }
+
+        await db.collection('users').doc(currentUser.uid).update(updateData);
+        showToast('✓ Settings saved!');
+
+        /* Update sidebar immediately */
+        document.getElementById('sidebar-name').textContent = newName;
+        document.getElementById('sidebar-username').textContent = '@' + newUsername;
+
+        /* Update avatar */
+        const photoSrc = newPhotoURL || currentUser.photoURL;
+        const avatarWrap = document.getElementById('sidebar-avatar-wrap');
+        const settingsPreview = document.getElementById('settings-avatar-preview');
+        if (photoSrc) {
+          avatarWrap.innerHTML = `<img src="${photoSrc}" alt="avatar" />`;
+          settingsPreview.innerHTML = `<img src="${photoSrc}" alt="avatar" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" />`;
+        } else {
+          avatarWrap.innerHTML = '<span>🌿</span>';
+          settingsPreview.innerHTML = '<span>🌿</span>';
+        }
+
+        /* Update public profile link */
+        const basePath = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/'));
+        const publicUrl = `${window.location.origin}${basePath}/profile.html?u=${newUsername}`;
+        const linkEl = document.getElementById('sidebar-public-link');
+        linkEl.href = publicUrl;
+        document.getElementById('copy-link-btn')._profileUrl = publicUrl;
+
+        /* Update local state */
+        userData.name = newName;
+        userData.username = newUsername;
+        userData.bio = bio;
+        userData.theme = theme;
+        userData.photoURL = newPhotoURL;
+
+        const savedEl = document.getElementById('settings-saved');
+        savedEl.classList.add('visible');
+        setTimeout(() => savedEl.classList.remove('visible'), 2500);
+
+      } catch (err) {
+        showToast('Error saving settings: ' + err.message, 'error');
+      }
+    });
+
+    /* ============================================================
+       LOGOUT
+       ============================================================ */
+    document.getElementById('logout-btn').addEventListener('click', async () => {
+      if (unsubscribeLinks) unsubscribeLinks();
+      await auth.signOut();
+      window.location.href = 'index.html';
+    });
+
+    /* ============================================================
+       HELPERS
+       ============================================================ */
+    function isValidUrl(str) {
+      try { new URL(str); return true; } catch { return false; }
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return str
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Treelink Profile</title>
+
+  <!-- Open Graph / Social preview tags -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" id="og-title" content="Treelink Profile" />
+  <meta property="og:description" id="og-desc" content="Check out my links on Treelink." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800;900&family=Roboto:wght@300;400;500;600&display=swap"
+    rel="stylesheet" />
+
+  <style>
+    /* ============================================================
+       DESIGN TOKENS (overridden dynamically by user theme color)
+       ============================================================ */
+    :root {
+      --accent: #22B193;
+      /* set dynamically from Firestore */
+      --accent-hover: #1B8A76;
+      --bg-light: #F5F7FB;
+      --bg-dark: #050816;
+      --card-light: #EDF1F7;
+      --card-dark: #1F2937;
+      --text-light: #111827;
+      --text-dark: #F3F4F6;
+      --muted-light: #6B7280;
+      --muted-dark: #9CA3AF;
+      --radius: 8px;
+      --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      color-scheme: light dark;
+    }
+
+    /* ============================================================
+       LIGHT / DARK THEME CLASSES
+       ============================================================ */
+    body.light {
+      --bg: var(--bg-light);
+      --card: var(--card-light);
+      --text: var(--text-light);
+      --muted: var(--muted-light);
+      --border: #E5E7EB;
+    }
+
+    body.dark {
+      --bg: var(--bg-dark);
+      --card: var(--card-dark);
+      --text: var(--text-dark);
+      --muted: var(--muted-dark);
+      --border: rgba(255, 255, 255, 0.1);
+    }
+
+    /* ============================================================
+       RESET & BASE
+       ============================================================ */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Roboto', sans-serif;
+      min-height: 100vh;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    /* ============================================================
+       BACKGROUND DECORATION
+       ============================================================ */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 50% at 50% 0%, rgba(var(--accent-rgb, 14, 165, 233), 0.06) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ============================================================
+       LOADING SCREEN
+       ============================================================ */
+    #loading {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-dark);
+      z-index: 9999;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .spinner {
+      width: 36px;
+      height: 36px;
+      border: 2px solid rgba(34, 177, 147, 0.2);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* ============================================================
+       NOT FOUND STATE
+       ============================================================ */
+    #not-found {
+      display: none;
+      position: fixed;
+      inset: 0;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 1rem;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    #not-found.visible {
+      display: flex;
+    }
+
+    .not-found-icon {
+      font-size: 4rem;
+    }
+
+    /* ============================================================
+       MAIN PROFILE PAGE
+       ============================================================ */
+    #profile-page {
+      display: none;
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      padding: 2rem 1rem 4rem;
+    }
+
+    #profile-page.visible {
+      display: block;
+    }
+
+    /* Center column */
+    .profile-col {
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    /* ============================================================
+       PROFILE HEADER
+       ============================================================ */
+    .profile-header {
+      text-align: center;
+      padding: 2.5rem 1rem 2rem;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    /* Avatar */
+    .profile-avatar {
+      width: 88px;
+      height: 88px;
+      border-radius: 50%;
+      margin: 0 auto 1.1rem;
+      border: 3px solid var(--accent);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      background: var(--accent);
+      box-shadow: 0 0 0 6px rgba(var(--accent-rgb, 14, 165, 233), 0.1);
+    }
+
+    .profile-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .profile-name {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.75rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.35rem;
+    }
+
+    .profile-username {
+      font-size: 0.875rem;
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: 0.75rem;
+    }
+
+    .profile-bio {
+      font-size: 0.95rem;
+      color: var(--muted);
+      max-width: 40ch;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* ============================================================
+       LINKS LIST
+       ============================================================ */
+    .links-list {
+      padding: 0.5rem 0;
+    }
+
+    /* Individual link button */
+    .profile-link {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem 1.25rem;
+      margin-bottom: 0.75rem;
+      text-decoration: none;
+      color: var(--text);
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+      animation: fadeUp 0.5s ease both;
+    }
+
+    /* Accent left border on hover */
+    .profile-link::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: var(--accent);
+      transform: scaleY(0);
+      transform-origin: bottom;
+      transition: transform var(--transition);
+    }
+
+    .profile-link:hover {
+      border-color: rgba(var(--accent-rgb, 34, 177, 147), 0.3);
+      transform: translateX(3px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .profile-link:hover::before {
+      transform: scaleY(1);
+    }
+
+    .profile-link:active {
+      transform: scale(0.98);
+    }
+
+    .link-icon {
+      font-size: 1.25rem;
+      flex-shrink: 0;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: rgba(var(--accent-rgb, 34, 177, 147), 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .link-label {
+      flex: 1;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .link-arrow {
+      font-size: 0.9rem;
+      color: var(--muted);
+      flex-shrink: 0;
+      transition: transform var(--transition);
+    }
+
+    .profile-link:hover .link-arrow {
+      transform: translateX(3px);
+    }
+
+    /* ============================================================
+       EMPTY STATE
+       ============================================================ */
+    .no-links {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--muted);
+    }
+
+    .no-links p {
+      margin-top: 0.5rem;
+      font-size: 0.9rem;
+    }
+
+    /* ============================================================
+       TREELINK FOOTER WATERMARK
+       ============================================================ */
+    .treelink-badge {
+      text-align: center;
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .treelink-badge a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-weight: 500;
+      transition: color var(--transition);
+    }
+
+    .treelink-badge a:hover {
+      color: var(--accent);
+    }
+
+    /* ============================================================
+       ANIMATIONS
+       ============================================================ */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(16px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ============================================================
+       CLICK COUNT BUBBLE (brief animation on click)
+       ============================================================ */
+    .click-bubble {
+      position: fixed;
+      pointer-events: none;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--accent);
+      animation: floatUp 0.8s ease forwards;
+      z-index: 9999;
+    }
+
+    @keyframes floatUp {
+      from {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      to {
+        opacity: 0;
+        transform: translateY(-40px);
+      }
+    }
+  </style>
+</head>
+
+<body class="dark">
+
+  <!-- ============================================================
+       LOADING SCREEN
+       ============================================================ -->
+  <div id="loading">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- ============================================================
+       NOT FOUND STATE
+       ============================================================ -->
+  <div id="not-found">
+    <div class="not-found-icon">🍂</div>
+    <h2 style="font-family:'Poppins',sans-serif; font-size:1.5rem;">Page not found</h2>
+    <p style="color:#000000; margin-top:.5rem;">This Treelink profile doesn't exist.</p>
+    <a href="index.html" style="margin-top:1.5rem; color:#1A73E8; text-decoration:none; font-weight:600;">
+      Create yours →
+    </a>
+  </div>
+
+  <!-- ============================================================
+       PROFILE PAGE
+       ============================================================ -->
+  <div id="profile-page">
+    <div class="profile-col">
+
+      <!-- Theme toggle is fixed so no markup needed here -->
+
+      <!-- Profile Header -->
+      <div class="profile-header">
+        <div class="profile-avatar" id="profile-avatar">🌿</div>
+        <h1 class="profile-name" id="profile-name">Loading…</h1>
+        <p class="profile-username" id="profile-username">@username</p>
+        <p class="profile-bio" id="profile-bio"></p>
+      </div>
+
+      <!-- Links -->
+      <div class="links-list" id="links-list"></div>
+
+      <!-- Treelink badge -->
+      <div class="treelink-badge">
+        <a href="index.html">
+          🌿 &nbsp;Create your own Treelink
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ============================================================
+       FIREBASE SDK
+       ============================================================ -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
+  <script>
+    /* ============================================================
+       FIREBASE CONFIGURATION
+       Replace these placeholders with your actual project values.
+       ============================================================ */
+    const firebaseConfig = {
+      apiKey: 'AIzaSyCIQ4tXZo9mibJscDKA5kLY7ndMrYaawp4',
+      authDomain: 'treelink-53452.firebaseapp.com',
+      projectId: 'treelink-53452',
+      storageBucket: 'treelink-53452.firebasestorage.app',
+      messagingSenderId: '298229640699',
+      appId: '1:298229640699:web:bb8e45200d4b76dadfef5e'
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    /* ============================================================
+       SET DEFAULT DARK THEME
+       ============================================================ */
+    document.body.classList.add('dark');
+
+    /* ============================================================
+       GET USERNAME FROM URL QUERY STRING
+       URL format: profile.html?u=username
+       ============================================================ */
+    const params = new URLSearchParams(window.location.search);
+    const username = params.get('u');
+
+    if (!username) {
+      /* No username param → show not found */
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('not-found').classList.add('visible');
+    } else {
+      loadProfile(username);
+    }
+
+    /* ============================================================
+       LOAD PROFILE FROM FIRESTORE
+       Queries /users where username == param, then loads links subcollection.
+       ============================================================ */
+    async function loadProfile(uname) {
+      try {
+        /* Find user document by username field */
+        const userSnap = await db
+          .collection('users')
+          .where('username', '==', uname)
+          .limit(1)
+          .get();
+
+        if (userSnap.empty) {
+          throw new Error('User not found');
+        }
+
+        const userDoc = userSnap.docs[0];
+        const uid = userDoc.id;
+        const user = userDoc.data();
+
+        /* ---- Apply user's theme color ---- */
+        applyThemeColor(user.theme || '#1A73E8');
+
+        /* ---- Populate header ---- */
+        document.getElementById('profile-name').textContent = user.name || 'Treelink User';
+        document.getElementById('profile-username').textContent = '@' + user.username;
+        document.getElementById('profile-bio').textContent = user.bio || '';
+
+        /* Avatar */
+        const avatarEl = document.getElementById('profile-avatar');
+        if (user.photoURL) {
+          avatarEl.innerHTML =
+            `<img src="${user.photoURL}" alt="${user.name}" loading="lazy" referrerpolicy="no-referrer"
+               onerror="this.onerror=null; this.parentElement.textContent='🌿';" />`;
+        }
+
+        /* ---- Update page title & OG tags ---- */
+        document.title = `${user.name} | Treelink`;
+        document.getElementById('og-title').setAttribute('content', `${user.name} | Treelink`);
+        document.getElementById('og-desc').setAttribute('content', user.bio || `Check out ${user.name}'s links on Treelink.`);
+
+        /* ---- Load links ---- */
+        const linksSnap = await db
+          .collection('users').doc(uid)
+          .collection('links')
+          .orderBy('order', 'asc')
+          .get();
+
+        const links = linksSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+
+        renderLinks(links, uid);
+
+        /* Show profile, hide loading */
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('profile-page').classList.add('visible');
+
+      } catch (err) {
+        console.error('Profile load error:', err);
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('not-found').classList.add('visible');
+      }
+    }
+
+    /* ============================================================
+       APPLY THEME COLOR
+       Dynamically injects CSS variable for the user's accent color.
+       Also computes an RGB version for use in rgba() gradients.
+       ============================================================ */
+    function applyThemeColor(hex) {
+      /* Parse hex → RGB */
+      const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+      if (result) {
+        const r = parseInt(result[1], 16);
+        const g = parseInt(result[2], 16);
+        const b = parseInt(result[3], 16);
+        document.documentElement.style.setProperty('--accent', hex);
+        document.documentElement.style.setProperty('--accent-rgb', `${r},${g},${b}`);
+
+        /* Lighten for accent2 (simple blend with white) */
+        const lighten = (v) => Math.min(255, Math.round(v + (255 - v) * 0.3));
+        const hex2 = `#${[r, g, b].map(lighten).map(v => v.toString(16).padStart(2, '0')).join('')}`;
+        document.documentElement.style.setProperty('--accent2', hex2);
+      }
+    }
+
+    /* ============================================================
+       RENDER LINKS
+       ============================================================ */
+    function renderLinks(links, uid) {
+      const container = document.getElementById('links-list');
+
+      if (links.length === 0) {
+        container.innerHTML = `
+          <div class="no-links">
+            <div style="font-size:2rem;">🔗</div>
+            <p>No links added yet.</p>
+          </div>`;
+        return;
+      }
+
+      links.forEach((link, idx) => {
+        const a = document.createElement('a');
+        a.href = '#'; /* We handle click manually to track analytics */
+        a.className = 'profile-link';
+        a.style.animationDelay = `${idx * 0.07}s`; /* Stagger entrance */
+        a.setAttribute('rel', 'noopener noreferrer');
+
+        a.innerHTML = `
+          <div class="link-icon">${link.icon || '🔗'}</div>
+          <span class="link-label">${escapeHtml(link.title)}</span>
+          <span class="link-arrow">→</span>
+        `;
+
+        /* Click handler: increment counter, then navigate */
+        a.addEventListener('click', (e) => {
+          e.preventDefault();
+
+          /* Visual feedback bubble */
+          spawnClickBubble(e.clientX, e.clientY);
+
+          /* Increment click count in Firestore asynchronously */
+          db.collection('users').doc(uid)
+            .collection('links').doc(link.id)
+            .update({
+              clicks: firebase.firestore.FieldValue.increment(1)
+            })
+            .catch(console.error);
+
+          /* Navigate after short delay so animation is visible */
+          setTimeout(() => { window.open(link.url, '_blank', 'noopener,noreferrer'); }, 200);
+        });
+
+        container.appendChild(a);
+      });
+    }
+
+    /* ============================================================
+       CLICK BUBBLE EFFECT
+       Shows a "+1" float animation at the click coordinates.
+       ============================================================ */
+    function spawnClickBubble(x, y) {
+      const el = document.createElement('div');
+      el.className = 'click-bubble';
+      el.textContent = '+1 click';
+      el.style.left = x + 'px';
+      el.style.top = y + 'px';
+      document.body.appendChild(el);
+      el.addEventListener('animationend', () => el.remove());
+    }
+
+    /* ============================================================
+       HELPER: Escape HTML to prevent XSS
+       ============================================================ */
+    function escapeHtml(str) {
+      if (!str) return '';
+      return str
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+  </script>
+</body>
+
+</html>

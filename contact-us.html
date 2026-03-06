@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — Treelink</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800;900&family=Roboto:wght@300;400;500;600&display=swap"
+    rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg: #F5F7FB;
+      --bg2: #EDF1F7;
+      --accent: #22B193;
+      --accent-hover: #1B8A76;
+      --text: #111827;
+      --muted: #6B7280;
+      --border-color: #D7DDE8;
+      --radius: 8px;
+      --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Roboto', sans-serif;
+      font-weight: 400;
+      line-height: 1.6;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        radial-gradient(ellipse 100% 50% at 50% 0%, rgba(34, 177, 147, 0.02) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* NAVBAR */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.2rem 2rem;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+    }
+
+    .nav-logo-icon {
+      width: 34px; height: 34px;
+      background: var(--accent);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+    }
+
+    .nav-logo-text {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.02em;
+    }
+
+    .nav-cta {
+      background: var(--accent);
+      border: 1px solid var(--accent);
+      color: #FFFFFF;
+      font-family: 'Roboto', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 500;
+      padding: 0.5rem 1.25rem;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: var(--transition);
+      text-decoration: none;
+    }
+
+    .nav-cta:hover {
+      background: var(--accent-hover);
+      border-color: var(--accent-hover);
+    }
+
+    /* PAGE */
+    .page {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 7rem 1.5rem 4rem;
+    }
+
+    .page-title {
+      font-family: 'Poppins', sans-serif;
+      font-size: clamp(2.2rem, 6vw, 4rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      text-align: center;
+      margin-bottom: 0.75rem;
+      animation: fadeUp 0.7s ease both;
+    }
+
+    .page-title em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .page-sub {
+      font-size: 1rem;
+      color: var(--muted);
+      text-align: center;
+      max-width: 44ch;
+      margin-bottom: 3.5rem;
+      font-weight: 300;
+      animation: fadeUp 0.7s 0.1s ease both;
+    }
+
+    /* CONTACT CARDS */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+      width: 100%;
+      max-width: 720px;
+      animation: fadeUp 0.7s 0.2s ease both;
+    }
+
+    @media (min-width: 560px) {
+      .contact-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    .contact-card {
+      background: var(--bg2);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 2rem 1.5rem;
+      text-align: center;
+      text-decoration: none;
+      color: var(--text);
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .contact-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--card-color, var(--accent));
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    .contact-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(34, 177, 147, 0.18);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+    }
+
+    .contact-card:hover::before { opacity: 1; }
+
+    .card-email    { --card-color: #EA4335; }
+    .card-github   { --card-color: #24292e; }
+    .card-whatsapp { --card-color: #25D366; }
+
+    .card-icon-wrap {
+      width: 56px; height: 56px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+
+    .card-email    .card-icon-wrap { background: rgba(234,67,53,0.09); }
+    .card-github   .card-icon-wrap { background: rgba(36,41,46,0.07); }
+    .card-whatsapp .card-icon-wrap { background: rgba(37,211,102,0.1); }
+
+    .contact-card:hover .card-icon-wrap { transform: scale(1.08); }
+    .card-icon-wrap svg { width: 28px; height: 28px; }
+
+    .card-label {
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+    }
+
+    .card-value {
+      font-size: 0.78rem;
+      color: var(--muted);
+      word-break: break-all;
+    }
+
+    .card-action {
+      margin-top: 0.25rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+
+    .card-email    .card-action { color: #EA4335; }
+    .card-github   .card-action { color: #24292e; }
+    .card-whatsapp .card-action { color: #128C7E; }
+
+    /* FOOTER */
+    footer {
+      position: relative;
+      z-index: 1;
+      background: var(--bg2);
+      border-top: 1px solid var(--border-color);
+      padding: 3rem 1.5rem;
+      margin-top: 3rem;
+    }
+
+    .footer-content {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .footer-section h3 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.75rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .footer-section ul {
+      list-style: none;
+    }
+
+    .footer-section li {
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-section a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      transition: var(--transition);
+    }
+
+    .footer-section a:hover {
+      color: var(--accent);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid var(--border-color);
+      padding-top: 1.5rem;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+
+    .footer-bottom a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .footer-bottom a:hover {
+      text-decoration: underline;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-icon">🌿</div>
+      <span class="nav-logo-text">Treelink</span>
+    </a>
+    <a href="index.html" class="nav-cta">Home</a>
+  </nav>
+
+  <main class="page">
+
+    <h1 class="page-title">Say <em>hello.</em></h1>
+    <p class="page-sub">Have a question, a project idea, or just want to connect? Pick your preferred channel below.</p>
+
+    <div class="contact-grid">
+
+      <a class="contact-card card-email" href="mailto:syedtanvirislam20@gmail.com">
+        <div class="card-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+              stroke="#EA4335" stroke-width="1.8" stroke-linejoin="round"/>
+            <path d="M22 6L12 13 2 6" stroke="#EA4335" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <span class="card-label">Email</span>
+        <span class="card-value">syedtanvirislam20@gmail.com</span>
+        <span class="card-action">Send a message →</span>
+      </a>
+
+      <a class="contact-card card-github" href="https://github.com/syedtanvircodex" target="_blank" rel="noopener">
+        <div class="card-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="#24292e" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd"
+              d="M12 2C6.477 2 2 6.477 2 12c0 4.419 2.865 8.166 6.839 9.489.5.092.682-.217.682-.483
+                 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.342-3.369-1.342-.454-1.154-1.11-1.462-1.11-1.462
+                 -.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831
+                 .092-.647.35-1.087.636-1.337-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683
+                 -.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836
+                 c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647
+                 .64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852
+                 0 1.336-.012 2.415-.012 2.743 0 .268.18.58.688.482A10.001 10.001 0 0022 12c0-5.523-4.477-10-10-10z"/>
+          </svg>
+        </div>
+        <span class="card-label">GitHub</span>
+        <span class="card-value">@syedtanvircodex</span>
+        <span class="card-action">View profile →</span>
+      </a>
+
+      <a class="contact-card card-whatsapp" href="https://wa.me/8801921575251" target="_blank" rel="noopener">
+        <div class="card-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="#25D366" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15
+              -.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475
+              -.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52
+              .149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207
+              -.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372
+              -.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2
+              5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.57-.085 1.758-.719
+              2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+            <path d="M12.004 2.003A9.997 9.997 0 002 12c0 1.76.463 3.411 1.268 4.845L2 22l5.232-1.244
+              A9.953 9.953 0 0012.004 22C17.526 22 22 17.523 22 12S17.526 2.003 12.004 2.003zm0 18.18
+              a8.168 8.168 0 01-4.16-1.138l-.299-.177-3.1.737.784-2.994-.194-.308A8.163 8.163 0 013.833
+              12c0-4.51 3.671-8.18 8.171-8.18S20.18 7.49 20.18 12s-3.666 8.183-8.176 8.183z"/>
+          </svg>
+        </div>
+        <span class="card-label">WhatsApp</span>
+        <span class="card-value">+880 1921 575 251</span>
+        <span class="card-action">Start chat →</span>
+      </a>
+
+    </div>
+
+  </main>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>Product</h3>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="#" id="dashboard-link" style="display:none;">Dashboard</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Resources</h3>
+        <ul>
+          <li><a href="contact-us.html">Contact</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+          <li><a href="terms.html">Terms</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Connect</h3>
+        <ul>
+          <li><a href="https://github.com/syedtanvircodex" target="_blank" rel="noopener">GitHub</a></li>
+          <li><a href="mailto:syedtanvirislam20@gmail.com">Email</a></li>
+          <li><a href="https://wa.me/8801921575251" target="_blank" rel="noopener">WhatsApp</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Treelink · Built with 🌿 by Syed Tanvir · All rights reserved</p>
+    </div>
+  </footer>
+
+</body>
+</html>
