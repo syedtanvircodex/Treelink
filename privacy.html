@@ -2,353 +2,502 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Privacy Policy — Treelink</title>
-    <meta name="description" content="Treelink Privacy Policy — how we collect, use, and protect your data." />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy — Treelink</title>
+  <meta name="description" content="Treelink Privacy Policy — how we collect, use, and protect your data." />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800;900&family=Roboto:wght@300;400;500;600&display=swap"
-        rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
 
-    <style>
-        :root {
-            --bg: #F5F7FB;
-            --bg2: #EDF1F7;
-            --accent: #22B193;
-            --accent-hover: #1B8A76;
-            --text: #111827;
-            --muted: #6B7280;
-            --border-color: #D7DDE8;
-            --radius: 8px;
-            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+  <style>
+    :root {
+      --bg:          #080807;
+      --bg-2:        #0f0f0e;
+      --bg-3:        #181816;
+      --text-1:      #EDEAE4;
+      --text-2:      #87857F;
+      --text-3:      #4A4946;
+      --accent:      #1BBF9A;
+      --accent-2:    #14A884;
+      --accent-dim:  rgba(27, 191, 154, 0.1);
+      --accent-glow: rgba(27, 191, 154, 0.22);
+      --border:      rgba(255, 255, 255, 0.07);
+      --border-2:    rgba(255, 255, 255, 0.12);
+      --r-sm:  12px;
+      --r-md:  18px;
+      --r-lg:  24px;
+      --r-xl:  32px;
+      --ease:        cubic-bezier(0.22, 1, 0.36, 1);
+    }
 
-        *,
-        *::before,
-        *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
 
-        html {
-            scroll-behavior: smooth;
-        }
+    body {
+      background: var(--bg);
+      color: var(--text-1);
+      font-family: 'Sora', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-weight: 400;
+      line-height: 1.7;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
 
-        body {
-            background: var(--bg);
-            color: var(--text);
-            font-family: 'Roboto', sans-serif;
-            font-weight: 400;
-            line-height: 1.7;
-            overflow-x: hidden;
-            min-height: 100vh;
-        }
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.028;
+      pointer-events: none;
+      z-index: 9998;
+    }
 
-        body::before {
-            content: '';
-            position: fixed;
-            inset: 0;
-            background-image:
-                radial-gradient(ellipse 100% 50% at 50% 0%, rgba(34, 177, 147, 0.02) 0%, transparent 70%);
-            pointer-events: none;
-            z-index: 0;
-        }
+    h1, h2, h3, h4 {
+      font-family: 'Outfit', sans-serif;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      font-weight: 700;
+    }
 
-        /* Navbar */
-        nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 100;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 1.2rem 2rem;
-            background: rgba(255, 255, 255, 0.92);
-            backdrop-filter: blur(16px);
-            border-bottom: 1px solid var(--border-color);
-        }
+    /* Scroll animations */
+    .reveal {
+      opacity: 0;
+      transform: translateY(36px);
+      transition: opacity 0.85s var(--ease), transform 0.85s var(--ease);
+    }
+    .reveal.in { opacity: 1; transform: translateY(0); }
 
-        .nav-logo {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            text-decoration: none;
-        }
+    .reveal-scale {
+      opacity: 0;
+      transform: scale(0.93);
+      transition: opacity 0.75s var(--ease), transform 0.75s var(--ease);
+    }
+    .reveal-scale.in { opacity: 1; transform: scale(1); }
 
-        .nav-logo-icon {
-            width: 34px;
-            height: 34px;
-            background: var(--accent);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.1rem;
-        }
+    .d1 { transition-delay: 0.06s; }
+    .d2 { transition-delay: 0.13s; }
+    .d3 { transition-delay: 0.20s; }
 
-        .nav-logo-text {
-            font-family: 'Poppins', sans-serif;
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--text);
-            letter-spacing: -0.02em;
-        }
+    /* Background orbs */
+    .bg-layer {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(110px);
+      animation: orb-drift 16s ease-in-out infinite alternate;
+    }
+    .orb-a {
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(27,191,154,.11) 0%, transparent 70%);
+      top: -260px; right: -180px;
+      animation-duration: 18s;
+    }
+    .orb-b {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(27,191,154,.07) 0%, transparent 70%);
+      bottom: 60px; left: -160px;
+      animation-duration: 22s;
+      animation-delay: -8s;
+    }
+    @keyframes orb-drift {
+      0%   { transform: translate(0, 0) scale(1); }
+      50%  { transform: translate(30px, -50px) scale(1.06); }
+      100% { transform: translate(-20px, 25px) scale(0.96); }
+    }
 
-        .nav-cta {
-            background: var(--accent);
-            border: 1px solid var(--accent);
-            color: #FFFFFF;
-            font-family: 'Roboto', sans-serif;
-            font-size: 0.875rem;
-            font-weight: 500;
-            padding: 0.5rem 1.25rem;
-            border-radius: var(--radius);
-            cursor: pointer;
-            transition: var(--transition);
-            text-decoration: none;
-        }
+    /* Navbar */
+    #navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 500;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.375rem 3rem;
+      transition: padding 0.4s var(--ease), background 0.4s ease, border-color 0.4s ease;
+      border-bottom: 1px solid transparent;
+    }
+    #navbar.scrolled {
+      padding: 0.875rem 3rem;
+      background: rgba(8, 8, 7, 0.88);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-bottom-color: var(--border);
+    }
 
-        .nav-cta:hover {
-            background: var(--accent-hover);
-            color: #FFFFFF;
-            border-color: var(--accent-hover);
-        }
+    .nav-left  { display: flex; align-items: center; gap: 2.5rem; }
+    .nav-right { display: flex; align-items: center; gap: 0.75rem; }
 
-        /* Content */
-        .legal-content {
-            position: relative;
-            z-index: 1;
-            max-width: 740px;
-            margin: 0 auto;
-            padding: 7rem 1.5rem 4rem;
-        }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+    .nav-logo-icon { width: 28px; height: 28px; color: var(--accent); flex-shrink: 0; }
+    .nav-logo-text {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-1);
+      letter-spacing: -0.02em;
+    }
 
-        .legal-content h1 {
-            font-family: 'Poppins', sans-serif;
-            font-size: clamp(2rem, 5vw, 3rem);
-            font-weight: 800;
-            margin-bottom: 0.5rem;
-            color: var(--text);
-        }
+    .nav-links { display: flex; align-items: center; gap: 0.125rem; }
+    .nav-links a {
+      color: var(--text-2);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      padding: 0.375rem 0.8rem;
+      border-radius: 8px;
+      transition: color 0.2s, background 0.2s;
+    }
+    .nav-links a:hover { color: var(--text-1); background: rgba(255,255,255,0.06); }
 
-        .legal-content .last-updated {
-            font-size: 0.85rem;
-            color: var(--muted);
-            margin-bottom: 2.5rem;
-        }
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-2);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 0.5rem 1.125rem;
+      font-family: 'Sora', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.25s var(--ease);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .btn-ghost:hover { color: var(--text-1); border-color: var(--border-2); background: rgba(255,255,255,0.04); }
 
-        .legal-content h2 {
-            font-family: 'Poppins', sans-serif;
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--accent);
-            margin: 2rem 0 0.75rem;
-        }
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 100px;
+      padding: 0.5rem 1.25rem;
+      font-family: 'Sora', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s var(--ease);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .btn-primary:hover {
+      background: var(--accent-2);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 28px var(--accent-glow);
+    }
 
-        .legal-content p,
-        .legal-content ul {
-            color: var(--muted);
-            font-size: 0.95rem;
-            margin-bottom: 1rem;
-        }
+    /* Content */
+    .legal-content {
+      position: relative;
+      z-index: 1;
+      max-width: 740px;
+      margin: 0 auto;
+      padding: 8rem 1.5rem 5rem;
+    }
 
-        .legal-content ul {
-            padding-left: 1.5rem;
-        }
+    .legal-header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
 
-        .legal-content li {
-            margin-bottom: 0.4rem;
-        }
+    .legal-content h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(2.25rem, 6vw, 3.5rem);
+      font-weight: 700;
+      color: var(--text-1);
+      margin-bottom: 0.75rem;
+    }
 
-        .legal-content a {
-            color: var(--accent);
-            text-decoration: none;
-        }
+    .legal-content .last-updated {
+      font-size: 0.875rem;
+      color: var(--text-2);
+    }
 
-        .legal-content a:hover {
-            text-decoration: underline;
-        }
+    .legal-content h2 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--accent);
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border);
+    }
 
-        /* FOOTER */
-        footer {
-            position: relative;
-            z-index: 1;
-            background: var(--bg2);
-            border-top: 1px solid var(--border-color);
-            padding: 3rem 1.5rem;
-            margin-top: 3rem;
-        }
+    .legal-content h2:first-of-type {
+      margin-top: 2rem;
+    }
 
-        .footer-content {
-            max-width: 1100px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
+    .legal-content p,
+    .legal-content ul {
+      color: var(--text-2);
+      font-size: 0.975rem;
+      margin-bottom: 1rem;
+      line-height: 1.75;
+    }
 
-        .footer-section h3 {
-            font-family: 'Poppins', sans-serif;
-            font-size: 0.9rem;
-            font-weight: 700;
-            color: var(--text);
-            margin-bottom: 0.75rem;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-        }
+    .legal-content ul {
+      padding-left: 1.5rem;
+    }
 
-        .footer-section ul {
-            list-style: none;
-        }
+    .legal-content li {
+      margin-bottom: 0.5rem;
+    }
 
-        .footer-section li {
-            margin-bottom: 0.5rem;
-        }
+    .legal-content strong {
+      color: var(--text-1);
+      font-weight: 500;
+    }
 
-        .footer-section a {
-            color: var(--muted);
-            text-decoration: none;
-            font-size: 0.875rem;
-            transition: var(--transition);
-        }
+    .legal-content a {
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(27, 191, 154, 0.3);
+      transition: border-color 0.2s ease;
+    }
 
-        .footer-section a:hover {
-            color: var(--accent);
-        }
+    .legal-content a:hover {
+      border-color: var(--accent);
+    }
 
-        .footer-bottom {
-            border-top: 1px solid var(--border-color);
-            padding-top: 1.5rem;
-            text-align: center;
-            color: var(--muted);
-            font-size: 0.8rem;
-        }
+    /* Footer */
+    footer {
+      position: relative;
+      z-index: 1;
+      background: var(--bg-2);
+      border-top: 1px solid var(--border);
+      padding: 4rem 1.5rem 2rem;
+      margin-top: 4rem;
+    }
 
-        .footer-bottom a {
-            color: var(--accent);
-            text-decoration: none;
-        }
+    .footer-content {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 2.5rem;
+      margin-bottom: 3rem;
+    }
 
-        .footer-bottom a:hover {
-            text-decoration: underline;
-        }
-    </style>
+    .footer-section h3 {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-1);
+      margin-bottom: 1rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .footer-section ul {
+      list-style: none;
+    }
+
+    .footer-section li {
+      margin-bottom: 0.75rem;
+    }
+
+    .footer-section a {
+      color: var(--text-2);
+      text-decoration: none;
+      font-size: 0.875rem;
+      transition: color 0.3s ease;
+    }
+
+    .footer-section a:hover {
+      color: var(--accent);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid var(--border);
+      padding-top: 2rem;
+      text-align: center;
+      color: var(--text-2);
+      font-size: 0.8125rem;
+    }
+
+    .footer-bottom a {
+      color: var(--text-2);
+      text-decoration: none;
+    }
+
+    .footer-bottom a:hover {
+      color: var(--accent);
+    }
+
+    /* Responsive */
+    @media (max-width: 767px) {
+      #navbar { padding: 1rem 1.25rem; }
+      #navbar.scrolled { padding: 0.75rem 1.25rem; }
+      .legal-content { padding: 7rem 1.25rem 4rem; }
+      .nav-links { display: none; }
+    }
+  </style>
 </head>
 
 <body>
 
-    <nav>
-        <a href="index.html" class="nav-logo">
-            <div class="nav-logo-icon">🌿</div>
-            <span class="nav-logo-text">Treelink</span>
-        </a>
-        <a href="index.html" class="nav-cta">Home</a>
-    </nav>
+  <div class="bg-layer">
+    <div class="orb orb-a"></div>
+    <div class="orb orb-b"></div>
+  </div>
 
-    <main class="legal-content">
-        <h1>Privacy Policy</h1>
-        <p class="last-updated">Last updated: March 2, 2026</p>
+  <nav id="navbar">
+    <div class="nav-left">
+      <a href="index.html" class="nav-logo">
+        <svg class="nav-logo-icon" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M14 25V15" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+          <path d="M14 15L7 8" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+          <path d="M14 15L21 8" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+          <path d="M14 10V4.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+          <circle cx="7" cy="7" r="2.4" fill="currentColor" opacity=".65"/>
+          <circle cx="21" cy="7" r="2.4" fill="currentColor" opacity=".65"/>
+          <circle cx="14" cy="3.5" r="2.4" fill="currentColor"/>
+        </svg>
+        <span class="nav-logo-text">Treelink</span>
+      </a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="contact-us.html">Contact</a>
+      </div>
+    </div>
+    <div class="nav-right">
+      <a href="index.html" class="btn-ghost">Home</a>
+    </div>
+  </nav>
 
-        <h2>1. Information We Collect</h2>
-        <p>When you sign in with Google, we receive and store the following information from your Google account:</p>
+  <main class="legal-content">
+    <div class="legal-header reveal">
+      <h1>Privacy Policy</h1>
+      <p class="last-updated">Last updated: March 2, 2026</p>
+    </div>
+
+    <h2 class="reveal d1">1. Information We Collect</h2>
+    <p class="reveal d1">When you sign in with Google, we receive and store the following information from your Google account:</p>
+    <ul class="reveal d1">
+      <li>Your name and email address</li>
+      <li>Your profile photo URL</li>
+      <li>A unique Google account identifier</li>
+    </ul>
+    <p class="reveal d1">Additionally, we store data you provide while using Treelink:</p>
+    <ul class="reveal d1">
+      <li>Your chosen username and bio</li>
+      <li>Links you add (titles, URLs, icons)</li>
+      <li>Your theme/accent color preference</li>
+      <li>Click counts on your links (anonymous, aggregate only)</li>
+    </ul>
+
+    <h2 class="reveal d2">2. How We Use Your Information</h2>
+    <p class="reveal d2">Your information is used to:</p>
+    <ul class="reveal d2">
+      <li>Create and maintain your Treelink profile</li>
+      <li>Display your public profile page to visitors</li>
+      <li>Provide link analytics (click counts)</li>
+      <li>Authenticate you securely via Google Sign-In</li>
+    </ul>
+
+    <h2 class="reveal d2">3. Data Storage & Security</h2>
+    <p class="reveal d2">All data is stored securely on <strong>Google Firebase</strong> (Firestore database). Firebase provides enterprise-grade security, encryption in transit and at rest, and regular security audits. We do not sell, trade, or share your personal information with third parties.</p>
+
+    <h2 class="reveal d3">4. Cookies & Local Storage</h2>
+    <p class="reveal d3">Treelink uses cookies only as required by Firebase Authentication to maintain your login session. We do not use tracking cookies or third-party advertising cookies.</p>
+
+    <h2 class="reveal d3">5. Third-Party Services</h2>
+    <p class="reveal d3">We use the following third-party services:</p>
+    <ul class="reveal d3">
+      <li><strong>Google Firebase</strong> — authentication, database, and hosting</li>
+      <li><strong>Google Fonts</strong> — web typography</li>
+    </ul>
+    <p class="reveal d3">These services have their own privacy policies. We encourage you to review them.</p>
+
+    <h2 class="reveal d3">6. Your Rights</h2>
+    <p class="reveal d3">You have the right to:</p>
+    <ul class="reveal d3">
+      <li>Access, update, or delete your personal data at any time through your dashboard</li>
+      <li>Delete your account by contacting us</li>
+      <li>Request a copy of your stored data</li>
+    </ul>
+
+    <h2 class="reveal d3">7. Children's Privacy</h2>
+    <p class="reveal d3">Treelink is not intended for children under 13 years of age. We do not knowingly collect personal information from children.</p>
+
+    <h2 class="reveal d3">8. Changes to This Policy</h2>
+    <p class="reveal d3">We may update this Privacy Policy from time to time. Changes will be posted on this page with an updated date.</p>
+
+    <h2 class="reveal d3">9. Contact</h2>
+    <p class="reveal d3">If you have any questions about this Privacy Policy, please reach out via our <a href="index.html">homepage</a>.</p>
+  </main>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>Product</h3>
         <ul>
-            <li>Your name and email address</li>
-            <li>Your profile photo URL</li>
-            <li>A unique Google account identifier</li>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="#" id="dashboard-link" style="display:none;">Dashboard</a></li>
         </ul>
-        <p>Additionally, we store data you provide while using Treelink:</p>
+      </div>
+      <div class="footer-section">
+        <h3>Resources</h3>
         <ul>
-            <li>Your chosen username and bio</li>
-            <li>Links you add (titles, URLs, icons)</li>
-            <li>Your theme/accent color preference</li>
-            <li>Click counts on your links (anonymous, aggregate only)</li>
+          <li><a href="contact-us.html">Contact</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+          <li><a href="terms.html">Terms</a></li>
         </ul>
-
-        <h2>2. How We Use Your Information</h2>
-        <p>Your information is used to:</p>
+      </div>
+      <div class="footer-section">
+        <h3>Connect</h3>
         <ul>
-            <li>Create and maintain your Treelink profile</li>
-            <li>Display your public profile page to visitors</li>
-            <li>Provide link analytics (click counts)</li>
-            <li>Authenticate you securely via Google Sign-In</li>
+          <li><a href="https://github.com/syedtanvircodex" target="_blank" rel="noopener">GitHub</a></li>
+          <li><a href="mailto:syedtanvirislam20@gmail.com">Get in Touch</a></li>
         </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Treelink. Built with 🌿 by Syed Tanvir.</p>
+    </div>
+  </footer>
 
-        <h2>3. Data Storage & Security</h2>
-        <p>All data is stored securely on <strong>Google Firebase</strong> (Firestore database). Firebase provides
-            enterprise-grade security, encryption in transit and at rest, and regular security audits. We do not sell,
-            trade, or share your personal information with third parties.</p>
+  <script>
+    // Navbar scroll effect
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
 
-        <h2>4. Cookies & Local Storage</h2>
-        <p>Treelink uses cookies only as required by Firebase Authentication to maintain your login session. We do not
-            use tracking cookies or third-party advertising cookies.</p>
+    // Scroll reveal animations
+    const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+        }
+      });
+    }, observerOptions);
 
-        <h2>5. Third-Party Services</h2>
-        <p>We use the following third-party services:</p>
-        <ul>
-            <li><strong>Google Firebase</strong> — authentication, database, and hosting</li>
-            <li><strong>Google Fonts</strong> — web typography</li>
-        </ul>
-        <p>These services have their own privacy policies. We encourage you to review them.</p>
-
-        <h2>6. Your Rights</h2>
-        <p>You have the right to:</p>
-        <ul>
-            <li>Access, update, or delete your personal data at any time through your dashboard</li>
-            <li>Delete your account by contacting us</li>
-            <li>Request a copy of your stored data</li>
-        </ul>
-
-        <h2>7. Children's Privacy</h2>
-        <p>Treelink is not intended for children under 13 years of age. We do not knowingly collect personal information
-            from children.</p>
-
-        <h2>8. Changes to This Policy</h2>
-        <p>We may update this Privacy Policy from time to time. Changes will be posted on this page with an updated
-            date.</p>
-
-        <h2>9. Contact</h2>
-        <p>If you have any questions about this Privacy Policy, please reach out via our <a
-                href="index.html">homepage</a>.</p>
-    </main>
-
-    <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>Product</h3>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="#" id="dashboard-link" style="display:none;">Dashboard</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h3>Resources</h3>
-                <ul>
-                    <li><a href="contact-us.html">Contact</a></li>
-                    <li><a href="privacy.html">Privacy</a></li>
-                    <li><a href="terms.html">Terms</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h3>Connect</h3>
-                <ul>
-                    <li><a href="https://github.com/syedtanvircodex" target="_blank" rel="noopener">GitHub</a></li>
-                    <li><a href="mailto:syedtanvirislam20@gmail.com">Email</a></li>
-                    <li><a href="https://wa.me/8801921575251" target="_blank" rel="noopener">WhatsApp</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>© 2026 Treelink · Built with 🌿 by Syed Tanvir · All rights reserved</p>
-        </div>
-    </footer>
+    document.querySelectorAll('.reveal, .reveal-scale').forEach(el => observer.observe(el));
+  </script>
 
 </body>
-
 </html>

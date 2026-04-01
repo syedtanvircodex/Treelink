@@ -1,763 +1,1656 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Treelink — One Link. Every Branch.</title>
 
-  <!-- Google Fonts: Poppins for headings, Roboto for body -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800;900&family=Roboto:wght@300;400;500;600&display=swap"
-    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
 
   <style>
-    /* ============================================================
-       CSS CUSTOM PROPERTIES — Design Tokens
-       ============================================================ */
+    /* =====================
+       VARIABLES & RESET
+    ===================== */
     :root {
-      --bg: #F5F7FB;
-      --bg2: #EDF1F7;
-      --accent: #22B193;
-      --accent-hover: #1B8A76;
-      --text: #111827;
-      --muted: #6B7280;
-      --border-color: #D7DDE8;
-      --radius: 8px;
-      --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --bg:          #080807;
+      --bg-2:        #0f0f0e;
+      --bg-3:        #181816;
+      --text-1:      #EDEAE4;
+      --text-2:      #87857F;
+      --text-3:      #4A4946;
+      --accent:      #1BBF9A;
+      --accent-2:    #14A884;
+      --accent-dim:  rgba(27, 191, 154, 0.1);
+      --accent-glow: rgba(27, 191, 154, 0.22);
+      --border:      rgba(255, 255, 255, 0.07);
+      --border-2:    rgba(255, 255, 255, 0.12);
+      --r-sm:  12px;
+      --r-md:  18px;
+      --r-lg:  24px;
+      --r-xl:  32px;
+      --ease:        cubic-bezier(0.22, 1, 0.36, 1);
     }
 
-    /* ============================================================
-       RESET & BASE
-       ============================================================ */
-    *,
-    *::before,
-    *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    html {
-      scroll-behavior: smooth;
-    }
+    html { scroll-behavior: smooth; font-size: 16px; }
 
     body {
       background: var(--bg);
-      color: var(--text);
-      font-family: 'Roboto', sans-serif;
+      color: var(--text-1);
+      font-family: 'Sora', -apple-system, BlinkMacSystemFont, sans-serif;
       font-weight: 400;
       line-height: 1.6;
       overflow-x: hidden;
-      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* ============================================================
-       BACKGROUND TEXTURE — subtle organic noise overlay
-       ============================================================ */
-    body::before {
+    /* Noise texture overlay */
+    body::after {
       content: '';
       position: fixed;
       inset: 0;
-      background-image:
-        radial-gradient(ellipse 100% 50% at 50% 0%, rgba(34, 177, 147, 0.02) 0%, transparent 70%);
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.028;
       pointer-events: none;
-      z-index: 0;
+      z-index: 9998;
     }
 
-    /* ============================================================
+    h1, h2, h3, h4 {
+      font-family: 'Outfit', sans-serif;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      font-weight: 700;
+    }
+
+    /* =====================
+       SCROLL ANIMATIONS
+    ===================== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(36px);
+      transition: opacity 0.85s var(--ease), transform 0.85s var(--ease);
+    }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+
+    .reveal-scale {
+      opacity: 0;
+      transform: scale(0.93);
+      transition: opacity 0.75s var(--ease), transform 0.75s var(--ease);
+    }
+    .reveal-scale.in { opacity: 1; transform: scale(1); }
+
+    .d1 { transition-delay: 0.06s; }
+    .d2 { transition-delay: 0.13s; }
+    .d3 { transition-delay: 0.20s; }
+    .d4 { transition-delay: 0.27s; }
+    .d5 { transition-delay: 0.34s; }
+
+    /* =====================
        NAVBAR
-       ============================================================ */
-    nav {
+    ===================== */
+    #navbar {
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 100;
+      top: 0; left: 0; right: 0;
+      z-index: 500;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 1.2rem 2rem;
-      background: rgba(255, 255, 255, 0.92);
-      backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border-color);
+      padding: 1.375rem 3rem;
+      transition: padding 0.4s var(--ease), background 0.4s ease, border-color 0.4s ease;
+      border-bottom: 1px solid transparent;
     }
+    #navbar.scrolled {
+      padding: 0.875rem 3rem;
+      background: rgba(8, 8, 7, 0.88);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-bottom-color: var(--border);
+    }
+
+    .nav-left  { display: flex; align-items: center; gap: 2.5rem; }
+    .nav-right { display: flex; align-items: center; gap: 0.75rem; }
 
     .nav-logo {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.6rem;
       text-decoration: none;
+      flex-shrink: 0;
     }
-
-    .nav-logo-icon {
-      width: 34px;
-      height: 34px;
-      background: var(--accent);
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.1rem;
-    }
-
+    .nav-logo-icon { width: 28px; height: 28px; color: var(--accent); flex-shrink: 0; }
     .nav-logo-text {
-      font-family: 'Poppins', sans-serif;
-      font-size: 1.3rem;
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.05rem;
       font-weight: 700;
-      color: var(--text);
+      color: var(--text-1);
       letter-spacing: -0.02em;
     }
 
-    .nav-cta {
-      background: var(--accent);
-      border: 1px solid var(--accent);
-      color: #FFFFFF;
-      font-family: 'Roboto', sans-serif;
+    .nav-links { display: flex; align-items: center; gap: 0.125rem; }
+    .nav-links a {
+      color: var(--text-2);
+      text-decoration: none;
       font-size: 0.875rem;
       font-weight: 500;
-      padding: 0.5rem 1.25rem;
-      border-radius: var(--radius);
+      padding: 0.375rem 0.8rem;
+      border-radius: 8px;
+      transition: color 0.2s, background 0.2s;
+    }
+    .nav-links a:hover { color: var(--text-1); background: rgba(255,255,255,0.06); }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-2);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 0.5rem 1.125rem;
+      font-family: 'Sora', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 500;
       cursor: pointer;
-      transition: var(--transition);
+      transition: all 0.25s var(--ease);
       text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .btn-ghost:hover { color: var(--text-1); border-color: var(--border-2); background: rgba(255,255,255,0.04); }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 100px;
+      padding: 0.5rem 1.25rem;
+      font-family: 'Sora', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s var(--ease);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .btn-primary:hover {
+      background: var(--accent-2);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 28px var(--accent-glow);
+    }
+    .btn-primary:active { transform: translateY(0); }
+
+    .btn-lg { padding: 0.9rem 2rem; font-size: 1rem; }
+
+    /* =====================
+       BACKGROUND / ORBS
+    ===================== */
+    .bg-layer {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(110px);
+      animation: orb-drift 16s ease-in-out infinite alternate;
+    }
+    .orb-a {
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(27,191,154,.11) 0%, transparent 70%);
+      top: -260px; right: -180px;
+      animation-duration: 18s;
+    }
+    .orb-b {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(27,191,154,.07) 0%, transparent 70%);
+      bottom: 60px; left: -160px;
+      animation-duration: 22s;
+      animation-delay: -8s;
+    }
+    .orb-c {
+      width: 350px; height: 350px;
+      background: radial-gradient(circle, rgba(70,210,170,.05) 0%, transparent 70%);
+      top: 42%; left: 38%;
+      animation-duration: 26s;
+      animation-delay: -14s;
+    }
+    @keyframes orb-drift {
+      0%   { transform: translate(0, 0) scale(1); }
+      50%  { transform: translate(30px, -50px) scale(1.06); }
+      100% { transform: translate(-20px, 25px) scale(0.96); }
     }
 
-    .nav-cta:hover {
-      background: var(--accent-hover);
-      color: #FFFFFF;
-      border-color: var(--accent-hover);
+    .grid-bg {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,.022) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.022) 1px, transparent 1px);
+      background-size: 64px 64px;
+      mask-image: radial-gradient(ellipse 75% 75% at 50% 30%, black 0%, transparent 70%);
     }
 
-    .nav-actions {
+    /* =====================
+       HERO
+    ===================== */
+    .hero-wrap {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 3rem;
+      padding: 7.5rem 5rem 5rem;
+      max-width: 1380px;
+      margin: 0 auto;
+    }
+
+    .hero-content { position: relative; }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(27,191,154,.08);
+      border: 1px solid rgba(27,191,154,.22);
+      border-radius: 100px;
+      padding: 0.375rem 0.875rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 2rem;
+    }
+    .badge-pulse {
+      width: 6px; height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: bpulse 2.2s ease infinite;
+    }
+    @keyframes bpulse {
+      0%,100% { opacity:1; transform:scale(1); box-shadow:0 0 0 0 rgba(27,191,154,.5); }
+      50%      { opacity:.7; transform:scale(1.4); box-shadow:0 0 0 5px rgba(27,191,154,0); }
+    }
+
+    .hero-title {
+      font-size: clamp(3.5rem, 6.5vw, 7rem);
+      font-weight: 800;
+      line-height: 1.0;
+      letter-spacing: -0.045em;
+      color: var(--text-1);
+      margin-bottom: 1.5rem;
+    }
+    .hero-title-accent {
+      display: block;
+      background: linear-gradient(130deg, var(--accent) 0%, #62DFC1 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      font-size: 1.125rem;
+      color: var(--text-2);
+      max-width: 46ch;
+      line-height: 1.75;
+      margin-bottom: 2.5rem;
+      font-weight: 400;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 3rem;
+    }
+
+    .social-proof {
       display: flex;
       align-items: center;
       gap: 0.75rem;
     }
+    .sp-avatars { display: flex; }
+    .sp-av {
+      width: 30px; height: 30px;
+      border-radius: 50%;
+      border: 2px solid var(--bg);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.6rem; font-weight: 700; color: #fff;
+      margin-left: -7px; flex-shrink: 0;
+    }
+    .sp-av:first-child { margin-left: 0; }
+    .av-a { background: linear-gradient(135deg,#667eea,#764ba2); }
+    .av-b { background: linear-gradient(135deg,#f093fb,#f5576c); }
+    .av-c { background: linear-gradient(135deg,#4facfe,#00f2fe); }
+    .av-d { background: linear-gradient(135deg,#43e97b,#38f9d7); }
+    .sp-label { font-size: 0.8rem; color: var(--text-2); font-weight: 500; }
+    .sp-label strong { color: var(--text-1); font-weight: 600; }
 
-    /* ============================================================
-       HERO SECTION
-       ============================================================ */
-    .hero {
+    /* =====================
+       PHONE MOCKUP
+    ===================== */
+    .hero-visual {
       position: relative;
       z-index: 1;
-      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .phone-outer { position: relative; }
+
+    .phone-mockup {
+      width: 296px;
+      background: var(--bg-3);
+      border: 1.5px solid rgba(255,255,255,0.11);
+      border-radius: 46px;
+      padding: 2rem 1.5rem 2.5rem;
+      box-shadow:
+        0 0 0 1px rgba(0,0,0,.6),
+        0 50px 100px rgba(0,0,0,.7),
+        0 0 80px var(--accent-glow);
+      animation: phone-float 5s ease-in-out infinite;
+      transform-style: preserve-3d;
+      cursor: default;
+    }
+    @keyframes phone-float {
+      0%,100% { transform: translateY(0px) rotate(0deg); }
+      50%      { transform: translateY(-16px) rotate(.5deg); }
+    }
+
+    .phone-pill {
+      width: 72px; height: 4px;
+      background: rgba(255,255,255,.1);
+      border-radius: 2px;
+      margin: 0 auto 1.75rem;
+    }
+
+    .phone-profile {
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 8rem 1.5rem 4rem;
+      margin-bottom: 1.5rem;
     }
-
-    /* Decorative rings behind heading */
-    .hero-rings {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 600px;
-      height: 600px;
-      pointer-events: none;
-    }
-
-    .hero-rings::before,
-    .hero-rings::after {
-      content: '';
-      position: absolute;
+    .phone-avatar {
+      width: 62px; height: 62px;
       border-radius: 50%;
-      border: 1px solid rgba(34, 177, 147, 0.06);
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+      background: linear-gradient(135deg, var(--accent) 0%, #62DFC1 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.2rem; font-weight: 700; color: #fff;
+      margin-bottom: 0.875rem;
+      box-shadow: 0 0 0 3px rgba(27,191,154,.2);
     }
-
-    .hero-rings::before {
-      width: 100%;
-      height: 100%;
+    .phone-name {
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.9rem; font-weight: 700;
+      color: var(--text-1); letter-spacing: -0.02em;
+      margin-bottom: 0.2rem;
     }
+    .phone-handle { font-size: 0.7rem; color: var(--text-2); margin-bottom: 0.6rem; }
+    .phone-bio    { font-size: 0.68rem; color: var(--text-2); text-align: center; line-height: 1.5; }
 
-    .hero-rings::after {
-      width: 70%;
-      height: 70%;
-      border-color: rgba(34, 177, 147, 0.12);
-    }
-
-    .hero-eyebrow {
-      display: inline-flex;
+    .phone-link {
+      display: flex;
       align-items: center;
-      gap: 0.5rem;
-      background: rgba(34, 177, 147, 0.06);
-      border: 1px solid rgba(34, 177, 147, 0.18);
-      border-radius: 100px;
-      padding: 0.35rem 1rem;
-      font-size: 0.8rem;
-      font-weight: 500;
-      color: var(--accent);
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      margin-bottom: 2rem;
-      animation: fadeUp 0.8s ease both;
-    }
-
-    .hero-title {
-      font-family: 'Poppins', sans-serif;
-      font-size: clamp(2.8rem, 8vw, 6.5rem);
-      font-weight: 800;
-      line-height: 1.0;
-      letter-spacing: -0.03em;
-      color: var(--text);
-      max-width: 14ch;
-      margin: 0 auto 1.5rem;
-      animation: fadeUp 0.8s 0.1s ease both;
-    }
-
-    .hero-title em {
-      font-style: normal;
-      color: var(--accent);
-    }
-
-    .hero-sub {
-      font-size: clamp(1rem, 2.5vw, 1.2rem);
-      color: var(--muted);
-      max-width: 46ch;
-      margin: 0 auto 2.5rem;
-      font-weight: 300;
-      animation: fadeUp 0.8s 0.2s ease both;
-    }
-
-    /* ============================================================
-       AUTH BUTTON (Google Login)
-       ============================================================ */
-    .btn-google {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.8rem;
-      background: var(--accent);
-      color: #FFFFFF;
-      border: none;
-      border-radius: var(--radius);
-      padding: 0.9rem 2rem;
-      font-family: 'Roboto', sans-serif;
-      font-size: 1rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: var(--transition);
+      justify-content: space-between;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: 11px;
+      padding: 0.7rem 0.875rem;
+      margin-bottom: 0.45rem;
       text-decoration: none;
-      animation: fadeUp 0.8s 0.3s ease both;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-      position: relative;
-      overflow: hidden;
+      cursor: default;
+      transition: all 0.25s var(--ease);
     }
+    .phone-link:hover {
+      background: rgba(27,191,154,.09);
+      border-color: rgba(27,191,154,.22);
+      transform: scale(1.02);
+    }
+    .phone-link-label { font-size: 0.7rem; font-weight: 600; color: var(--text-1); }
+    .phone-link-arrow { width: 13px; height: 13px; color: var(--text-3); flex-shrink: 0; }
 
-    .btn-google::after {
-      content: '';
+    /* Floating notification badges */
+    .f-badge {
       position: absolute;
-      inset: 0;
-      background: rgba(255, 255, 255, 0);
-      transition: var(--transition);
+      background: rgba(18,18,17,.92);
+      border: 1px solid var(--border-2);
+      border-radius: 11px;
+      padding: 0.475rem 0.875rem;
+      font-size: 0.68rem;
+      font-weight: 600;
+      color: var(--text-1);
+      display: flex; align-items: center; gap: 0.4rem;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 8px 24px rgba(0,0,0,.5);
+      white-space: nowrap;
     }
+    .badge-green  { width: 7px; height: 7px; background: var(--accent);  border-radius: 50%; }
+    .badge-yellow { width: 7px; height: 7px; background: #F5C542;        border-radius: 50%; }
 
-    .btn-google:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(34, 177, 147, 0.22);
-      background: var(--accent-hover);
+    .fb-clicks {
+      top: 12%; right: -145px;
+      animation: fb1 6s ease-in-out infinite;
     }
-
-    .btn-google:active {
-      transform: translateY(0);
+    .fb-live {
+      bottom: 22%; left: -140px;
+      animation: fb2 7.5s ease-in-out infinite;
     }
+    @keyframes fb1 { 0%,100%{transform:translateY(0)}  50%{transform:translateY(-9px)} }
+    @keyframes fb2 { 0%,100%{transform:translateY(0)}  50%{transform:translateY(9px)} }
 
-    .btn-google svg {
-      width: 20px;
-      height: 20px;
-      flex-shrink: 0;
-    }
-
-    /* Error message */
-    #auth-error {
-      margin-top: 1rem;
-      color: #e87a7a;
-      font-size: 0.875rem;
-      min-height: 1.2em;
-      animation: fadeUp 0.4s ease both;
-    }
-
-    /* ============================================================
-       FEATURES STRIP
-       ============================================================ */
-    .features {
+    /* =====================
+       MARQUEE
+    ===================== */
+    .marquee-wrap {
       position: relative;
       z-index: 1;
-      padding: 5rem 1.5rem;
-      max-width: 1100px;
+      overflow: hidden;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: var(--bg-2);
+      padding: 1.0625rem 0;
+    }
+
+    .marquee-track {
+      display: flex;
+      width: max-content;
+      animation: marquee 28s linear infinite;
+    }
+    .marquee-track:hover { animation-play-state: paused; }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    .m-item {
+      display: flex; align-items: center; gap: 0.75rem;
+      padding: 0 2rem;
+      font-size: 0.75rem; font-weight: 600;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+    .m-dot {
+      width: 4px; height: 4px;
+      background: var(--accent);
+      border-radius: 50%; flex-shrink: 0;
+    }
+    .m-item.hl { color: var(--accent); }
+
+    /* =====================
+       STATS
+    ===================== */
+    .stats-wrap {
+      position: relative;
+      z-index: 1;
+      padding: 6rem 5rem;
+      max-width: 1380px;
+      margin: 0 auto;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      overflow: hidden;
+    }
+    .stat-item {
+      background: var(--bg-2);
+      padding: 2.5rem 2rem;
+      text-align: center;
+      transition: background 0.3s ease;
+    }
+    .stat-item:hover { background: var(--bg-3); }
+    .stat-num {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(2.25rem, 3.5vw, 3.25rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      color: var(--text-1);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+    .stat-num .accent { color: var(--accent); }
+    .stat-label { font-size: 0.875rem; color: var(--text-2); font-weight: 500; }
+
+    /* =====================
+       STATEMENT
+    ===================== */
+    .statement-wrap {
+      position: relative;
+      z-index: 1;
+      background: var(--bg-2);
+      padding: 8rem 5rem;
+      overflow: hidden;
+    }
+    .statement-inner { max-width: 1160px; margin: 0 auto; }
+    .section-eyebrow {
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--accent);
+      margin-bottom: 1.75rem;
+    }
+    .statement-text {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(2rem, 4.5vw, 3.75rem);
+      font-weight: 700;
+      line-height: 1.18;
+      letter-spacing: -0.03em;
+      color: var(--text-3);
+    }
+    .statement-text em {
+      font-style: normal;
+      color: var(--text-1);
+    }
+
+    /* =====================
+       FEATURES BENTO
+    ===================== */
+    .features-wrap {
+      position: relative;
+      z-index: 1;
+      padding: 8rem 5rem;
+      max-width: 1380px;
       margin: 0 auto;
     }
 
-    .features-label {
-      text-align: center;
-      font-size: 0.8rem;
-      font-weight: 500;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 3rem;
+    .section-head { margin-bottom: 4rem; }
+    .section-title {
+      font-size: clamp(2rem, 4.5vw, 3.25rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: var(--text-1);
+      max-width: 22ch;
+      margin-bottom: 0.875rem;
+    }
+    .section-sub {
+      font-size: 1.0625rem;
+      color: var(--text-2);
+      max-width: 54ch;
+      line-height: 1.75;
     }
 
-    .features-grid {
+    /* Bento grid */
+    .bento {
       display: grid;
-      grid-template-columns: 1fr;
-      gap: 1.25rem;
+      grid-template-columns: repeat(3, 1fr);
+      grid-auto-rows: minmax(220px, auto);
+      gap: 0.875rem;
     }
 
-    @media (min-width: 600px) {
-      .features-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (min-width: 900px) {
-      .features-grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
-    }
-
-    .feature-card {
-      background: var(--bg2);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius);
-      padding: 1.75rem;
-      transition: var(--transition);
+    .bc {
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 2rem;
       position: relative;
       overflow: hidden;
+      transition: border-color 0.4s ease, box-shadow 0.4s ease;
     }
-
-    .feature-card::before {
+    .bc::after {
       content: '';
       position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 2px;
-      background: var(--accent);
+      inset: 0;
       opacity: 0;
-      transition: var(--transition);
+      transition: opacity 0.4s ease;
+      background: radial-gradient(500px circle at var(--mx,50%) var(--my,50%), rgba(27,191,154,.05), transparent 40%);
+      border-radius: inherit;
+      pointer-events: none;
     }
-
-    .feature-card:hover {
-      border-color: rgba(34, 177, 147, 0.22);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+    .bc:hover {
+      border-color: rgba(27,191,154,.22);
+      box-shadow: 0 0 0 0 transparent, inset 0 0 50px rgba(27,191,154,.02);
     }
+    .bc:hover::after { opacity: 1; }
+    .bc-wide { grid-column: span 2; }
+    .bc-tall { grid-row: span 2; }
 
-    .feature-card:hover::before {
-      opacity: 1;
+    .bc-icon {
+      width: 42px; height: 42px;
+      background: var(--accent-dim);
+      border-radius: var(--r-sm);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 1.5rem;
+      color: var(--accent);
     }
+    .bc-icon svg { width: 20px; height: 20px; }
 
-    .feature-icon {
-      font-size: 1.75rem;
-      margin-bottom: 1rem;
-    }
-
-    .feature-title {
-      font-family: 'Poppins', sans-serif;
-      font-size: 1.1rem;
+    .bc-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.175rem;
       font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text-1);
       margin-bottom: 0.5rem;
-      color: var(--text);
     }
-
-    .feature-desc {
-      font-size: 0.9rem;
-      color: var(--muted);
+    .bc-desc {
+      font-size: 0.9375rem;
+      color: var(--text-2);
       line-height: 1.65;
     }
 
-    /* ============================================================
-       DEMO / MOCKUP SECTION
-       ============================================================ */
-    .mockup-section {
+    /* Analytics mini chart */
+    .mini-chart {
+      display: flex;
+      align-items: flex-end;
+      gap: 5px;
+      height: 60px;
+      margin-top: auto;
+      padding-top: 1.25rem;
+    }
+    .chart-col {
+      flex: 1;
+      background: var(--accent-dim);
+      border-radius: 4px 4px 0 0;
+      position: relative;
+      transition: background 0.3s ease;
+    }
+    .chart-col::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+    .bc:hover .chart-col { background: rgba(27,191,154,.18); }
+
+    /* Link list preview */
+    .mini-links { display: flex; flex-direction: column; gap: 5px; margin-top: auto; padding-top: 1.25rem; }
+    .mini-link-row {
+      display: flex; align-items: center; gap: 7px;
+      background: rgba(255,255,255,.03);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.45rem 0.7rem;
+      font-size: 0.68rem; font-weight: 500; color: var(--text-2);
+    }
+    .ml-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+
+    /* Theme chips */
+    .theme-chips {
+      display: flex; gap: 6px;
+      margin-top: auto; padding-top: 1.25rem;
+    }
+    .t-chip {
+      height: 28px; flex: 1; border-radius: 7px;
+      transition: transform 0.3s ease;
+    }
+    .bc:hover .t-chip:nth-child(odd)  { transform: scaleY(1.18); }
+    .bc:hover .t-chip:nth-child(even) { transform: scaleY(0.85); }
+
+    /* =====================
+       PREVIEW SECTION
+    ===================== */
+    .preview-wrap {
       position: relative;
       z-index: 1;
-      padding: 4rem 1.5rem 6rem;
-      text-align: center;
+      background: var(--bg-2);
+      padding: 9rem 5rem;
+      overflow: hidden;
     }
-
-    .mockup-title {
-      font-family: 'Poppins', sans-serif;
-      font-size: clamp(1.8rem, 5vw, 3rem);
-      font-weight: 700;
-      margin-bottom: 0.75rem;
-    }
-
-    .mockup-sub {
-      color: var(--muted);
-      margin-bottom: 3rem;
-      font-size: 1rem;
-    }
-
-    /* Phone mockup */
-    .phone {
-      display: inline-block;
-      width: 260px;
-      background: #FFFFFF;
-      border: 1px solid var(--border-color);
-      border-radius: 36px;
-      padding: 1.5rem 1rem;
-      box-shadow:
-        0 20px 60px rgba(0, 0, 0, 0.1),
-        0 0 0 1px rgba(0, 0, 0, 0.04);
-      position: relative;
-    }
-
-    .phone::before {
-      content: '';
-      display: block;
-      width: 80px;
-      height: 6px;
-      background: var(--border-color);
-      border-radius: 3px;
-      margin: 0 auto 1.5rem;
-    }
-
-    .phone-avatar {
-      width: 64px;
-      height: 64px;
-      border-radius: 50%;
-      background: var(--accent);
-      margin: 0 auto 0.75rem;
-      display: flex;
+    .preview-inner {
+      max-width: 1160px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 7rem;
       align-items: center;
-      justify-content: center;
-      font-size: 1.5rem;
     }
-
-    .phone-name {
-      font-family: 'Poppins', sans-serif;
+    .preview-copy h2 {
+      font-size: clamp(2rem, 4vw, 3rem);
       font-weight: 700;
-      font-size: 1rem;
-      margin-bottom: 0.25rem;
-    }
-
-    .phone-handle {
-      font-size: 0.75rem;
-      color: var(--muted);
+      letter-spacing: -0.03em;
+      color: var(--text-1);
       margin-bottom: 1.25rem;
     }
-
-    .phone-link {
-      display: block;
-      background: var(--accent);
-      border: 1px solid var(--accent);
-      border-radius: var(--radius);
-      padding: 0.65rem 1rem;
-      font-size: 0.8rem;
-      font-weight: 500;
-      color: #FFFFFF;
-      margin-bottom: 0.6rem;
-      transition: var(--transition);
-      text-decoration: none;
+    .preview-copy p {
+      font-size: 1.0625rem;
+      color: var(--text-2);
+      line-height: 1.75;
+      margin-bottom: 1.5rem;
     }
 
-    .phone-link:hover {
-      background: var(--accent-hover);
+    .check-list { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+    .check-list li { display: flex; align-items: center; gap: 0.75rem; font-size: 0.9375rem; color: var(--text-1); font-weight: 500; }
+    .chk {
+      width: 20px; height: 20px;
+      background: var(--accent-dim);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; color: var(--accent);
     }
+    .chk svg { width: 11px; height: 11px; }
 
-    /* ============================================================
-       FOOTER
-       ============================================================ */
-    footer {
+    .preview-phone { display: flex; justify-content: center; }
+
+    /* =====================
+       STEPS
+    ===================== */
+    .steps-wrap {
       position: relative;
       z-index: 1;
-      background: var(--bg2);
-      border-top: 1px solid var(--border-color);
-      padding: 3rem 1.5rem;
+      padding: 8rem 5rem;
+      max-width: 1380px;
+      margin: 0 auto;
+    }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
       margin-top: 4rem;
     }
 
-    .footer-content {
-      max-width: 1100px;
-      margin: 0 auto;
+    .step-card {
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 2.5rem 2rem;
+      transition: all 0.4s var(--ease);
+    }
+    .step-card:hover {
+      border-color: var(--border-2);
+      transform: translateY(-5px);
+      box-shadow: 0 24px 60px rgba(0,0,0,.35);
+    }
+    .step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px; height: 34px;
+      background: var(--accent-dim);
+      border: 1px solid rgba(27,191,154,.2);
+      border-radius: 10px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 800;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+    }
+    .step-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text-1);
+      margin-bottom: 0.75rem;
+    }
+    .step-desc { font-size: 0.9375rem; color: var(--text-2); line-height: 1.7; }
+
+    /* =====================
+       TESTIMONIALS
+    ===================== */
+    .testimonials-wrap {
+      position: relative;
+      z-index: 1;
+      background: var(--bg-2);
+      padding: 8rem 5rem;
+    }
+    .testimonials-inner { max-width: 1160px; margin: 0 auto; }
+
+    .t-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 2rem;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-top: 4rem;
+    }
+
+    .t-card {
+      background: var(--bg-3);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 2rem;
+      transition: all 0.4s var(--ease);
+    }
+    .t-card:hover { border-color: var(--border-2); transform: translateY(-4px); }
+
+    .t-stars { display: flex; gap: 3px; margin-bottom: 1.25rem; }
+    .t-star   { width: 15px; height: 15px; color: #F5C542; }
+
+    .t-quote {
+      font-size: 0.9375rem;
+      color: var(--text-2);
+      line-height: 1.75;
+      margin-bottom: 1.5rem;
+    }
+
+    .t-author { display: flex; align-items: center; gap: 0.75rem; }
+    .t-av {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.72rem; font-weight: 700; color: #fff; flex-shrink: 0;
+    }
+    .t-name   { font-size: 0.875rem; font-weight: 600; color: var(--text-1); }
+    .t-handle { font-size: 0.73rem; color: var(--text-3); }
+
+    /* =====================
+       PRICING
+    ===================== */
+    .pricing-wrap {
+      position: relative;
+      z-index: 1;
+      padding: 8rem 5rem;
+      max-width: 1380px;
+      margin: 0 auto;
+    }
+    .pricing-center { text-align: center; }
+    .pricing-center .section-title { max-width: 100%; }
+    .pricing-center .section-sub    { margin: 1rem auto 0; }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+      max-width: 860px;
+      margin: 4rem auto 0;
+    }
+
+    .p-card {
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: var(--r-xl);
+      padding: 2.5rem;
+      transition: all 0.4s var(--ease);
+    }
+    .p-card:hover { transform: translateY(-4px); box-shadow: 0 32px 64px rgba(0,0,0,.35); }
+    .p-card.featured {
+      border-color: rgba(27,191,154,.3);
+      background: linear-gradient(140deg, rgba(27,191,154,.05) 0%, var(--bg-2) 55%);
+    }
+
+    .p-tag {
+      display: inline-block;
+      background: var(--accent-dim);
+      color: var(--accent);
+      border-radius: 6px;
+      padding: 0.22rem 0.6rem;
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 1.25rem;
+    }
+    .p-tag.muted { background: rgba(255,255,255,.05); color: var(--text-3); }
+
+    .p-name {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em;
+      color: var(--text-1); margin-bottom: 0.5rem;
+    }
+    .p-blurb { font-size: 0.9rem; color: var(--text-2); margin-bottom: 2rem; line-height: 1.6; }
+
+    .p-price {
+      font-family: 'Outfit', sans-serif;
+      font-size: 3.25rem; font-weight: 800;
+      letter-spacing: -0.04em;
+      color: var(--text-1); line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+    .p-price sup { font-size: 1.2rem; vertical-align: super; }
+    .p-period { font-size: 0.875rem; color: var(--text-3); margin-bottom: 2rem; }
+
+    .p-divider { height: 1px; background: var(--border); margin-bottom: 1.5rem; }
+
+    .p-features {
+      list-style: none;
+      display: flex; flex-direction: column; gap: 0.875rem;
       margin-bottom: 2rem;
     }
+    .p-features li { display: flex; align-items: flex-start; gap: 0.75rem; font-size: 0.9rem; color: var(--text-2); }
+    .p-features li.off { opacity: 0.35; }
+    .p-features li.off .chk { background: rgba(255,255,255,.05); color: var(--text-3); }
 
-    .footer-section h3 {
-      font-family: 'Poppins', sans-serif;
-      font-size: 0.9rem;
-      font-weight: 700;
-      color: var(--text);
-      margin-bottom: 0.75rem;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-    }
-
-    .footer-section ul {
-      list-style: none;
-    }
-
-    .footer-section li {
-      margin-bottom: 0.5rem;
-    }
-
-    .footer-section a {
-      color: var(--muted);
-      text-decoration: none;
-      font-size: 0.875rem;
-      transition: var(--transition);
-    }
-
-    .footer-section a:hover {
-      color: var(--accent);
-    }
-
-    .footer-bottom {
-      border-top: 1px solid var(--border-color);
-      padding-top: 1.5rem;
+    /* =====================
+       CTA
+    ===================== */
+    .cta-wrap {
+      position: relative;
+      z-index: 1;
+      padding: 11rem 5rem;
       text-align: center;
-      color: var(--muted);
-      font-size: 0.8rem;
+      overflow: hidden;
     }
-
-    .footer-bottom a {
-      color: var(--accent);
-      text-decoration: none;
+    .cta-glow {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      width: 900px; height: 600px;
+      background: radial-gradient(ellipse, rgba(27,191,154,.1) 0%, transparent 65%);
+      filter: blur(60px);
+      pointer-events: none;
     }
-
-    .footer-bottom a:hover {
-      text-decoration: underline;
+    .cta-inner { position: relative; z-index: 1; max-width: 640px; margin: 0 auto; }
+    .cta-title {
+      font-size: clamp(2.5rem, 6vw, 5.5rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      color: var(--text-1);
+      margin-bottom: 1.5rem;
+      line-height: 1.04;
     }
+    .cta-sub { font-size: 1.125rem; color: var(--text-2); line-height: 1.75; margin-bottom: 3rem; }
+    .cta-actions { display: flex; align-items: center; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+    .cta-note { margin-top: 1.5rem; font-size: 0.8rem; color: var(--text-3); }
+    #auth-error { margin-top: 1.25rem; font-size: 0.875rem; color: #FF6B6B; min-height: 1.2em; }
 
-    /* ============================================================
-       ANIMATIONS
-       ============================================================ */
-    @keyframes fadeUp {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    /* =====================
+       FOOTER
+    ===================== */
+    footer {
+      position: relative;
+      z-index: 1;
+      background: var(--bg-2);
+      border-top: 1px solid var(--border);
+      padding: 5.5rem 5rem 2.5rem;
     }
-
-    /* Loading spinner (shown during auth) */
-    .spinner {
-      display: inline-block;
-      width: 18px;
-      height: 18px;
-      border: 2px solid rgba(26, 115, 232, 0.3);
-      border-top-color: var(--accent);
-      border-radius: 50%;
-      animation: spin 0.7s linear infinite;
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2.2fr 1fr 1fr 1fr;
+      gap: 3rem;
+      margin-bottom: 4.5rem;
     }
-
-    @keyframes spin {
-      to {
-        transform: rotate(360deg);
-      }
+    .footer-brand-desc {
+      font-size: 0.9rem;
+      color: var(--text-2);
+      margin-top: 1rem;
+      line-height: 1.75;
+      max-width: 30ch;
     }
+    .footer-col h4 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-1);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 1.25rem;
+    }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+    .footer-col a { font-size: 0.875rem; color: var(--text-2); text-decoration: none; transition: color 0.2s; }
+    .footer-col a:hover { color: var(--text-1); }
+    .footer-bottom {
+      border-top: 1px solid var(--border);
+      padding-top: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .footer-bottom p { font-size: 0.8rem; color: var(--text-3); }
+    .footer-legal { display: flex; gap: 1.5rem; }
+    .footer-legal a { font-size: 0.8rem; color: var(--text-3); text-decoration: none; transition: color 0.2s; }
+    .footer-legal a:hover { color: var(--text-2); }
 
-    /* Auth loading overlay */
+    /* =====================
+       AUTH OVERLAY
+    ===================== */
     #auth-overlay {
       display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(255, 255, 255, 0.9);
-      z-index: 200;
+      position: fixed; inset: 0;
+      background: rgba(8,8,7,.96);
+      backdrop-filter: blur(16px);
+      z-index: 9000;
       align-items: center;
       justify-content: center;
       flex-direction: column;
-      gap: 1rem;
-      font-size: 1rem;
-      color: var(--text);
+      gap: 1.5rem;
+    }
+    #auth-overlay.visible { display: flex; }
+    .spinner {
+      width: 34px; height: 34px;
+      border: 2.5px solid rgba(27,191,154,.18);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.65s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* =====================
+       RESPONSIVE
+    ===================== */
+    @media (max-width: 1100px) {
+      .hero-wrap { grid-template-columns: 1fr; text-align: center; padding: 7rem 3rem 5rem; }
+      .hero-sub { max-width: 100%; }
+      .hero-actions { justify-content: center; }
+      .social-proof { justify-content: center; }
+      .hero-visual { display: none; }
+      .bento { grid-template-columns: 1fr 1fr; }
+      .bc-wide { grid-column: span 1; }
+      .steps-grid { grid-template-columns: 1fr 1fr; }
+      .t-grid { grid-template-columns: 1fr 1fr; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+      .preview-inner { grid-template-columns: 1fr; }
     }
 
-    #auth-overlay.visible {
-      display: flex;
+    @media (max-width: 768px) {
+      #navbar { padding: 1rem 1.5rem; }
+      #navbar.scrolled { padding: 0.75rem 1.5rem; }
+      .nav-links { display: none; }
+      .hero-wrap, .stats-wrap, .features-wrap, .steps-wrap,
+      .pricing-wrap, .cta-wrap, footer,
+      .statement-wrap, .preview-wrap, .testimonials-wrap { padding-left: 1.5rem; padding-right: 1.5rem; }
+      .bento { grid-template-columns: 1fr; }
+      .bc-wide { grid-column: span 1; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .t-grid { grid-template-columns: 1fr; }
+      .steps-grid { grid-template-columns: 1fr; }
+      .pricing-grid { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 480px) {
+      .footer-top { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
     }
   </style>
 </head>
-
 <body>
 
-  <!-- ============================================================
-       AUTH LOADING OVERLAY
-       ============================================================ -->
+  <!-- ===== AUTH OVERLAY ===== -->
   <div id="auth-overlay">
-    <div class="spinner" style="width:36px;height:36px;border-width:3px;"></div>
-    <span>Signing you in…</span>
+    <div class="spinner"></div>
+    <p style="color:var(--text-2);font-size:.875rem;font-family:'Sora',sans-serif;">Signing you in...</p>
   </div>
 
-  <!-- ============================================================
-       NAVIGATION
-       ============================================================ -->
-  <nav>
-    <a href="index.html" class="nav-logo">
-      <div class="nav-logo-icon">🌿</div>
-      <span class="nav-logo-text">Treelink</span>
-    </a>
-    <div class="nav-actions">
-      <button class="nav-cta" id="nav-login-btn">Get Started</button>
+  <!-- ===== BACKGROUND LAYER ===== -->
+  <div class="bg-layer">
+    <div class="orb orb-a"></div>
+    <div class="orb orb-b"></div>
+    <div class="orb orb-c"></div>
+    <div class="grid-bg"></div>
+  </div>
+
+  <!-- ===== NAVBAR ===== -->
+  <nav id="navbar">
+    <div class="nav-left">
+      <a href="index.html" class="nav-logo">
+        <svg class="nav-logo-icon" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M14 25V15" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+          <path d="M14 15L7 8" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+          <path d="M14 15L21 8" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+          <path d="M14 10V4.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+          <circle cx="7" cy="7" r="2.4" fill="currentColor" opacity=".65"/>
+          <circle cx="21" cy="7" r="2.4" fill="currentColor" opacity=".65"/>
+          <circle cx="14" cy="3.5" r="2.4" fill="currentColor"/>
+        </svg>
+        <span class="nav-logo-text">Treelink</span>
+      </a>
+      <div class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#how-it-works">How it works</a>
+        <a href="#pricing">Pricing</a>
+      </div>
+    </div>
+    <div class="nav-right">
+      <button class="btn-ghost" id="nav-login-btn">Log in</button>
+      <button class="btn-primary" id="nav-cta-btn">
+        Get Started
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
     </div>
   </nav>
 
-  <!-- ============================================================
-       HERO
-       ============================================================ -->
-  <section class="hero">
+  <!-- ===== HERO ===== -->
+  <div class="hero-wrap">
+    <div class="hero-content">
 
-    <h1 class="hero-title">
-      One link.<br /><em>Every branch.</em>
-    </h1>
-
-    <p class="hero-sub">
-      Treelink gives you a beautiful, customizable page that holds all your links —
-      social media, portfolio, shop, anything — in one living space.
-    </p>
-
-    <!-- Google Sign-In button — triggers Firebase Auth popup -->
-    <button class="btn-google" id="login-btn">
-      <!-- Google logo SVG with enhanced contrast -->
-      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="filter: brightness(1.1);">
-        <path
-          d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
-          fill="#FFFFFF" />
-        <path
-          d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
-          fill="#FFFFFF" />
-        <path
-          d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"
-          fill="#FFFFFF" />
-        <path
-          d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
-          fill="#FFFFFF" />
-      </svg>
-      Continue with Google
-    </button>
-
-    <!-- Error message container -->
-    <p id="auth-error"></p>
-  </section>
-
-  <!-- ============================================================
-       FEATURES
-       ============================================================ -->
-  <section class="features">
-    <p class="features-label">Why Treelink</p>
-
-    <div class="features-grid">
-      <div class="feature-card">
-        <div class="feature-icon">⚡</div>
-        <h3 class="feature-title">Instant Setup</h3>
-        <p class="feature-desc">Sign in with Google and your Treelink profile is ready in seconds — no credit card, no
-          hassle.</p>
+      <div class="hero-badge reveal">
+        <span class="badge-pulse"></span>
+        Free forever &mdash; No card required
       </div>
-      <div class="feature-card">
-        <div class="feature-icon">🎨</div>
-        <h3 class="feature-title">Custom Themes</h3>
-        <p class="feature-desc">Pick your accent color and make your page feel uniquely yours. Light and dark modes
-          included.</p>
+
+      <h1 class="hero-title reveal d1">
+        One link.<br>
+        <span class="hero-title-accent">Every branch.</span>
+      </h1>
+
+      <p class="hero-sub reveal d2">
+        Put your entire digital world on one beautifully crafted page. Share your content, socials, projects, and more — all from a single URL.
+      </p>
+
+      <div class="hero-actions reveal d3">
+        <button class="btn-primary btn-lg" id="login-btn">
+          <svg width="17" height="17" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#fff"/>
+            <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#fff"/>
+            <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#fff"/>
+            <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#fff"/>
+          </svg>
+          Continue with Google
+        </button>
+        <a href="#features" class="btn-ghost btn-lg">See features</a>
       </div>
-      <div class="feature-card">
-        <div class="feature-icon">📊</div>
-        <h3 class="feature-title">Link Analytics</h3>
-        <p class="feature-desc">See how many times each link is clicked. Know what your audience cares about most.</p>
+
+      <div class="social-proof reveal d4">
+        <div class="sp-avatars">
+          <div class="sp-av av-a">MK</div>
+          <div class="sp-av av-b">JS</div>
+          <div class="sp-av av-c">AR</div>
+          <div class="sp-av av-d">TN</div>
+        </div>
+        <p class="sp-label"><strong>50,000+</strong> creators already growing with Treelink</p>
       </div>
-      <div class="feature-card">
-        <div class="feature-icon">🔗</div>
-        <h3 class="feature-title">Unlimited Links</h3>
-        <p class="feature-desc">Add as many links as you need. Reorder them by drag-and-drop to prioritize what matters.
-        </p>
+
+    </div>
+
+    <div class="hero-visual reveal-scale d2">
+      <div class="phone-outer">
+        <div class="phone-mockup" id="phone3d">
+          <div class="phone-pill"></div>
+          <div class="phone-profile">
+            <div class="phone-avatar">AR</div>
+            <div class="phone-name">Alex Rivera</div>
+            <div class="phone-handle">@alexrivera</div>
+            <div class="phone-bio">Designer &amp; creator, New York City</div>
+          </div>
+          <a class="phone-link" href="#">
+            <span class="phone-link-label">Portfolio &amp; Design Work</span>
+            <svg class="phone-link-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <a class="phone-link" href="#">
+            <span class="phone-link-label">Instagram</span>
+            <svg class="phone-link-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <a class="phone-link" href="#">
+            <span class="phone-link-label">Latest Blog Post</span>
+            <svg class="phone-link-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <a class="phone-link" href="#">
+            <span class="phone-link-label">My Online Shop</span>
+            <svg class="phone-link-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <a class="phone-link" href="#">
+            <span class="phone-link-label">Book a Call</span>
+            <svg class="phone-link-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+
+        <div class="f-badge fb-clicks">
+          <span class="badge-green"></span>
+          247 clicks today
+        </div>
+        <div class="f-badge fb-live">
+          <span class="badge-yellow"></span>
+          12 viewing now
+        </div>
       </div>
-      <div class="feature-card">
-        <div class="feature-icon">📱</div>
-        <h3 class="feature-title">Mobile First</h3>
-        <p class="feature-desc">Your profile looks stunning on every device — designed for the phone-first world.</p>
+    </div>
+  </div>
+
+  <!-- ===== MARQUEE ===== -->
+  <div class="marquee-wrap">
+    <div class="marquee-track" aria-hidden="true">
+      <div class="m-item">Artists</div><div class="m-item"><span class="m-dot"></span></div>
+      <div class="m-item">Musicians</div><div class="m-item"><span class="m-dot"></span></div>
+      <div class="m-item hl">Podcasters</div><div class="m-item"><span class="m-dot"></span></div>
+      <div class="m-item">Photographers</div><div class="m-item"><span class="m-dot"></span></div>
+      <div class="m-item">Writers</div><div class="m-item"><span class="m-dot"></span></div>
+      <div class="m-item">Coaches</div><div class="m-item"><span class="m-dot"></span></div>
+      <div class="m-item hl">Developers</div><div class="m-item"><span class="m-dot"></span></div>
+      <div class="m-item">Entrepreneurs</div><div class="m-item"><span class="m-dot"></span></div>
+      <div class="m-item">Educators</div><div class="m-item"><span class="m-dot"></span></div>
+      <div class="m-item">YouTubers</div><div class="m-item"><span class="m-dot"></span></div>
+      <div class="m-item hl">Designers</div><div class="m-item"><span class="m-dot"></span></div>
+      <div class="m-item">Influencers</div><div class="m-item"><span class="m-dot"></span></div>
+      <!-- duplicate for seamless loop -->
+      <div class="m-item">Artists</div><div class="m-item"><span class="m-dot"></span></div>
+      <div class="m-item">Musicians</div><div class="m-item"><span class="m-dot"></span></div>
+      <div class="m-item hl">Podcasters</div><div class="m-item"><span class="m-dot"></span></div>
+      <div class="m-item">Photographers</div><div class="m-item"><span class="m-dot"></span></div>
+      <div class="m-item">Writers</div><div class="m-item"><span class="m-dot"></span></div>
+      <div class="m-item">Coaches</div><div class="m-item"><span class="m-dot"></span></div>
+      <div class="m-item hl">Developers</div><div class="m-item"><span class="m-dot"></span></div>
+      <div class="m-item">Entrepreneurs</div><div class="m-item"><span class="m-dot"></span></div>
+      <div class="m-item">Educators</div><div class="m-item"><span class="m-dot"></span></div>
+      <div class="m-item">YouTubers</div><div class="m-item"><span class="m-dot"></span></div>
+      <div class="m-item hl">Designers</div><div class="m-item"><span class="m-dot"></span></div>
+      <div class="m-item">Influencers</div><div class="m-item"><span class="m-dot"></span></div>
+    </div>
+  </div>
+
+  <!-- ===== STATS ===== -->
+  <section class="stats-wrap">
+    <div class="stats-grid">
+      <div class="stat-item reveal">
+        <div class="stat-num"><span class="counter" data-target="50">0</span>K<span class="accent">+</span></div>
+        <div class="stat-label">Active creators</div>
       </div>
-      <div class="feature-card">
-        <div class="feature-icon">🔒</div>
-        <h3 class="feature-title">Secure & Fast</h3>
-        <p class="feature-desc">Built on Firebase — Google's infrastructure — so your page is always up, always fast,
-          always safe.</p>
+      <div class="stat-item reveal d1">
+        <div class="stat-num"><span class="counter" data-target="120">0</span>M<span class="accent">+</span></div>
+        <div class="stat-label">Link clicks served</div>
+      </div>
+      <div class="stat-item reveal d2">
+        <div class="stat-num"><span class="counter" data-target="150">0</span><span class="accent">+</span></div>
+        <div class="stat-label">Countries reached</div>
+      </div>
+      <div class="stat-item reveal d3">
+        <div class="stat-num">100<span class="accent">%</span></div>
+        <div class="stat-label">Forever free</div>
       </div>
     </div>
   </section>
 
-  <!-- ============================================================
-       PHONE MOCKUP
-       ============================================================ -->
-  <section class="mockup-section">
-    <h2 class="mockup-title">See it in <em style="font-style:normal;color:var(--accent)">action</em></h2>
-    <p class="mockup-sub">Your whole digital life — one beautiful page.</p>
-
-    <div class="phone">
-      <div class="phone-avatar">🌿</div>
-      <div class="phone-name">Alex Rivera</div>
-      <div class="phone-handle">treelink.com/alexrivera</div>
-      <a class="phone-link">🎨 Portfolio & Design Work</a>
-      <a class="phone-link">📸 Instagram</a>
-      <a class="phone-link">🛍️ My Etsy Shop</a>
-      <a class="phone-link">📝 Latest Blog Post</a>
-      <a class="phone-link">💌 Contact Me</a>
+  <!-- ===== STATEMENT ===== -->
+  <section class="statement-wrap">
+    <div class="statement-inner">
+      <p class="section-eyebrow reveal">The big idea</p>
+      <p class="statement-text reveal d1">
+        Your audience lives across <em>a dozen platforms.</em> Your presence should live in <em>one place.</em> Stop the scattered links. Start one <em>beautiful page.</em>
+      </p>
     </div>
   </section>
 
-  <!-- ============================================================
-       FOOTER
-       ============================================================ -->
+  <!-- ===== FEATURES BENTO ===== -->
+  <section class="features-wrap" id="features">
+    <div class="section-head reveal">
+      <p class="section-eyebrow">Features</p>
+      <h2 class="section-title">Powerful tools for modern creators.</h2>
+      <p class="section-sub">Everything you need to build a presence that converts visitors into followers, customers, and fans.</p>
+    </div>
+
+    <div class="bento">
+
+      <!-- Wide: Instant Setup -->
+      <div class="bc bc-wide reveal">
+        <div class="bc-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+          </svg>
+        </div>
+        <div class="bc-title">Instant Setup</div>
+        <div class="bc-desc">Sign in with Google and your Treelink page is live in under 30 seconds. No forms, no credit card, no technical knowledge required. Just sign in and start adding your links immediately.</div>
+      </div>
+
+      <!-- Analytics -->
+      <div class="bc reveal d1" style="display:flex;flex-direction:column;">
+        <div class="bc-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
+          </svg>
+        </div>
+        <div class="bc-title">Real Analytics</div>
+        <div class="bc-desc">Know exactly what's working. Track clicks per link, daily trends, and audience geography.</div>
+        <div class="mini-chart">
+          <div class="chart-col" style="height:35%"></div>
+          <div class="chart-col" style="height:55%"></div>
+          <div class="chart-col" style="height:42%"></div>
+          <div class="chart-col" style="height:78%"></div>
+          <div class="chart-col" style="height:62%"></div>
+          <div class="chart-col" style="height:90%"></div>
+          <div class="chart-col" style="height:72%"></div>
+          <div class="chart-col" style="height:100%"></div>
+        </div>
+      </div>
+
+      <!-- Custom Themes -->
+      <div class="bc reveal d2" style="display:flex;flex-direction:column;">
+        <div class="bc-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/>
+            <circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/>
+            <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/>
+          </svg>
+        </div>
+        <div class="bc-title">Custom Themes</div>
+        <div class="bc-desc">Pick your accent color. Your page should feel as unique as you are.</div>
+        <div class="theme-chips">
+          <div class="t-chip" style="background:#1BBF9A"></div>
+          <div class="t-chip" style="background:#7C3AED"></div>
+          <div class="t-chip" style="background:#F59E0B"></div>
+          <div class="t-chip" style="background:#EF4444"></div>
+          <div class="t-chip" style="background:#3B82F6"></div>
+        </div>
+      </div>
+
+      <!-- Unlimited Links -->
+      <div class="bc reveal d1" style="display:flex;flex-direction:column;">
+        <div class="bc-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+          </svg>
+        </div>
+        <div class="bc-title">Unlimited Links</div>
+        <div class="bc-desc">No cap. No tiers. Add as many links as you want, drag to reorder.</div>
+        <div class="mini-links">
+          <div class="mini-link-row"><div class="ml-dot" style="background:#1BBF9A"></div>Portfolio</div>
+          <div class="mini-link-row"><div class="ml-dot" style="background:#7C3AED"></div>Instagram</div>
+          <div class="mini-link-row"><div class="ml-dot" style="background:#F59E0B"></div>Newsletter</div>
+        </div>
+      </div>
+
+      <!-- Wide: Mobile First -->
+      <div class="bc bc-wide reveal d2">
+        <div class="bc-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18" stroke-width="3"/>
+          </svg>
+        </div>
+        <div class="bc-title">Mobile First, Always</div>
+        <div class="bc-desc">Your audience is on their phones. Treelink pages are built from the ground up for mobile — pixel-perfect on every screen size, device, and OS. Sub-second load time, no exceptions.</div>
+      </div>
+
+      <!-- Security -->
+      <div class="bc reveal d3">
+        <div class="bc-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+        </div>
+        <div class="bc-title">Google Infrastructure</div>
+        <div class="bc-desc">Backed by Firebase. Your page stays online even during traffic spikes — no maintenance, no downtime.</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== PREVIEW ===== -->
+  <section class="preview-wrap">
+    <div class="preview-inner">
+
+      <div class="preview-copy reveal">
+        <p class="section-eyebrow">See it in action</p>
+        <h2>A page that looks as good as you do.</h2>
+        <p>Treelink profiles are designed to make your links stand out, not blend in. Clean typography, responsive layout, and your brand colors — served fast from everywhere.</p>
+        <ul class="check-list">
+          <li>
+            <span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+            Loads in under 500ms on any connection
+          </li>
+          <li>
+            <span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+            Accessible and screen reader friendly
+          </li>
+          <li>
+            <span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+            Pixel-perfect on mobile, tablet, and desktop
+          </li>
+          <li>
+            <span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+            Your custom colors applied instantly
+          </li>
+        </ul>
+      </div>
+
+      <div class="preview-phone reveal-scale d2">
+        <div class="phone-mockup" style="animation-delay:-2.5s;">
+          <div class="phone-pill"></div>
+          <div class="phone-profile">
+            <div class="phone-avatar" style="background:linear-gradient(135deg,#7C3AED,#9D4EDD)">TN</div>
+            <div class="phone-name">Tanvir Noor</div>
+            <div class="phone-handle">@tanvirnoor</div>
+            <div class="phone-bio">Full-stack dev. Open source. Coffee-driven.</div>
+          </div>
+          <a class="phone-link" href="#">
+            <span class="phone-link-label">GitHub Projects</span>
+            <svg class="phone-link-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <a class="phone-link" href="#">
+            <span class="phone-link-label">Latest Tutorial</span>
+            <svg class="phone-link-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <a class="phone-link" href="#">
+            <span class="phone-link-label">Dev Newsletter</span>
+            <svg class="phone-link-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <a class="phone-link" href="#">
+            <span class="phone-link-label">Hire Me</span>
+            <svg class="phone-link-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== HOW IT WORKS ===== -->
+  <section class="steps-wrap" id="how-it-works">
+    <div class="section-head reveal">
+      <p class="section-eyebrow">How it works</p>
+      <h2 class="section-title">Three steps to your digital home.</h2>
+    </div>
+
+    <div class="steps-grid">
+      <div class="step-card reveal d1">
+        <div class="step-num">01</div>
+        <div class="step-title">Sign up in seconds</div>
+        <p class="step-desc">Connect with Google in one click. No passwords, no long forms. Your Treelink profile is created and live the moment you sign in.</p>
+      </div>
+      <div class="step-card reveal d2">
+        <div class="step-num">02</div>
+        <div class="step-title">Customize your page</div>
+        <p class="step-desc">Add your links, write a short bio, pick a theme color. Drag to reorder. Changes update live — see them instantly as you edit.</p>
+      </div>
+      <div class="step-card reveal d3">
+        <div class="step-num">03</div>
+        <div class="step-title">Share everywhere</div>
+        <p class="step-desc">One link for everything. Drop it in your Instagram bio, Twitter, YouTube description, email signature — anywhere your audience lives.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TESTIMONIALS ===== -->
+  <section class="testimonials-wrap">
+    <div class="testimonials-inner">
+      <div class="section-head reveal">
+        <p class="section-eyebrow">Wall of love</p>
+        <h2 class="section-title">What creators are saying.</h2>
+      </div>
+
+      <div class="t-grid">
+
+        <div class="t-card reveal d1">
+          <div class="t-stars">
+            <svg class="t-star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="t-star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="t-star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="t-star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="t-star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </div>
+          <p class="t-quote">"I replaced three separate links in my bio with one Treelink URL. My click-through rate went up, my DMs went down. Exactly what I needed as a freelance photographer."</p>
+          <div class="t-author">
+            <div class="t-av" style="background:linear-gradient(135deg,#667eea,#764ba2)">MK</div>
+            <div>
+              <div class="t-name">Maya K.</div>
+              <div class="t-handle">Photographer, London</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="t-card reveal d2">
+          <div class="t-stars">
+            <svg class="t-star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="t-star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="t-star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="t-star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="t-star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </div>
+          <p class="t-quote">"Set up in under a minute, seriously. I'm a podcast host — I just need my Spotify, YouTube, and merch store in one link. Treelink does exactly that, no bloat."</p>
+          <div class="t-author">
+            <div class="t-av" style="background:linear-gradient(135deg,#f093fb,#f5576c)">JS</div>
+            <div>
+              <div class="t-name">James S.</div>
+              <div class="t-handle">Podcast Host, Toronto</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="t-card reveal d3">
+          <div class="t-stars">
+            <svg class="t-star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="t-star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="t-star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="t-star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="t-star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </div>
+          <p class="t-quote">"The analytics showed me which link got clicked most. I moved it to the top and doubled my Etsy store conversions within a week. Simple tool, meaningful results."</p>
+          <div class="t-author">
+            <div class="t-av" style="background:linear-gradient(135deg,#4facfe,#00f2fe)">AR</div>
+            <div>
+              <div class="t-name">Arfa R.</div>
+              <div class="t-handle">Handmade goods, Dhaka</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PRICING ===== -->
+  <section class="pricing-wrap" id="pricing">
+    <div class="section-head pricing-center reveal">
+      <p class="section-eyebrow">Pricing</p>
+      <h2 class="section-title">Simple, honest pricing.</h2>
+      <p class="section-sub">No hidden fees. No paywalls for essential features. Just a great tool, free forever.</p>
+    </div>
+
+    <div class="pricing-grid">
+
+      <div class="p-card featured reveal d1">
+        <div class="p-tag">Current Plan</div>
+        <div class="p-name">Free</div>
+        <div class="p-blurb">Everything you need to get started and grow your presence online.</div>
+        <div class="p-price"><sup>$</sup>0</div>
+        <div class="p-period">Forever free, no catches</div>
+        <div class="p-divider"></div>
+        <ul class="p-features">
+          <li><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Unlimited links</li>
+          <li><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Click analytics dashboard</li>
+          <li><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Custom theme color</li>
+          <li><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>treelink.app/username URL</li>
+          <li><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Mobile-first responsive design</li>
+        </ul>
+        <button class="btn-primary btn-lg" id="pricing-login-btn" style="width:100%;justify-content:center;">
+          Get Started Free
+        </button>
+      </div>
+
+      <div class="p-card reveal d2">
+        <div class="p-tag muted">Coming Soon</div>
+        <div class="p-name">Pro</div>
+        <div class="p-blurb">For creators who want advanced analytics, a custom domain, and zero branding.</div>
+        <div class="p-price"><sup>$</sup>4</div>
+        <div class="p-period">per month, billed annually</div>
+        <div class="p-divider"></div>
+        <ul class="p-features">
+          <li><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Everything in Free</li>
+          <li><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Custom domain (yourbrand.com)</li>
+          <li><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Advanced analytics &amp; geo data</li>
+          <li><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Remove Treelink branding</li>
+          <li><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Priority support</li>
+        </ul>
+        <button class="btn-ghost btn-lg" style="width:100%;cursor:not-allowed;opacity:.5;" disabled>
+          Notify me when live
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== FINAL CTA ===== -->
+  <section class="cta-wrap">
+    <div class="cta-glow"></div>
+    <div class="cta-inner">
+      <h2 class="cta-title reveal">Your link page<br>starts here.</h2>
+      <p class="cta-sub reveal d1">Join 50,000+ creators who use Treelink to share their story with the world. Free. Always.</p>
+      <div class="cta-actions reveal d2">
+        <button class="btn-primary btn-lg" id="cta-login-btn">
+          <svg width="17" height="17" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#fff"/>
+            <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#fff"/>
+            <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#fff"/>
+            <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#fff"/>
+          </svg>
+          Get Started Free
+        </button>
+      </div>
+      <p id="auth-error"></p>
+      <p class="cta-note reveal d3">No credit card required. Live in 30 seconds.</p>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
   <footer>
-    <div class="footer-content">
-      <div class="footer-section">
-        <h3>Product</h3>
+    <div class="footer-top">
+      <div>
+        <a href="index.html" class="nav-logo">
+          <svg class="nav-logo-icon" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M14 25V15" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+            <path d="M14 15L7 8" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+            <path d="M14 15L21 8" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+            <path d="M14 10V4.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+            <circle cx="7" cy="7" r="2.4" fill="currentColor" opacity=".65"/>
+            <circle cx="21" cy="7" r="2.4" fill="currentColor" opacity=".65"/>
+            <circle cx="14" cy="3.5" r="2.4" fill="currentColor"/>
+          </svg>
+          <span class="nav-logo-text">Treelink</span>
+        </a>
+        <p class="footer-brand-desc">One link for your entire digital presence. Built for creators, by a creator.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Product</h4>
         <ul>
           <li><a href="index.html">Home</a></li>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#pricing">Pricing</a></li>
           <li><a href="#" id="dashboard-link" style="display:none;">Dashboard</a></li>
         </ul>
       </div>
-      <div class="footer-section">
-        <h3>Resources</h3>
+      <div class="footer-col">
+        <h4>Resources</h4>
         <ul>
           <li><a href="contact-us.html">Contact</a></li>
-          <li><a href="privacy.html">Privacy</a></li>
-          <li><a href="terms.html">Terms</a></li>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="terms.html">Terms of Service</a></li>
         </ul>
       </div>
-      <div class="footer-section">
-        <h3>Connect</h3>
+      <div class="footer-col">
+        <h4>Connect</h4>
         <ul>
           <li><a href="https://github.com/syedtanvircodex" target="_blank" rel="noopener">GitHub</a></li>
-          <li><a href="mailto:syedtanvirislam20@gmail.com">Email</a></li>
-          <li><a href="https://wa.me/8801921575251" target="_blank" rel="noopener">WhatsApp</a></li>
+          <li><a href="/cdn-cgi/l/email-protection#12616b777666737c647b607b617e737f202252757f737b7e3c717d7f">Get in Touch</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2026 Treelink · Built with 🌿 by Syed Tanvir · All rights reserved</p>
+      <p>&copy; 2026 Treelink. Built by Syed Tanvir.</p>
+      <div class="footer-legal">
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="contact-us.html">Contact</a>
+      </div>
     </div>
   </footer>
 
-
-  <!-- ============================================================
-       FIREBASE SDK (v9 compat mode)
-       ============================================================ -->
+  <!-- Firebase SDK -->
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 
   <script>
-    /* ============================================================
-       FIREBASE CONFIGURATION
-       Replace the placeholder values below with your own Firebase
-       project credentials from: https://console.firebase.google.com
-       Project Settings → General → Your apps → Firebase SDK snippet
-       ============================================================ */
+    // ===== FIREBASE =====
     const firebaseConfig = {
       apiKey: 'AIzaSyCIQ4tXZo9mibJscDKA5kLY7ndMrYaawp4',
       authDomain: 'treelink-53452.firebaseapp.com',
@@ -767,99 +1660,122 @@
       appId: '1:298229640699:web:bb8e45200d4b76dadfef5e'
     };
 
-    /* Initialize Firebase */
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
-    const db = firebase.firestore();
+    const db   = firebase.firestore();
 
-    /* ============================================================
-       AUTH STATE OBSERVER
-       Runs whenever auth state changes (page load, login, logout).
-       If a user is already signed in, redirect them to the dashboard.
-       ============================================================ */
     auth.onAuthStateChanged(async (user) => {
       if (user) {
-        /* User is logged in — ensure their Firestore doc exists,
-           then redirect to the dashboard */
         await ensureUserDocument(user);
         window.location.href = 'dashboard.html';
       }
     });
 
-    /* ============================================================
-       ENSURE USER DOCUMENT
-       Creates a Firestore document for new users under /users/{uid}.
-       Uses .set() with merge:true so it won't overwrite existing data.
-       ============================================================ */
     async function ensureUserDocument(user) {
-      const userRef = db.collection('users').doc(user.uid);
-      const snap = await userRef.get();
-
+      const ref  = db.collection('users').doc(user.uid);
+      const snap = await ref.get();
       if (!snap.exists) {
-        /* Generate a username from the display name or email */
         const rawName = user.displayName || user.email.split('@')[0];
-        const username = rawName.toLowerCase().replace(/\s+/g, '').replace(/[^a-z0-9_]/g, '');
-
-        await userRef.set({
+        const username = rawName.toLowerCase().replace(/\s+/g,'').replace(/[^a-z0-9_]/g,'');
+        await ref.set({
           uid: user.uid,
           name: user.displayName || 'Treelink User',
           email: user.email,
           photoURL: user.photoURL || '',
-          username: username,
-          theme: '#1A73E8',   /* default accent color */
+          username,
+          theme: '#1A73E8',
           bio: '',
           createdAt: firebase.firestore.FieldValue.serverTimestamp()
         }, { merge: true });
       }
     }
 
-    /* ============================================================
-       GOOGLE SIGN-IN
-       Opens a popup for Google OAuth via Firebase Authentication.
-       ============================================================ */
     async function signInWithGoogle() {
       const errorEl = document.getElementById('auth-error');
       const overlay = document.getElementById('auth-overlay');
-      const loginBtn = document.getElementById('login-btn');
-
-      errorEl.textContent = '';
+      if (errorEl) errorEl.textContent = '';
       overlay.classList.add('visible');
-      loginBtn.disabled = true;
-
       try {
         const provider = new firebase.auth.GoogleAuthProvider();
-        /* Request additional scopes if needed */
         provider.addScope('profile');
         provider.addScope('email');
-
         await auth.signInWithPopup(provider);
-        /* onAuthStateChanged above will handle the redirect */
-
       } catch (err) {
         overlay.classList.remove('visible');
-        loginBtn.disabled = false;
-
-        /* User-friendly error messages */
-        switch (err.code) {
-          case 'auth/popup-closed-by-user':
-            errorEl.textContent = 'Sign-in popup was closed. Please try again.';
-            break;
-          case 'auth/popup-blocked':
-            errorEl.textContent = 'Popup was blocked. Please allow popups for this site.';
-            break;
-          case 'auth/network-request-failed':
-            errorEl.textContent = 'Network error. Please check your connection.';
-            break;
-          default:
-            errorEl.textContent = 'Sign-in failed: ' + (err.message || 'Unknown error.');
-        }
+        const msgs = {
+          'auth/popup-closed-by-user':    'Sign-in was cancelled. Please try again.',
+          'auth/popup-blocked':           'Popup was blocked. Please allow popups for this site.',
+          'auth/network-request-failed':  'Network error. Please check your connection.'
+        };
+        if (errorEl) errorEl.textContent = msgs[err.code] || 'Sign-in failed: ' + (err.message || 'Unknown error.');
       }
     }
 
-    /* Attach click handlers to both buttons */
-    document.getElementById('login-btn').addEventListener('click', signInWithGoogle);
-    document.getElementById('nav-login-btn').addEventListener('click', signInWithGoogle);
-  </script>
-</body>
+    ['login-btn','nav-login-btn','nav-cta-btn','cta-login-btn','pricing-login-btn'].forEach(id => {
+      document.getElementById(id)?.addEventListener('click', signInWithGoogle);
+    });
 
+    // ===== NAVBAR SCROLL =====
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.pageYOffset > 60);
+    }, { passive: true });
+
+    // ===== SCROLL REVEAL =====
+    const revealObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          revealObs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal, .reveal-scale').forEach(el => revealObs.observe(el));
+
+    // ===== COUNTER ANIMATION =====
+    const counterObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        const el     = e.target;
+        const target = parseInt(el.dataset.target);
+        let   cur    = 0;
+        const step   = target / (1400 / 16);
+        const t = setInterval(() => {
+          cur = Math.min(cur + step, target);
+          el.textContent = Math.floor(cur);
+          if (cur >= target) clearInterval(t);
+        }, 16);
+        counterObs.unobserve(el);
+      });
+    }, { threshold: 0.6 });
+    document.querySelectorAll('.counter').forEach(el => counterObs.observe(el));
+
+    // ===== 3D PHONE TILT =====
+    const phone3d = document.getElementById('phone3d');
+    const heroVis = document.querySelector('.hero-visual');
+    if (phone3d && heroVis) {
+      heroVis.addEventListener('mousemove', e => {
+        const r = heroVis.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width  - 0.5;
+        const y = (e.clientY - r.top)  / r.height - 0.5;
+        phone3d.style.transform = `perspective(900px) rotateY(${x*14}deg) rotateX(${-y*9}deg)`;
+        phone3d.style.animation = 'none';
+      });
+      heroVis.addEventListener('mouseleave', () => {
+        phone3d.style.transform = '';
+        phone3d.style.animation = '';
+      });
+    }
+
+    // ===== BENTO SPOTLIGHT =====
+    document.querySelectorAll('.bc').forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const r = card.getBoundingClientRect();
+        card.style.setProperty('--mx', ((e.clientX - r.left) / r.width  * 100) + '%');
+        card.style.setProperty('--my', ((e.clientY - r.top)  / r.height * 100) + '%');
+      });
+    });
+  </script>
+
+</body>
 </html>
