@@ -1,67 +1,157 @@
 # Treelink
 
-<a href="https://treelink-ops.vercel.app"> View Live → </a>
+A lightweight, modern link aggregation platform built with vanilla web technologies and Firebase.
 
+## Overview
 
-Treelink is a static web application for creating a public link page from one account. Users sign in with Google, manage links from a dashboard, and share a public profile URL.
+Treelink allows users to create a personalized public profile page that hosts multiple links from a single URL. Share your social media, portfolio, store, newsletter, and more in one beautifully designed location.
 
-## What this project includes
+**Live Demo:** [treelink-ops.vercel.app](https://treelink-ops.vercel.app)
 
-1. Landing page with Google sign in
-2. Authenticated dashboard for profile and link management
-3. Public profile page with click tracking
-4. Privacy Policy page
-5. Terms of Service page
-6. Contact page
+## Features
 
-## Core functionality
+- **Google Sign-In** – Quick authentication via Google
+- **Dashboard** – Manage links and profile settings
+- **Public Profiles** – Share a unique username-based link
+- **Link Management** – Create, edit, delete, and organize links
+- **Click Tracking** – Monitor link performance in real-time
+- **Customization** – Profile photo, display name, bio, custom theme color
+- **Light/Dark Modes** – Automatic theme detection with user preferences
+- **Mobile-Friendly** – Responsive design for all devices
 
-1. Firebase Authentication with Google provider
-2. Firestore user document creation on first sign in
-3. Link create, update, delete, and reorder in dashboard
-4. Username based public profile route using query parameter `profile.html?u=<username>`
-5. Per link click count tracking on public profile
-6. Theme color, bio, display name, username, and profile photo settings
+## Tech Stack
 
-## Tech stack
+- HTML5
+- CSS3 (Variables, Animations, Responsive Grid)
+- Vanilla JavaScript (ES6+)
+- Firebase Authentication (Google)
+- Firebase Firestore (Database)
 
-1. HTML
-2. CSS
-3. Vanilla JavaScript
-4. Firebase App SDK compat
-5. Firebase Auth SDK compat
-6. Firebase Firestore SDK compat
+## File Structure
 
-## Project files
+```
+├── index.html           Landing page & authentication
+├── dashboard.html       Link & profile management
+├── profile.html         Public profile sharing
+├── contact-us.html      Contact form
+├── privacy.html         Privacy policy
+├── terms.html           Terms of service
+└── README.md
+```
 
-1. `index.html` for landing and authentication entry
-2. `dashboard.html` for authenticated link and profile management
-3. `profile.html` for public user profile and link clicks
-4. `privacy.html` for privacy policy
-5. `terms.html` for terms of service
-6. `contact-us.html` for contact methods
+## Getting Started
 
-## Firebase data model
+### Prerequisites
+- Modern web browser
+- Google account (for testing authentication)
+- Firebase project
 
-Collection `users`
+### Setup
 
-Document `users/{uid}` fields
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/yourusername/treelink.git
+   cd treelink
+   ```
 
-1. `uid`
-2. `name`
-3. `email`
-4. `photoURL`
-5. `username`
-6. `theme`
-7. `bio`
-8. `createdAt`
+2. **Configure Firebase**
+   - Create a Firebase project at [firebase.google.com](https://firebase.google.com)
+   - Set up Firebase Authentication (Google provider)
+   - Enable Firestore Database
+   - Copy your Firebase config credentials
 
-Subcollection `users/{uid}/links`
+3. **Update Firebase Configuration**
+   - Located in `index.html`, `dashboard.html`, and `profile.html`
+   - Replace placeholder credentials with your project values
 
-1. `title`
-2. `url`
-3. `icon`
-4. `clicks`
+4. **Deploy**
+   - Traditional hosting: Vercel, Netlify, GitHub Pages
+   - Local testing: `python -m http.server 8000`
+
+## Database Schema
+
+### Collection: `users`
+
+Document structure (`users/{uid}`):
+```javascript
+{
+  uid: string,
+  email: string,
+  displayName: string,
+  username: string (unique),
+  bio: string,
+  photoURL: string,
+  themeColor: string (hex),
+  links: object {
+    [linkId]: {
+      title: string,
+      url: string,
+      clicks: number
+    }
+  },
+  createdAt: timestamp,
+  updatedAt: timestamp
+}
+```
+
+## User Workflow
+
+1. **Sign In** → Google authentication on index.html
+2. **Setup** → Configure username, display name, bio, photo
+3. **Manage Links** → Create/edit/reorder links from dashboard
+4. **Share** → Send public profile URL to audience
+5. **Track** → Monitor link clicks in dashboard
+
+## Public Profile URL Format
+
+```
+profile.html?u=username
+```
+
+Example: `https://example.com/profile.html?u=john_doe`
+
+## Development
+
+### Adding New Features
+
+- Links are stored as objects in the user document
+- Theme colors are applied dynamically via CSS variables
+- Both light and dark themes are supported
+- Animations use CSS transitions and keyframes
+
+### Code Organization
+
+- Global styles use CSS custom properties (--accent, --bg, --text, etc.)
+- Responsive breakpoints at 900px and 1200px
+- Firebase initialization in each HTML file
+- Authentication state managed per page
+
+## Browser Support
+
+- Chrome/Edge (latest)
+- Firefox (latest)
+- Safari (latest)
+- Mobile browsers (iOS Safari, Chrome Android)
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/your-feature`)
+3. Commit your changes (`git commit -m 'Add your feature'`)
+4. Push to the branch (`git push origin feature/your-feature`)
+5. Open a Pull Request
+
+## License
+
+MIT License – feel free to use this project for personal or commercial purposes.
+
+## Support & Feedback
+
+Found a bug? Have a suggestion? Please open an issue or contact us via the contact page.
+
+---
+
+Built with care for creators and businesses.
 5. `order`
 6. `createdAt`
 
