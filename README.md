@@ -42,6 +42,7 @@ Treelink allows users to create a personalized public profile page that hosts mu
 ## Getting Started
 
 ### Prerequisites
+
 - Modern web browser
 - Google account (for testing authentication)
 - Firebase project
@@ -49,6 +50,7 @@ Treelink allows users to create a personalized public profile page that hosts mu
 ### Setup
 
 1. **Clone the repository**
+
    ```bash
    git clone https://github.com/yourusername/treelink.git
    cd treelink
@@ -73,6 +75,7 @@ Treelink allows users to create a personalized public profile page that hosts mu
 ### Collection: `users`
 
 Document structure (`users/{uid}`):
+
 ```javascript
 {
   uid: string,
@@ -151,9 +154,7 @@ Found a bug? Have a suggestion? Please open an issue or contact us via the conta
 
 ---
 
-Built with care for creators and businesses.
-5. `order`
-6. `createdAt`
+Built with care for creators and businesses. 5. `order` 6. `createdAt`
 
 ## Local run instructions
 
