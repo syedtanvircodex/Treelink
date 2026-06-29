@@ -53,7 +53,7 @@
         background: var(--bg);
         color: var(--text-1);
         font-family:
-          "Sora",
+          'Sora',
           -apple-system,
           BlinkMacSystemFont,
           sans-serif;
@@ -65,7 +65,7 @@
 
       /* Noise texture overlay */
       body::after {
-        content: "";
+        content: '';
         position: fixed;
         inset: 0;
         background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
@@ -78,7 +78,7 @@
       h2,
       h3,
       h4 {
-        font-family: "Outfit", sans-serif;
+        font-family: 'Outfit', sans-serif;
         line-height: 1.05;
         letter-spacing: -0.03em;
         font-weight: 700;
@@ -179,7 +179,7 @@
         flex-shrink: 0;
       }
       .nav-logo-text {
-        font-family: "Outfit", sans-serif;
+        font-family: 'Outfit', sans-serif;
         font-size: 1.05rem;
         font-weight: 700;
         color: var(--text-1);
@@ -213,7 +213,7 @@
         border: 1px solid var(--border);
         border-radius: 100px;
         padding: 0.5rem 1.125rem;
-        font-family: "Sora", sans-serif;
+        font-family: 'Sora', sans-serif;
         font-size: 0.875rem;
         font-weight: 500;
         cursor: pointer;
@@ -235,7 +235,7 @@
         border: none;
         border-radius: 100px;
         padding: 0.5rem 1.25rem;
-        font-family: "Sora", sans-serif;
+        font-family: 'Sora', sans-serif;
         font-size: 0.875rem;
         font-weight: 600;
         cursor: pointer;
@@ -278,11 +278,7 @@
       .orb-a {
         width: 700px;
         height: 700px;
-        background: radial-gradient(
-          circle,
-          rgba(27, 191, 154, 0.11) 0%,
-          transparent 70%
-        );
+        background: radial-gradient(circle, rgba(27, 191, 154, 0.11) 0%, transparent 70%);
         top: -260px;
         right: -180px;
         animation-duration: 18s;
@@ -290,11 +286,7 @@
       .orb-b {
         width: 500px;
         height: 500px;
-        background: radial-gradient(
-          circle,
-          rgba(27, 191, 154, 0.07) 0%,
-          transparent 70%
-        );
+        background: radial-gradient(circle, rgba(27, 191, 154, 0.07) 0%, transparent 70%);
         bottom: 60px;
         left: -160px;
         animation-duration: 22s;
@@ -303,11 +295,7 @@
       .orb-c {
         width: 350px;
         height: 350px;
-        background: radial-gradient(
-          circle,
-          rgba(70, 210, 170, 0.05) 0%,
-          transparent 70%
-        );
+        background: radial-gradient(circle, rgba(70, 210, 170, 0.05) 0%, transparent 70%);
         top: 42%;
         left: 38%;
         animation-duration: 26s;
@@ -330,17 +318,9 @@
         inset: 0;
         background-image:
           linear-gradient(rgba(255, 255, 255, 0.022) 1px, transparent 1px),
-          linear-gradient(
-            90deg,
-            rgba(255, 255, 255, 0.022) 1px,
-            transparent 1px
-          );
+          linear-gradient(90deg, rgba(255, 255, 255, 0.022) 1px, transparent 1px);
         background-size: 64px 64px;
-        mask-image: radial-gradient(
-          ellipse 75% 75% at 50% 30%,
-          black 0%,
-          transparent 70%
-        );
+        mask-image: radial-gradient(ellipse 75% 75% at 50% 30%, black 0%, transparent 70%);
       }
 
       /* =====================
@@ -540,7 +520,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        font-family: "Outfit", sans-serif;
+        font-family: 'Outfit', sans-serif;
         font-size: 1.2rem;
         font-weight: 700;
         color: #fff;
@@ -548,7 +528,7 @@
         box-shadow: 0 0 0 3px rgba(27, 191, 154, 0.2);
       }
       .phone-name {
-        font-family: "Outfit", sans-serif;
+        font-family: 'Outfit', sans-serif;
         font-size: 0.9rem;
         font-weight: 700;
         color: var(--text-1);
@@ -739,7 +719,7 @@
         background: var(--bg-3);
       }
       .stat-num {
-        font-family: "Outfit", sans-serif;
+        font-family: 'Outfit', sans-serif;
         font-size: clamp(2.25rem, 3.5vw, 3.25rem);
         font-weight: 800;
         letter-spacing: -0.04em;
@@ -779,7 +759,7 @@
         margin-bottom: 1.75rem;
       }
       .statement-text {
-        font-family: "Outfit", sans-serif;
+        font-family: 'Outfit', sans-serif;
         font-size: clamp(2rem, 4.5vw, 3.75rem);
         font-weight: 700;
         line-height: 1.18;
@@ -840,7 +820,7 @@
           box-shadow 0.4s ease;
       }
       .bc::after {
-        content: "";
+        content: '';
         position: absolute;
         inset: 0;
         opacity: 0;
@@ -886,7 +866,7 @@
       }
 
       .bc-title {
-        font-family: "Outfit", sans-serif;
+        font-family: 'Outfit', sans-serif;
         font-size: 1.175rem;
         font-weight: 700;
         letter-spacing: -0.02em;
@@ -916,7 +896,7 @@
         transition: background 0.3s ease;
       }
       .chart-col::before {
-        content: "";
+        content: '';
         position: absolute;
         top: 0;
         left: 0;
@@ -1082,14 +1062,14 @@
         background: var(--accent-dim);
         border: 1px solid rgba(27, 191, 154, 0.2);
         border-radius: 10px;
-        font-family: "Outfit", sans-serif;
+        font-family: 'Outfit', sans-serif;
         font-size: 0.875rem;
         font-weight: 800;
         color: var(--accent);
         margin-bottom: 1.5rem;
       }
       .step-title {
-        font-family: "Outfit", sans-serif;
+        font-family: 'Outfit', sans-serif;
         font-size: 1.35rem;
         font-weight: 700;
         letter-spacing: -0.02em;
@@ -1221,11 +1201,7 @@
       }
       .p-card.featured {
         border-color: rgba(27, 191, 154, 0.3);
-        background: linear-gradient(
-          140deg,
-          rgba(27, 191, 154, 0.05) 0%,
-          var(--bg-2) 55%
-        );
+        background: linear-gradient(140deg, rgba(27, 191, 154, 0.05) 0%, var(--bg-2) 55%);
       }
 
       .p-tag {
@@ -1246,7 +1222,7 @@
       }
 
       .p-name {
-        font-family: "Outfit", sans-serif;
+        font-family: 'Outfit', sans-serif;
         font-size: 1.5rem;
         font-weight: 700;
         letter-spacing: -0.02em;
@@ -1261,7 +1237,7 @@
       }
 
       .p-price {
-        font-family: "Outfit", sans-serif;
+        font-family: 'Outfit', sans-serif;
         font-size: 3.25rem;
         font-weight: 800;
         letter-spacing: -0.04em;
@@ -1324,11 +1300,7 @@
         transform: translate(-50%, -50%);
         width: 900px;
         height: 600px;
-        background: radial-gradient(
-          ellipse,
-          rgba(27, 191, 154, 0.1) 0%,
-          transparent 65%
-        );
+        background: radial-gradient(ellipse, rgba(27, 191, 154, 0.1) 0%, transparent 65%);
         filter: blur(60px);
         pointer-events: none;
       }
@@ -1395,7 +1367,7 @@
         max-width: 30ch;
       }
       .footer-col h4 {
-        font-family: "Outfit", sans-serif;
+        font-family: 'Outfit', sans-serif;
         font-size: 0.75rem;
         font-weight: 700;
         color: var(--text-1);
@@ -1578,13 +1550,7 @@
     <!-- ===== AUTH OVERLAY ===== -->
     <div id="auth-overlay">
       <div class="spinner"></div>
-      <p
-        style="
-          color: var(--text-2);
-          font-size: 0.875rem;
-          font-family: &quot;Sora&quot;, sans-serif;
-        "
-      >
+      <p style="color: var(--text-2); font-size: 0.875rem; font-family: 'Sora', sans-serif">
         Signing you in...
       </p>
     </div>
@@ -1607,30 +1573,10 @@
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
           >
-            <path
-              d="M14 25V15"
-              stroke="currentColor"
-              stroke-width="2.2"
-              stroke-linecap="round"
-            />
-            <path
-              d="M14 15L7 8"
-              stroke="currentColor"
-              stroke-width="2.2"
-              stroke-linecap="round"
-            />
-            <path
-              d="M14 15L21 8"
-              stroke="currentColor"
-              stroke-width="2.2"
-              stroke-linecap="round"
-            />
-            <path
-              d="M14 10V4.5"
-              stroke="currentColor"
-              stroke-width="2.2"
-              stroke-linecap="round"
-            />
+            <path d="M14 25V15" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" />
+            <path d="M14 15L7 8" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" />
+            <path d="M14 15L21 8" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" />
+            <path d="M14 10V4.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" />
             <circle cx="7" cy="7" r="2.4" fill="currentColor" opacity=".65" />
             <circle cx="21" cy="7" r="2.4" fill="currentColor" opacity=".65" />
             <circle cx="14" cy="3.5" r="2.4" fill="currentColor" />
@@ -1677,18 +1623,13 @@
         </h1>
 
         <p class="hero-sub reveal d2">
-          Put your entire digital world on one beautifully crafted page. Share
-          your content, socials, projects, and more — all from a single URL.
+          Put your entire digital world on one beautifully crafted page. Share your content,
+          socials, projects, and more — all from a single URL.
         </p>
 
         <div class="hero-actions reveal d3">
           <button class="btn-primary btn-lg" id="login-btn">
-            <svg
-              width="17"
-              height="17"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
+            <svg width="17" height="17" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path
                 d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
                 fill="#fff"
@@ -1718,9 +1659,7 @@
             <div class="sp-av av-c">AR</div>
             <div class="sp-av av-d">TN</div>
           </div>
-          <p class="sp-label">
-            <strong>50,000+</strong> creators already growing with Treelink
-          </p>
+          <p class="sp-label"><strong>50,000+</strong> creators already growing with Treelink</p>
         </div>
       </div>
 
@@ -1878,25 +1817,19 @@
       <div class="stats-grid">
         <div class="stat-item reveal">
           <div class="stat-num">
-            <span class="counter" data-target="50">0</span>K<span class="accent"
-              >+</span
-            >
+            <span class="counter" data-target="50">0</span>K<span class="accent">+</span>
           </div>
           <div class="stat-label">Active creators</div>
         </div>
         <div class="stat-item reveal d1">
           <div class="stat-num">
-            <span class="counter" data-target="120">0</span>M<span
-              class="accent"
-              >+</span
-            >
+            <span class="counter" data-target="120">0</span>M<span class="accent">+</span>
           </div>
           <div class="stat-label">Link clicks served</div>
         </div>
         <div class="stat-item reveal d2">
           <div class="stat-num">
-            <span class="counter" data-target="150">0</span
-            ><span class="accent">+</span>
+            <span class="counter" data-target="150">0</span><span class="accent">+</span>
           </div>
           <div class="stat-label">Countries reached</div>
         </div>
@@ -1912,8 +1845,8 @@
       <div class="statement-inner">
         <p class="section-eyebrow reveal">The big idea</p>
         <p class="statement-text reveal d1">
-          Your audience lives across <em>a dozen platforms.</em> Your presence
-          should live in <em>one place.</em> Stop the scattered links. Start one
+          Your audience lives across <em>a dozen platforms.</em> Your presence should live in
+          <em>one place.</em> Stop the scattered links. Start one
           <em>beautiful page.</em>
         </p>
       </div>
@@ -1925,8 +1858,8 @@
         <p class="section-eyebrow">Features</p>
         <h2 class="section-title">Powerful tools for modern creators.</h2>
         <p class="section-sub">
-          Everything you need to build a presence that converts visitors into
-          followers, customers, and fans.
+          Everything you need to build a presence that converts visitors into followers, customers,
+          and fans.
         </p>
       </div>
 
@@ -1947,9 +1880,9 @@
           </div>
           <div class="bc-title">Instant Setup</div>
           <div class="bc-desc">
-            Sign in with Google and your Treelink page is live in under 30
-            seconds. No forms, no credit card, no technical knowledge required.
-            Just sign in and start adding your links immediately.
+            Sign in with Google and your Treelink page is live in under 30 seconds. No forms, no
+            credit card, no technical knowledge required. Just sign in and start adding your links
+            immediately.
           </div>
         </div>
 
@@ -1971,8 +1904,8 @@
           </div>
           <div class="bc-title">Real Analytics</div>
           <div class="bc-desc">
-            Know exactly what's working. Track clicks per link, daily trends,
-            and audience geography.
+            Know exactly what's working. Track clicks per link, daily trends, and audience
+            geography.
           </div>
           <div class="mini-chart">
             <div class="chart-col" style="height: 35%"></div>
@@ -2030,12 +1963,8 @@
               stroke-linecap="round"
               stroke-linejoin="round"
             >
-              <path
-                d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"
-              />
-              <path
-                d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"
-              />
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
             </svg>
           </div>
           <div class="bc-title">Unlimited Links</div>
@@ -2075,9 +2004,9 @@
           </div>
           <div class="bc-title">Mobile First, Always</div>
           <div class="bc-desc">
-            Your audience is on their phones. Treelink pages are built from the
-            ground up for mobile — pixel-perfect on every screen size, device,
-            and OS. Sub-second load time, no exceptions.
+            Your audience is on their phones. Treelink pages are built from the ground up for mobile
+            — pixel-perfect on every screen size, device, and OS. Sub-second load time, no
+            exceptions.
           </div>
         </div>
 
@@ -2097,8 +2026,8 @@
           </div>
           <div class="bc-title">Google Infrastructure</div>
           <div class="bc-desc">
-            Backed by Firebase. Your page stays online even during traffic
-            spikes — no maintenance, no downtime.
+            Backed by Firebase. Your page stays online even during traffic spikes — no maintenance,
+            no downtime.
           </div>
         </div>
       </div>
@@ -2111,9 +2040,8 @@
           <p class="section-eyebrow">See it in action</p>
           <h2>A page that looks as good as you do.</h2>
           <p>
-            Treelink profiles are designed to make your links stand out, not
-            blend in. Clean typography, responsive layout, and your brand colors
-            — served fast from everywhere.
+            Treelink profiles are designed to make your links stand out, not blend in. Clean
+            typography, responsive layout, and your brand colors — served fast from everywhere.
           </p>
           <ul class="check-list">
             <li>
@@ -2187,9 +2115,7 @@
               </div>
               <div class="phone-name">Tanvir Noor</div>
               <div class="phone-handle">@tanvirnoor</div>
-              <div class="phone-bio">
-                Full-stack dev. Open source. Coffee-driven.
-              </div>
+              <div class="phone-bio">Full-stack dev. Open source. Coffee-driven.</div>
             </div>
             <a class="phone-link" href="#">
               <span class="phone-link-label">GitHub Projects</span>
@@ -2264,24 +2190,24 @@
           <div class="step-num">01</div>
           <div class="step-title">Sign up in seconds</div>
           <p class="step-desc">
-            Connect with Google in one click. No passwords, no long forms. Your
-            Treelink profile is created and live the moment you sign in.
+            Connect with Google in one click. No passwords, no long forms. Your Treelink profile is
+            created and live the moment you sign in.
           </p>
         </div>
         <div class="step-card reveal d2">
           <div class="step-num">02</div>
           <div class="step-title">Customize your page</div>
           <p class="step-desc">
-            Add your links, write a short bio, pick a theme color. Drag to
-            reorder. Changes update live — see them instantly as you edit.
+            Add your links, write a short bio, pick a theme color. Drag to reorder. Changes update
+            live — see them instantly as you edit.
           </p>
         </div>
         <div class="step-card reveal d3">
           <div class="step-num">03</div>
           <div class="step-title">Share everywhere</div>
           <p class="step-desc">
-            One link for everything. Drop it in your Instagram bio, Twitter,
-            YouTube description, email signature — anywhere your audience lives.
+            One link for everything. Drop it in your Instagram bio, Twitter, YouTube description,
+            email signature — anywhere your audience lives.
           </p>
         </div>
       </div>
@@ -2325,15 +2251,11 @@
               </svg>
             </div>
             <p class="t-quote">
-              "I replaced three separate links in my bio with one Treelink URL.
-              My click-through rate went up, my DMs went down. Exactly what I
-              needed as a freelance photographer."
+              "I replaced three separate links in my bio with one Treelink URL. My click-through
+              rate went up, my DMs went down. Exactly what I needed as a freelance photographer."
             </p>
             <div class="t-author">
-              <div
-                class="t-av"
-                style="background: linear-gradient(135deg, #667eea, #764ba2)"
-              >
+              <div class="t-av" style="background: linear-gradient(135deg, #667eea, #764ba2)">
                 MK
               </div>
               <div>
@@ -2372,15 +2294,11 @@
               </svg>
             </div>
             <p class="t-quote">
-              "Set up in under a minute, seriously. I'm a podcast host — I just
-              need my Spotify, YouTube, and merch store in one link. Treelink
-              does exactly that, no bloat."
+              "Set up in under a minute, seriously. I'm a podcast host — I just need my Spotify,
+              YouTube, and merch store in one link. Treelink does exactly that, no bloat."
             </p>
             <div class="t-author">
-              <div
-                class="t-av"
-                style="background: linear-gradient(135deg, #f093fb, #f5576c)"
-              >
+              <div class="t-av" style="background: linear-gradient(135deg, #f093fb, #f5576c)">
                 JS
               </div>
               <div>
@@ -2419,15 +2337,11 @@
               </svg>
             </div>
             <p class="t-quote">
-              "The analytics showed me which link got clicked most. I moved it
-              to the top and doubled my Etsy store conversions within a week.
-              Simple tool, meaningful results."
+              "The analytics showed me which link got clicked most. I moved it to the top and
+              doubled my Etsy store conversions within a week. Simple tool, meaningful results."
             </p>
             <div class="t-author">
-              <div
-                class="t-av"
-                style="background: linear-gradient(135deg, #4facfe, #00f2fe)"
-              >
+              <div class="t-av" style="background: linear-gradient(135deg, #4facfe, #00f2fe)">
                 AR
               </div>
               <div>
@@ -2446,8 +2360,7 @@
         <p class="section-eyebrow">Pricing</p>
         <h2 class="section-title">Simple, honest pricing.</h2>
         <p class="section-sub">
-          No hidden fees. No paywalls for essential features. Just a great tool,
-          free forever.
+          No hidden fees. No paywalls for essential features. Just a great tool, free forever.
         </p>
       </div>
 
@@ -2541,8 +2454,7 @@
           <div class="p-tag muted">Coming Soon</div>
           <div class="p-name">Pro</div>
           <div class="p-blurb">
-            For creators who want advanced analytics, a custom domain, and zero
-            branding.
+            For creators who want advanced analytics, a custom domain, and zero branding.
           </div>
           <div class="p-price"><sup>$</sup>4</div>
           <div class="p-period">per month, billed annually</div>
@@ -2631,17 +2543,11 @@
       <div class="cta-inner">
         <h2 class="cta-title reveal">Your link page<br />starts here.</h2>
         <p class="cta-sub reveal d1">
-          Join 50,000+ creators who use Treelink to share their story with the
-          world. Free. Always.
+          Join 50,000+ creators who use Treelink to share their story with the world. Free. Always.
         </p>
         <div class="cta-actions reveal d2">
           <button class="btn-primary btn-lg" id="cta-login-btn">
-            <svg
-              width="17"
-              height="17"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
+            <svg width="17" height="17" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path
                 d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
                 fill="#fff"
@@ -2663,9 +2569,7 @@
           </button>
         </div>
         <p id="auth-error"></p>
-        <p class="cta-note reveal d3">
-          No credit card required. Live in 30 seconds.
-        </p>
+        <p class="cta-note reveal d3">No credit card required. Live in 30 seconds.</p>
       </div>
     </section>
 
@@ -2680,12 +2584,7 @@
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <path
-                d="M14 25V15"
-                stroke="currentColor"
-                stroke-width="2.2"
-                stroke-linecap="round"
-              />
+              <path d="M14 25V15" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" />
               <path
                 d="M14 15L7 8"
                 stroke="currentColor"
@@ -2705,20 +2604,13 @@
                 stroke-linecap="round"
               />
               <circle cx="7" cy="7" r="2.4" fill="currentColor" opacity=".65" />
-              <circle
-                cx="21"
-                cy="7"
-                r="2.4"
-                fill="currentColor"
-                opacity=".65"
-              />
+              <circle cx="21" cy="7" r="2.4" fill="currentColor" opacity=".65" />
               <circle cx="14" cy="3.5" r="2.4" fill="currentColor" />
             </svg>
             <span class="nav-logo-text">Treelink</span>
           </a>
           <p class="footer-brand-desc">
-            One link for your entire digital presence. Built for creators, by a
-            creator.
+            One link for your entire digital presence. Built for creators, by a creator.
           </p>
         </div>
         <div class="footer-col">
@@ -2728,9 +2620,7 @@
             <li><a href="#features">Features</a></li>
             <li><a href="#pricing">Pricing</a></li>
             <li>
-              <a href="#" id="dashboard-link" style="display: none"
-                >Dashboard</a
-              >
+              <a href="#" id="dashboard-link" style="display: none">Dashboard</a>
             </li>
           </ul>
         </div>
@@ -2746,12 +2636,7 @@
           <h4>Connect</h4>
           <ul>
             <li>
-              <a
-                href="https://github.com/aluukill"
-                target="_blank"
-                rel="noopener"
-                >GitHub</a
-              >
+              <a href="https://github.com/aluukill" target="_blank" rel="noopener">GitHub</a>
             </li>
             <li>
               <a
@@ -2784,12 +2669,12 @@
     <script>
       // ===== FIREBASE =====
       const firebaseConfig = {
-        apiKey: "AIzaSyCIQ4tXZo9mibJscDKA5kLY7ndMrYaawp4",
-        authDomain: "treelink-53452.firebaseapp.com",
-        projectId: "treelink-53452",
-        storageBucket: "treelink-53452.firebasestorage.app",
-        messagingSenderId: "298229640699",
-        appId: "1:298229640699:web:bb8e45200d4b76dadfef5e",
+        apiKey: 'AIzaSyCIQ4tXZo9mibJscDKA5kLY7ndMrYaawp4',
+        authDomain: 'treelink-53452.firebaseapp.com',
+        projectId: 'treelink-53452',
+        storageBucket: 'treelink-53452.firebasestorage.app',
+        messagingSenderId: '298229640699',
+        appId: '1:298229640699:web:bb8e45200d4b76dadfef5e',
       };
 
       firebase.initializeApp(firebaseConfig);
@@ -2799,82 +2684,72 @@
       auth.onAuthStateChanged(async (user) => {
         if (user) {
           await ensureUserDocument(user);
-          window.location.href = "dashboard.html";
+          window.location.href = 'dashboard.html';
         }
       });
 
       async function ensureUserDocument(user) {
-        const ref = db.collection("users").doc(user.uid);
+        const ref = db.collection('users').doc(user.uid);
         const snap = await ref.get();
         if (!snap.exists) {
-          const rawName = user.displayName || user.email.split("@")[0];
+          const rawName = user.displayName || user.email.split('@')[0];
           const username = rawName
             .toLowerCase()
-            .replace(/\s+/g, "")
-            .replace(/[^a-z0-9_]/g, "");
+            .replace(/\s+/g, '')
+            .replace(/[^a-z0-9_]/g, '');
           await ref.set(
             {
               uid: user.uid,
-              name: user.displayName || "Treelink User",
+              name: user.displayName || 'Treelink User',
               email: user.email,
-              photoURL: user.photoURL || "",
+              photoURL: user.photoURL || '',
               username,
-              theme: "#1A73E8",
-              bio: "",
+              theme: '#1A73E8',
+              bio: '',
               createdAt: firebase.firestore.FieldValue.serverTimestamp(),
             },
-            { merge: true },
+            { merge: true }
           );
         }
       }
 
       async function signInWithGoogle() {
-        const errorEl = document.getElementById("auth-error");
-        const overlay = document.getElementById("auth-overlay");
-        if (errorEl) errorEl.textContent = "";
-        overlay.classList.add("visible");
+        const errorEl = document.getElementById('auth-error');
+        const overlay = document.getElementById('auth-overlay');
+        if (errorEl) errorEl.textContent = '';
+        overlay.classList.add('visible');
         try {
           const provider = new firebase.auth.GoogleAuthProvider();
-          provider.addScope("profile");
-          provider.addScope("email");
+          provider.addScope('profile');
+          provider.addScope('email');
           await auth.signInWithPopup(provider);
         } catch (err) {
-          overlay.classList.remove("visible");
+          overlay.classList.remove('visible');
           const msgs = {
-            "auth/popup-closed-by-user":
-              "Sign-in was cancelled. Please try again.",
-            "auth/popup-blocked":
-              "Popup was blocked. Please allow popups for this site.",
-            "auth/network-request-failed":
-              "Network error. Please check your connection.",
+            'auth/popup-closed-by-user': 'Sign-in was cancelled. Please try again.',
+            'auth/popup-blocked': 'Popup was blocked. Please allow popups for this site.',
+            'auth/network-request-failed': 'Network error. Please check your connection.',
           };
           if (errorEl)
             errorEl.textContent =
-              msgs[err.code] ||
-              "Sign-in failed: " + (err.message || "Unknown error.");
+              msgs[err.code] || 'Sign-in failed: ' + (err.message || 'Unknown error.');
         }
       }
 
-      [
-        "login-btn",
-        "nav-login-btn",
-        "nav-cta-btn",
-        "cta-login-btn",
-        "pricing-login-btn",
-      ].forEach((id) => {
-        document
-          .getElementById(id)
-          ?.addEventListener("click", signInWithGoogle);
-      });
+      ['login-btn', 'nav-login-btn', 'nav-cta-btn', 'cta-login-btn', 'pricing-login-btn'].forEach(
+        (id) => {
+          document.getElementById(id)?.addEventListener('click', signInWithGoogle);
+        }
+      );
 
       // ===== NAVBAR SCROLL =====
-      const navbar = document.getElementById("navbar");
+      const navbar = document.getElementById('navbar');
       window.addEventListener(
-        "scroll",
+        'scroll',
         () => {
-          navbar.classList.toggle("scrolled", window.pageYOffset > 60);
+          navbar.classList.toggle('scrolled', window.pageYOffset > 60);
         },
-        { passive: true },
+        { passive: true }
       );
 
       // ===== SCROLL REVEAL =====
@@ -2882,16 +2757,14 @@
         (entries) => {
           entries.forEach((e) => {
             if (e.isIntersecting) {
-              e.target.classList.add("in");
+              e.target.classList.add('in');
               revealObs.unobserve(e.target);
             }
           });
         },
-        { threshold: 0.1, rootMargin: "0px 0px -40px 0px" },
+        { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
       );
-      document
-        .querySelectorAll(".reveal, .reveal-scale")
-        .forEach((el) => revealObs.observe(el));
+      document.querySelectorAll('.reveal, .reveal-scale').forEach((el) => revealObs.observe(el));
 
       // ===== COUNTER ANIMATION =====
       const counterObs = new IntersectionObserver(
@@ -2910,41 +2783,33 @@
             counterObs.unobserve(el);
           });
         },
-        { threshold: 0.6 },
+        { threshold: 0.6 }
       );
-      document
-        .querySelectorAll(".counter")
-        .forEach((el) => counterObs.observe(el));
+      document.querySelectorAll('.counter').forEach((el) => counterObs.observe(el));
 
       // ===== 3D PHONE TILT =====
-      const phone3d = document.getElementById("phone3d");
-      const heroVis = document.querySelector(".hero-visual");
+      const phone3d = document.getElementById('phone3d');
+      const heroVis = document.querySelector('.hero-visual');
       if (phone3d && heroVis) {
-        heroVis.addEventListener("mousemove", (e) => {
+        heroVis.addEventListener('mousemove', (e) => {
           const r = heroVis.getBoundingClientRect();
           const x = (e.clientX - r.left) / r.width - 0.5;
           const y = (e.clientY - r.top) / r.height - 0.5;
           phone3d.style.transform = `perspective(900px) rotateY(${x * 14}deg) rotateX(${-y * 9}deg)`;
-          phone3d.style.animation = "none";
+          phone3d.style.animation = 'none';
         });
-        heroVis.addEventListener("mouseleave", () => {
-          phone3d.style.transform = "";
-          phone3d.style.animation = "";
+        heroVis.addEventListener('mouseleave', () => {
+          phone3d.style.transform = '';
+          phone3d.style.animation = '';
         });
       }
 
       // ===== BENTO SPOTLIGHT =====
-      document.querySelectorAll(".bc").forEach((card) => {
-        card.addEventListener("mousemove", (e) => {
+      document.querySelectorAll('.bc').forEach((card) => {
+        card.addEventListener('mousemove', (e) => {
           const r = card.getBoundingClientRect();
-          card.style.setProperty(
-            "--mx",
-            ((e.clientX - r.left) / r.width) * 100 + "%",
-          );
-          card.style.setProperty(
-            "--my",
-            ((e.clientY - r.top) / r.height) * 100 + "%",
-          );
+          card.style.setProperty('--mx', ((e.clientX - r.left) / r.width) * 100 + '%');
+          card.style.setProperty('--my', ((e.clientY - r.top) / r.height) * 100 + '%');
         });
       });
     </script>

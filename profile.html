@@ -8,11 +8,7 @@
     <!-- Open Graph / Social preview tags -->
     <meta property="og:type" content="website" />
     <meta property="og:title" id="og-title" content="Treelink Profile" />
-    <meta
-      property="og:description"
-      id="og-desc"
-      content="Check out my links on Treelink."
-    />
+    <meta property="og:description" id="og-desc" content="Check out my links on Treelink." />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -79,7 +75,7 @@
       body {
         background: var(--bg);
         color: var(--text);
-        font-family: "Sora", sans-serif;
+        font-family: 'Sora', sans-serif;
         min-height: 100vh;
         transition:
           background 0.3s ease,
@@ -90,7 +86,7 @@
        BACKGROUND DECORATION
        ============================================================ */
       body::before {
-        content: "";
+        content: '';
         position: fixed;
         inset: 0;
         background: radial-gradient(
@@ -208,7 +204,7 @@
       }
 
       .profile-name {
-        font-family: "Outfit", sans-serif;
+        font-family: 'Outfit', sans-serif;
         font-size: 1.75rem;
         font-weight: 800;
         letter-spacing: -0.02em;
@@ -257,7 +253,7 @@
 
       /* Accent left border on hover */
       .profile-link::before {
-        content: "";
+        content: '';
         position: absolute;
         left: 0;
         top: 0;
@@ -406,22 +402,11 @@
        ============================================================ -->
     <div id="not-found">
       <div class="not-found-icon">🍂</div>
-      <h2
-        style="font-family: &quot;Outfit&quot;, sans-serif; font-size: 1.5rem"
-      >
-        Page not found
-      </h2>
-      <p style="color: #000000; margin-top: 0.5rem">
-        This Treelink profile doesn't exist.
-      </p>
+      <h2 style="font-family: 'Outfit', sans-serif; font-size: 1.5rem">Page not found</h2>
+      <p style="color: #000000; margin-top: 0.5rem">This Treelink profile doesn't exist.</p>
       <a
         href="index.html"
-        style="
-          margin-top: 1.5rem;
-          color: #1a73e8;
-          text-decoration: none;
-          font-weight: 600;
-        "
+        style="margin-top: 1.5rem; color: #1a73e8; text-decoration: none; font-weight: 600"
       >
         Create yours →
       </a>
@@ -465,12 +450,12 @@
        Replace these placeholders with your actual project values.
        ============================================================ */
       const firebaseConfig = {
-        apiKey: "AIzaSyCIQ4tXZo9mibJscDKA5kLY7ndMrYaawp4",
-        authDomain: "treelink-53452.firebaseapp.com",
-        projectId: "treelink-53452",
-        storageBucket: "treelink-53452.firebasestorage.app",
-        messagingSenderId: "298229640699",
-        appId: "1:298229640699:web:bb8e45200d4b76dadfef5e",
+        apiKey: 'AIzaSyCIQ4tXZo9mibJscDKA5kLY7ndMrYaawp4',
+        authDomain: 'treelink-53452.firebaseapp.com',
+        projectId: 'treelink-53452',
+        storageBucket: 'treelink-53452.firebasestorage.app',
+        messagingSenderId: '298229640699',
+        appId: '1:298229640699:web:bb8e45200d4b76dadfef5e',
       };
 
       firebase.initializeApp(firebaseConfig);
@@ -479,19 +464,19 @@
       /* ============================================================
        SET DEFAULT DARK THEME
        ============================================================ */
-      document.body.classList.add("dark");
+      document.body.classList.add('dark');
 
       /* ============================================================
        GET USERNAME FROM URL QUERY STRING
        URL format: profile.html?u=username
        ============================================================ */
       const params = new URLSearchParams(window.location.search);
-      const username = params.get("u");
+      const username = params.get('u');
 
       if (!username) {
         /* No username param → show not found */
-        document.getElementById("loading").style.display = "none";
-        document.getElementById("not-found").classList.add("visible");
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('not-found').classList.add('visible');
       } else {
         loadProfile(username);
       }
@@ -504,13 +489,13 @@
         try {
           /* Find user document by username field */
           const userSnap = await db
-            .collection("users")
-            .where("username", "==", uname)
+            .collection('users')
+            .where('username', '==', uname)
             .limit(1)
             .get();
 
           if (userSnap.empty) {
-            throw new Error("User not found");
+            throw new Error('User not found');
           }
 
           const userDoc = userSnap.docs[0];
@@ -518,17 +503,15 @@
           const user = userDoc.data();
 
           /* ---- Apply user's theme color ---- */
-          applyThemeColor(user.theme || "#1A73E8");
+          applyThemeColor(user.theme || '#1A73E8');
 
           /* ---- Populate header ---- */
-          document.getElementById("profile-name").textContent =
-            user.name || "Treelink User";
-          document.getElementById("profile-username").textContent =
-            "@" + user.username;
-          document.getElementById("profile-bio").textContent = user.bio || "";
+          document.getElementById('profile-name').textContent = user.name || 'Treelink User';
+          document.getElementById('profile-username').textContent = '@' + user.username;
+          document.getElementById('profile-bio').textContent = user.bio || '';
 
           /* Avatar */
-          const avatarEl = document.getElementById("profile-avatar");
+          const avatarEl = document.getElementById('profile-avatar');
           if (user.photoURL) {
             avatarEl.innerHTML = `<img src="${user.photoURL}" alt="${user.name}" loading="lazy" referrerpolicy="no-referrer"
                onerror="this.onerror=null; this.parentElement.textContent='🌿';" />`;
@@ -536,22 +519,17 @@
 
           /* ---- Update page title & OG tags ---- */
           document.title = `${user.name} | Treelink`;
+          document.getElementById('og-title').setAttribute('content', `${user.name} | Treelink`);
           document
-            .getElementById("og-title")
-            .setAttribute("content", `${user.name} | Treelink`);
-          document
-            .getElementById("og-desc")
-            .setAttribute(
-              "content",
-              user.bio || `Check out ${user.name}'s links on Treelink.`,
-            );
+            .getElementById('og-desc')
+            .setAttribute('content', user.bio || `Check out ${user.name}'s links on Treelink.`);
 
           /* ---- Load links ---- */
           const linksSnap = await db
-            .collection("users")
+            .collection('users')
             .doc(uid)
-            .collection("links")
-            .orderBy("order", "asc")
+            .collection('links')
+            .orderBy('order', 'asc')
             .get();
 
           const links = linksSnap.docs.map((d) => ({ id: d.id, ...d.data() }));
@@ -559,12 +537,12 @@
           renderLinks(links, uid);
 
           /* Show profile, hide loading */
-          document.getElementById("loading").style.display = "none";
-          document.getElementById("profile-page").classList.add("visible");
+          document.getElementById('loading').style.display = 'none';
+          document.getElementById('profile-page').classList.add('visible');
         } catch (err) {
-          console.error("Profile load error:", err);
-          document.getElementById("loading").style.display = "none";
-          document.getElementById("not-found").classList.add("visible");
+          console.error('Profile load error:', err);
+          document.getElementById('loading').style.display = 'none';
+          document.getElementById('not-found').classList.add('visible');
         }
       }
 
@@ -580,19 +558,16 @@
           const r = parseInt(result[1], 16);
           const g = parseInt(result[2], 16);
           const b = parseInt(result[3], 16);
-          document.documentElement.style.setProperty("--accent", hex);
-          document.documentElement.style.setProperty(
-            "--accent-rgb",
-            `${r},${g},${b}`,
-          );
+          document.documentElement.style.setProperty('--accent', hex);
+          document.documentElement.style.setProperty('--accent-rgb', `${r},${g},${b}`);
 
           /* Lighten for accent2 (simple blend with white) */
           const lighten = (v) => Math.min(255, Math.round(v + (255 - v) * 0.3));
           const hex2 = `#${[r, g, b]
             .map(lighten)
-            .map((v) => v.toString(16).padStart(2, "0"))
-            .join("")}`;
-          document.documentElement.style.setProperty("--accent2", hex2);
+            .map((v) => v.toString(16).padStart(2, '0'))
+            .join('')}`;
+          document.documentElement.style.setProperty('--accent2', hex2);
         }
       }
 
@@ -600,7 +575,7 @@
        RENDER LINKS
        ============================================================ */
       function renderLinks(links, uid) {
-        const container = document.getElementById("links-list");
+        const container = document.getElementById('links-list');
 
         if (links.length === 0) {
           container.innerHTML = `
@@ -612,29 +587,29 @@
         }
 
         links.forEach((link, idx) => {
-          const a = document.createElement("a");
-          a.href = "#"; /* We handle click manually to track analytics */
-          a.className = "profile-link";
+          const a = document.createElement('a');
+          a.href = '#'; /* We handle click manually to track analytics */
+          a.className = 'profile-link';
           a.style.animationDelay = `${idx * 0.07}s`; /* Stagger entrance */
-          a.setAttribute("rel", "noopener noreferrer");
+          a.setAttribute('rel', 'noopener noreferrer');
 
           a.innerHTML = `
-          <div class="link-icon">${link.icon || "🔗"}</div>
+          <div class="link-icon">${link.icon || '🔗'}</div>
           <span class="link-label">${escapeHtml(link.title)}</span>
           <span class="link-arrow">→</span>
         `;
 
           /* Click handler: increment counter, then navigate */
-          a.addEventListener("click", (e) => {
+          a.addEventListener('click', (e) => {
             e.preventDefault();
 
             /* Visual feedback bubble */
             spawnClickBubble(e.clientX, e.clientY);
 
             /* Increment click count in Firestore asynchronously */
-            db.collection("users")
+            db.collection('users')
               .doc(uid)
-              .collection("links")
+              .collection('links')
               .doc(link.id)
               .update({
                 clicks: firebase.firestore.FieldValue.increment(1),
@@ -643,7 +618,7 @@
 
             /* Navigate after short delay so animation is visible */
             setTimeout(() => {
-              window.open(link.url, "_blank", "noopener,noreferrer");
+              window.open(link.url, '_blank', 'noopener,noreferrer');
             }, 200);
           });
 
@@ -656,25 +631,25 @@
        Shows a "+1" float animation at the click coordinates.
        ============================================================ */
       function spawnClickBubble(x, y) {
-        const el = document.createElement("div");
-        el.className = "click-bubble";
-        el.textContent = "+1 click";
-        el.style.left = x + "px";
-        el.style.top = y + "px";
+        const el = document.createElement('div');
+        el.className = 'click-bubble';
+        el.textContent = '+1 click';
+        el.style.left = x + 'px';
+        el.style.top = y + 'px';
         document.body.appendChild(el);
-        el.addEventListener("animationend", () => el.remove());
+        el.addEventListener('animationend', () => el.remove());
       }
 
       /* ============================================================
        HELPER: Escape HTML to prevent XSS
        ============================================================ */
       function escapeHtml(str) {
-        if (!str) return "";
+        if (!str) return '';
         return str
-          .replace(/&/g, "&amp;")
-          .replace(/</g, "&lt;")
-          .replace(/>/g, "&gt;")
-          .replace(/"/g, "&quot;");
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;');
       }
     </script>
   </body>

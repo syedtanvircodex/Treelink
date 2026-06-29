@@ -49,7 +49,7 @@
       body {
         background: var(--bg);
         color: var(--text);
-        font-family: "Sora", sans-serif;
+        font-family: 'Sora', sans-serif;
         font-size: 0.95rem;
         line-height: 1.6;
         min-height: 100vh;
@@ -71,7 +71,7 @@
       }
 
       #loading-screen .logo {
-        font-family: "Outfit", sans-serif;
+        font-family: 'Outfit', sans-serif;
         font-size: 1.5rem;
         font-weight: 700;
         color: var(--accent);
@@ -155,7 +155,7 @@
       }
 
       .sidebar-logo-text {
-        font-family: "Outfit", sans-serif;
+        font-family: 'Outfit', sans-serif;
         font-size: 1.2rem;
         font-weight: 700;
       }
@@ -268,7 +268,7 @@
         border: 1px solid rgba(34, 177, 147, 0.2);
         border-radius: 6px;
         padding: 0.35rem 0.65rem;
-        font-family: "Sora", sans-serif;
+        font-family: 'Sora', sans-serif;
         font-size: 0.75rem;
         font-weight: 500;
         color: var(--accent);
@@ -297,7 +297,7 @@
         border-radius: 8px;
         padding: 0.6rem 1rem;
         color: var(--muted);
-        font-family: "Sora", sans-serif;
+        font-family: 'Sora', sans-serif;
         font-size: 0.875rem;
         cursor: pointer;
         transition: var(--transition);
@@ -363,7 +363,7 @@
       }
 
       .topbar-logo {
-        font-family: "Outfit", sans-serif;
+        font-family: 'Outfit', sans-serif;
         font-size: 1.1rem;
         font-weight: 700;
         color: var(--text);
@@ -405,7 +405,7 @@
       }
 
       .section-title {
-        font-family: "Outfit", sans-serif;
+        font-family: 'Outfit', sans-serif;
         font-size: 1.5rem;
         font-weight: 700;
       }
@@ -428,7 +428,7 @@
       }
 
       .stat-value {
-        font-family: "Outfit", sans-serif;
+        font-family: 'Outfit', sans-serif;
         font-size: 2rem;
         font-weight: 700;
         color: var(--accent);
@@ -452,7 +452,7 @@
         gap: 0.4rem;
         padding: 0.6rem 1.2rem;
         border-radius: var(--radius);
-        font-family: "Sora", sans-serif;
+        font-family: 'Sora', sans-serif;
         font-size: 0.875rem;
         font-weight: 500;
         cursor: pointer;
@@ -544,7 +544,7 @@
         border-radius: 8px;
         padding: 0.65rem 0.9rem;
         color: var(--text);
-        font-family: "Sora", sans-serif;
+        font-family: 'Sora', sans-serif;
         font-size: 0.9rem;
         outline: none;
         transition: var(--transition);
@@ -690,7 +690,7 @@
         border-radius: 7px;
         padding: 0.55rem 0.8rem;
         color: var(--text);
-        font-family: "Sora", sans-serif;
+        font-family: 'Sora', sans-serif;
         font-size: 0.875rem;
         outline: none;
         width: 100%;
@@ -774,7 +774,7 @@
         transform: scale(1.1);
       }
 
-      input[type="color"] {
+      input[type='color'] {
         background: transparent;
         border: 1px solid var(--border-color);
         border-radius: 8px;
@@ -913,13 +913,9 @@
         <!-- Public profile URL -->
         <div class="sidebar-profile-link">
           <div class="profile-link-row">
-            <a href="#" id="sidebar-public-link" target="_blank"
-              >🌐 Visit your link</a
-            >
+            <a href="#" id="sidebar-public-link" target="_blank">🌐 Visit your link</a>
           </div>
-          <button class="copy-link-btn" id="copy-link-btn">
-            📋 Copy your profile link
-          </button>
+          <button class="copy-link-btn" id="copy-link-btn">📋 Copy your profile link</button>
         </div>
 
         <!-- Logout -->
@@ -933,9 +929,7 @@
         <!-- Mobile top bar -->
         <div class="topbar">
           <span class="topbar-logo">🌿 Treelink</span>
-          <button class="menu-btn" id="menu-btn" aria-label="Open menu">
-            ☰
-          </button>
+          <button class="menu-btn" id="menu-btn" aria-label="Open menu">☰</button>
         </div>
 
         <div class="content">
@@ -962,9 +956,7 @@
              --------------------------------------------------------- -->
           <div class="section-header">
             <h1 class="section-title">My Links</h1>
-            <button class="btn btn-primary" id="toggle-form-btn">
-              ＋ Add Link
-            </button>
+            <button class="btn btn-primary" id="toggle-form-btn">＋ Add Link</button>
           </div>
 
           <!-- Collapsible form -->
@@ -973,39 +965,23 @@
               <!-- Title field -->
               <div class="form-group">
                 <label for="link-title">Link Title</label>
-                <input
-                  type="text"
-                  id="link-title"
-                  placeholder="e.g. My Portfolio"
-                  maxlength="80"
-                />
+                <input type="text" id="link-title" placeholder="e.g. My Portfolio" maxlength="80" />
               </div>
               <!-- Icon field -->
               <div class="form-group">
                 <label for="link-icon">Icon (emoji)</label>
-                <input
-                  type="text"
-                  id="link-icon"
-                  placeholder="🔗"
-                  maxlength="4"
-                />
+                <input type="text" id="link-icon" placeholder="🔗" maxlength="4" />
               </div>
             </div>
 
             <!-- URL field (full row) -->
             <div class="form-group" style="margin-bottom: 1rem">
               <label for="link-url">URL</label>
-              <input
-                type="url"
-                id="link-url"
-                placeholder="https://yourwebsite.com"
-              />
+              <input type="url" id="link-url" placeholder="https://yourwebsite.com" />
             </div>
 
             <div class="form-actions">
-              <button class="btn btn-primary" id="save-link-btn">
-                Save Link
-              </button>
+              <button class="btn btn-primary" id="save-link-btn">Save Link</button>
               <button class="btn btn-ghost" id="cancel-form-btn">Cancel</button>
               <span id="form-error"></span>
             </div>
@@ -1027,14 +1003,7 @@
               <!-- Profile Photo -->
               <div class="form-group" style="margin-bottom: 1.25rem">
                 <label>Profile Photo</label>
-                <div
-                  style="
-                    display: flex;
-                    align-items: center;
-                    gap: 1rem;
-                    margin-top: 0.35rem;
-                  "
-                >
+                <div style="display: flex; align-items: center; gap: 1rem; margin-top: 0.35rem">
                   <div
                     class="sidebar-avatar"
                     id="settings-avatar-preview"
@@ -1048,13 +1017,7 @@
                       id="profile-photo-url"
                       placeholder="Paste image URL (e.g. https://…/photo.jpg)"
                     />
-                    <p
-                      style="
-                        font-size: 0.72rem;
-                        color: var(--muted);
-                        margin-top: 0.3rem;
-                      "
-                    >
+                    <p style="font-size: 0.72rem; color: var(--muted); margin-top: 0.3rem">
                       Leave empty to use your Google profile photo
                     </p>
                   </div>
@@ -1080,11 +1043,7 @@
                   maxlength="30"
                 />
                 <p
-                  style="
-                    font-size: 0.72rem;
-                    color: var(--muted);
-                    margin-top: 0.3rem;
-                  "
+                  style="font-size: 0.72rem; color: var(--muted); margin-top: 0.3rem"
                   id="username-hint"
                 >
                   Lowercase letters, numbers, and underscores only
@@ -1110,41 +1069,16 @@
                     style="background: #1a73e8"
                     data-color="#1A73E8"
                   ></div>
-                  <div
-                    class="color-swatch"
-                    style="background: #5ec898"
-                    data-color="#5ec898"
-                  ></div>
-                  <div
-                    class="color-swatch"
-                    style="background: #5e98c8"
-                    data-color="#5e98c8"
-                  ></div>
-                  <div
-                    class="color-swatch"
-                    style="background: #c85e98"
-                    data-color="#c85e98"
-                  ></div>
-                  <div
-                    class="color-swatch"
-                    style="background: #e85050"
-                    data-color="#e85050"
-                  ></div>
+                  <div class="color-swatch" style="background: #5ec898" data-color="#5ec898"></div>
+                  <div class="color-swatch" style="background: #5e98c8" data-color="#5e98c8"></div>
+                  <div class="color-swatch" style="background: #c85e98" data-color="#c85e98"></div>
+                  <div class="color-swatch" style="background: #e85050" data-color="#e85050"></div>
                   <!-- Custom color picker -->
-                  <input
-                    type="color"
-                    id="custom-color"
-                    value="#1A73E8"
-                    title="Pick custom color"
-                  />
-                  <span id="settings-saved" class="settings-saved"
-                    >✓ Saved</span
-                  >
+                  <input type="color" id="custom-color" value="#1A73E8" title="Pick custom color" />
+                  <span id="settings-saved" class="settings-saved">✓ Saved</span>
                 </div>
               </div>
-              <button class="btn btn-primary btn-sm" id="save-settings-btn">
-                Save Settings
-              </button>
+              <button class="btn btn-primary btn-sm" id="save-settings-btn">Save Settings</button>
             </div>
           </div>
         </div>
@@ -1166,12 +1100,12 @@
        Replace with your real credentials from Firebase console.
        ============================================================ */
       const firebaseConfig = {
-        apiKey: "AIzaSyCIQ4tXZo9mibJscDKA5kLY7ndMrYaawp4",
-        authDomain: "treelink-53452.firebaseapp.com",
-        projectId: "treelink-53452",
-        storageBucket: "treelink-53452.firebasestorage.app",
-        messagingSenderId: "298229640699",
-        appId: "1:298229640699:web:bb8e45200d4b76dadfef5e",
+        apiKey: 'AIzaSyCIQ4tXZo9mibJscDKA5kLY7ndMrYaawp4',
+        authDomain: 'treelink-53452.firebaseapp.com',
+        projectId: 'treelink-53452',
+        storageBucket: 'treelink-53452.firebasestorage.app',
+        messagingSenderId: '298229640699',
+        appId: '1:298229640699:web:bb8e45200d4b76dadfef5e',
       };
 
       firebase.initializeApp(firebaseConfig);
@@ -1192,39 +1126,39 @@
       /* ============================================================
        DOM REFERENCES
        ============================================================ */
-      const loadingScreen = document.getElementById("loading-screen");
-      const appShell = document.getElementById("app");
-      const toast = document.getElementById("toast");
-      const sidebar = document.getElementById("sidebar");
-      const sidebarOverlay = document.getElementById("sidebar-overlay");
-      const menuBtn = document.getElementById("menu-btn");
-      const linksList = document.getElementById("links-list");
-      const addLinkForm = document.getElementById("add-link-form");
-      const formError = document.getElementById("form-error");
+      const loadingScreen = document.getElementById('loading-screen');
+      const appShell = document.getElementById('app');
+      const toast = document.getElementById('toast');
+      const sidebar = document.getElementById('sidebar');
+      const sidebarOverlay = document.getElementById('sidebar-overlay');
+      const menuBtn = document.getElementById('menu-btn');
+      const linksList = document.getElementById('links-list');
+      const addLinkForm = document.getElementById('add-link-form');
+      const formError = document.getElementById('form-error');
 
       /* ============================================================
        TOAST UTILITY
        Shows a brief notification at the bottom of the screen.
        ============================================================ */
-      function showToast(msg, type = "success") {
+      function showToast(msg, type = 'success') {
         toast.textContent = msg;
         toast.className = `show ${type}`;
         clearTimeout(toast._timer);
         toast._timer = setTimeout(() => {
-          toast.className = "";
+          toast.className = '';
         }, 3000);
       }
 
       /* ============================================================
        SIDEBAR TOGGLE (mobile)
        ============================================================ */
-      menuBtn.addEventListener("click", () => {
-        sidebar.classList.add("open");
-        sidebarOverlay.classList.add("visible");
+      menuBtn.addEventListener('click', () => {
+        sidebar.classList.add('open');
+        sidebarOverlay.classList.add('visible');
       });
-      sidebarOverlay.addEventListener("click", () => {
-        sidebar.classList.remove("open");
-        sidebarOverlay.classList.remove("visible");
+      sidebarOverlay.addEventListener('click', () => {
+        sidebar.classList.remove('open');
+        sidebarOverlay.classList.remove('visible');
       });
 
       /* ============================================================
@@ -1233,7 +1167,7 @@
       auth.onAuthStateChanged(async (user) => {
         if (!user) {
           /* Not logged in → redirect to landing page */
-          window.location.href = "index.html";
+          window.location.href = 'index.html';
           return;
         }
 
@@ -1246,38 +1180,34 @@
         startLinksListener();
 
         /* Show the app */
-        loadingScreen.style.display = "none";
-        appShell.classList.add("visible");
+        loadingScreen.style.display = 'none';
+        appShell.classList.add('visible');
       });
 
       /* ============================================================
        LOAD USER DATA FROM FIRESTORE
        ============================================================ */
       async function loadUserData() {
-        const snap = await db.collection("users").doc(currentUser.uid).get();
+        const snap = await db.collection('users').doc(currentUser.uid).get();
         userData = snap.data();
 
         /* Populate sidebar */
-        document.getElementById("sidebar-name").textContent =
+        document.getElementById('sidebar-name').textContent =
           userData.name || currentUser.displayName;
-        document.getElementById("sidebar-username").textContent =
-          "@" + (userData.username || "user");
+        document.getElementById('sidebar-username').textContent =
+          '@' + (userData.username || 'user');
 
         /* Populate settings form fields */
-        document.getElementById("profile-bio").value = userData.bio || "";
-        document.getElementById("profile-name").value =
-          userData.name || currentUser.displayName || "";
-        document.getElementById("profile-username").value =
-          userData.username || "";
-        document.getElementById("profile-photo-url").value =
-          userData.photoURL || "";
+        document.getElementById('profile-bio').value = userData.bio || '';
+        document.getElementById('profile-name').value =
+          userData.name || currentUser.displayName || '';
+        document.getElementById('profile-username').value = userData.username || '';
+        document.getElementById('profile-photo-url').value = userData.photoURL || '';
 
         /* Avatar: use custom photoURL, then Google photo, then fallback emoji */
         const photoSrc = userData.photoURL || currentUser.photoURL;
-        const avatarWrap = document.getElementById("sidebar-avatar-wrap");
-        const settingsPreview = document.getElementById(
-          "settings-avatar-preview",
-        );
+        const avatarWrap = document.getElementById('sidebar-avatar-wrap');
+        const settingsPreview = document.getElementById('settings-avatar-preview');
         if (photoSrc) {
           avatarWrap.innerHTML = `<img src="${photoSrc}" alt="avatar" loading="lazy" referrerpolicy="no-referrer"
              onerror="this.onerror=null; this.closest('.sidebar-avatar').innerHTML='🌿';" />`;
@@ -1289,42 +1219,41 @@
         /* Public profile URL */
         const basePath = window.location.pathname.substring(
           0,
-          window.location.pathname.lastIndexOf("/"),
+          window.location.pathname.lastIndexOf('/')
         );
         const publicUrl = `${window.location.origin}${basePath}/profile.html?u=${userData.username}`;
-        const linkEl = document.getElementById("sidebar-public-link");
-        linkEl.textContent = "🌐 Visit your link";
+        const linkEl = document.getElementById('sidebar-public-link');
+        linkEl.textContent = '🌐 Visit your link';
         linkEl.href = publicUrl;
 
         /* Copy link button */
-        const copyBtn = document.getElementById("copy-link-btn");
+        const copyBtn = document.getElementById('copy-link-btn');
         copyBtn._profileUrl = publicUrl;
-        copyBtn.addEventListener("click", async () => {
+        copyBtn.addEventListener('click', async () => {
           try {
             await navigator.clipboard.writeText(copyBtn._profileUrl);
-            copyBtn.classList.add("copied");
-            copyBtn.textContent = "✓ Link copied!";
-            showToast("✓ Profile link copied to clipboard!");
+            copyBtn.classList.add('copied');
+            copyBtn.textContent = '✓ Link copied!';
+            showToast('✓ Profile link copied to clipboard!');
             setTimeout(() => {
-              copyBtn.classList.remove("copied");
-              copyBtn.textContent = "📋 Copy your profile link";
+              copyBtn.classList.remove('copied');
+              copyBtn.textContent = '📋 Copy your profile link';
             }, 2000);
           } catch {
             /* Fallback for older browsers */
-            const ta = document.createElement("textarea");
+            const ta = document.createElement('textarea');
             ta.value = copyBtn._profileUrl;
             document.body.appendChild(ta);
             ta.select();
-            document.execCommand("copy");
+            document.execCommand('copy');
             document.body.removeChild(ta);
-            showToast("✓ Profile link copied!");
+            showToast('✓ Profile link copied!');
           }
         });
 
         /* Preset color swatches — mark selected */
-        updateColorSwatches(userData.theme || "#1A73E8");
-        document.getElementById("custom-color").value =
-          userData.theme || "#1A73E8";
+        updateColorSwatches(userData.theme || '#1A73E8');
+        document.getElementById('custom-color').value = userData.theme || '#1A73E8';
       }
 
       /* ============================================================
@@ -1337,10 +1266,10 @@
         if (unsubscribeLinks) unsubscribeLinks();
 
         unsubscribeLinks = db
-          .collection("users")
+          .collection('users')
           .doc(currentUser.uid)
-          .collection("links")
-          .orderBy("order", "asc")
+          .collection('links')
+          .orderBy('order', 'asc')
           .onSnapshot(
             (snapshot) => {
               links = snapshot.docs.map((doc) => ({
@@ -1351,8 +1280,8 @@
               updateStats();
             },
             (err) => {
-              console.error("Links listener error:", err);
-            },
+              console.error('Links listener error:', err);
+            }
           );
       }
 
@@ -1369,11 +1298,11 @@
           return;
         }
 
-        linksList.innerHTML = "";
+        linksList.innerHTML = '';
 
         links.forEach((link, index) => {
-          const wrapper = document.createElement("div");
-          wrapper.className = "link-item-wrapper fade-in";
+          const wrapper = document.createElement('div');
+          wrapper.className = 'link-item-wrapper fade-in';
           wrapper.dataset.id = link.id;
           wrapper.dataset.index = index;
 
@@ -1383,7 +1312,7 @@
                draggable="true"
                data-id="${link.id}">
             <span class="drag-handle" title="Drag to reorder">⠿</span>
-            <div class="link-icon-preview">${link.icon || "🔗"}</div>
+            <div class="link-icon-preview">${link.icon || '🔗'}</div>
             <div class="link-info">
               <div class="link-title-text">${escapeHtml(link.title)}</div>
               <div class="link-url-text">${escapeHtml(link.url)}</div>
@@ -1402,7 +1331,7 @@
           <div class="link-edit-form" id="edit-form-${link.id}">
             <input type="text" class="edit-title" placeholder="Title" value="${escapeHtml(link.title)}" maxlength="80" />
             <input type="url"  class="edit-url"   placeholder="URL"   value="${escapeHtml(link.url)}" />
-            <input type="text" class="edit-icon"  placeholder="Icon (emoji)" value="${escapeHtml(link.icon || "")}" maxlength="4" />
+            <input type="text" class="edit-icon"  placeholder="Icon (emoji)" value="${escapeHtml(link.icon || '')}" maxlength="4" />
             <div style="display:flex;gap:.5rem;">
               <button class="btn btn-primary btn-sm save-edit-btn" data-id="${link.id}">Save</button>
               <button class="btn btn-ghost btn-sm cancel-edit-btn" data-id="${link.id}">Cancel</button>
@@ -1413,28 +1342,26 @@
           linksList.appendChild(wrapper);
 
           /* ----- Drag-and-drop events ----- */
-          const linkItem = wrapper.querySelector(".link-item");
-          linkItem.addEventListener("dragstart", onDragStart);
-          linkItem.addEventListener("dragover", onDragOver);
-          linkItem.addEventListener("dragleave", onDragLeave);
-          linkItem.addEventListener("drop", onDrop);
-          linkItem.addEventListener("dragend", onDragEnd);
+          const linkItem = wrapper.querySelector('.link-item');
+          linkItem.addEventListener('dragstart', onDragStart);
+          linkItem.addEventListener('dragover', onDragOver);
+          linkItem.addEventListener('dragleave', onDragLeave);
+          linkItem.addEventListener('drop', onDrop);
+          linkItem.addEventListener('dragend', onDragEnd);
         });
 
         /* ----- Button event delegation ----- */
-        linksList.querySelectorAll(".edit-btn").forEach((btn) => {
-          btn.addEventListener("click", () => toggleEditForm(btn.dataset.id));
+        linksList.querySelectorAll('.edit-btn').forEach((btn) => {
+          btn.addEventListener('click', () => toggleEditForm(btn.dataset.id));
         });
-        linksList.querySelectorAll(".delete-btn").forEach((btn) => {
-          btn.addEventListener("click", () => deleteLink(btn.dataset.id));
+        linksList.querySelectorAll('.delete-btn').forEach((btn) => {
+          btn.addEventListener('click', () => deleteLink(btn.dataset.id));
         });
-        linksList.querySelectorAll(".save-edit-btn").forEach((btn) => {
-          btn.addEventListener("click", () => saveEdit(btn.dataset.id));
+        linksList.querySelectorAll('.save-edit-btn').forEach((btn) => {
+          btn.addEventListener('click', () => saveEdit(btn.dataset.id));
         });
-        linksList.querySelectorAll(".cancel-edit-btn").forEach((btn) => {
-          btn.addEventListener("click", () =>
-            toggleEditForm(btn.dataset.id, false),
-          );
+        linksList.querySelectorAll('.cancel-edit-btn').forEach((btn) => {
+          btn.addEventListener('click', () => toggleEditForm(btn.dataset.id, false));
         });
       }
 
@@ -1443,97 +1370,85 @@
        ============================================================ */
       function updateStats() {
         const totalClicks = links.reduce((sum, l) => sum + (l.clicks || 0), 0);
-        const topClicks = links.length
-          ? Math.max(...links.map((l) => l.clicks || 0))
-          : 0;
+        const topClicks = links.length ? Math.max(...links.map((l) => l.clicks || 0)) : 0;
 
-        document.getElementById("stat-links").textContent = links.length;
-        document.getElementById("stat-clicks").textContent = totalClicks;
-        document.getElementById("stat-top").textContent = topClicks || "—";
+        document.getElementById('stat-links').textContent = links.length;
+        document.getElementById('stat-clicks').textContent = totalClicks;
+        document.getElementById('stat-top').textContent = topClicks || '—';
       }
 
       /* ============================================================
        FORM TOGGLE
        ============================================================ */
-      const toggleFormBtn = document.getElementById("toggle-form-btn");
-      toggleFormBtn.addEventListener("click", () => {
-        const isHidden = addLinkForm.style.display === "none";
-        addLinkForm.style.display = isHidden ? "block" : "none";
-        toggleFormBtn.textContent = isHidden ? "✕ Cancel" : "＋ Add Link";
+      const toggleFormBtn = document.getElementById('toggle-form-btn');
+      toggleFormBtn.addEventListener('click', () => {
+        const isHidden = addLinkForm.style.display === 'none';
+        addLinkForm.style.display = isHidden ? 'block' : 'none';
+        toggleFormBtn.textContent = isHidden ? '✕ Cancel' : '＋ Add Link';
         if (isHidden) {
-          document.getElementById("link-title").focus();
+          document.getElementById('link-title').focus();
         } else {
           /* Reset form */
           clearAddForm();
         }
       });
 
-      document
-        .getElementById("cancel-form-btn")
-        .addEventListener("click", () => {
-          addLinkForm.style.display = "none";
-          toggleFormBtn.textContent = "＋ Add Link";
-          clearAddForm();
-        });
+      document.getElementById('cancel-form-btn').addEventListener('click', () => {
+        addLinkForm.style.display = 'none';
+        toggleFormBtn.textContent = '＋ Add Link';
+        clearAddForm();
+      });
 
       function clearAddForm() {
-        document.getElementById("link-title").value = "";
-        document.getElementById("link-url").value = "";
-        document.getElementById("link-icon").value = "";
-        formError.textContent = "";
+        document.getElementById('link-title').value = '';
+        document.getElementById('link-url').value = '';
+        document.getElementById('link-icon').value = '';
+        formError.textContent = '';
       }
 
       /* ============================================================
        SAVE NEW LINK
        Adds a document to /users/{uid}/links collection.
        ============================================================ */
-      document
-        .getElementById("save-link-btn")
-        .addEventListener("click", async () => {
-          const title = document.getElementById("link-title").value.trim();
-          const url = document.getElementById("link-url").value.trim();
-          const icon =
-            document.getElementById("link-icon").value.trim() || "🔗";
+      document.getElementById('save-link-btn').addEventListener('click', async () => {
+        const title = document.getElementById('link-title').value.trim();
+        const url = document.getElementById('link-url').value.trim();
+        const icon = document.getElementById('link-icon').value.trim() || '🔗';
 
-          /* Validate */
-          if (!title) {
-            formError.textContent = "Please enter a title.";
-            return;
-          }
-          if (!url) {
-            formError.textContent = "Please enter a URL.";
-            return;
-          }
-          if (!isValidUrl(url)) {
-            formError.textContent =
-              "Please enter a valid URL (include https://).";
-            return;
-          }
+        /* Validate */
+        if (!title) {
+          formError.textContent = 'Please enter a title.';
+          return;
+        }
+        if (!url) {
+          formError.textContent = 'Please enter a URL.';
+          return;
+        }
+        if (!isValidUrl(url)) {
+          formError.textContent = 'Please enter a valid URL (include https://).';
+          return;
+        }
 
-          formError.textContent = "";
+        formError.textContent = '';
 
-          try {
-            await db
-              .collection("users")
-              .doc(currentUser.uid)
-              .collection("links")
-              .add({
-                title,
-                url,
-                icon,
-                clicks: 0,
-                order: links.length /* append at end */,
-                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-              });
+        try {
+          await db.collection('users').doc(currentUser.uid).collection('links').add({
+            title,
+            url,
+            icon,
+            clicks: 0,
+            order: links.length /* append at end */,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+          });
 
-            clearAddForm();
-            addLinkForm.style.display = "none";
-            toggleFormBtn.textContent = "＋ Add Link";
-            showToast("✓ Link added!");
-          } catch (err) {
-            formError.textContent = "Error saving link: " + err.message;
-          }
-        });
+          clearAddForm();
+          addLinkForm.style.display = 'none';
+          toggleFormBtn.textContent = '＋ Add Link';
+          showToast('✓ Link added!');
+        } catch (err) {
+          formError.textContent = 'Error saving link: ' + err.message;
+        }
+      });
 
       /* ============================================================
        TOGGLE EDIT FORM
@@ -1542,11 +1457,11 @@
         const editForm = document.getElementById(`edit-form-${id}`);
         if (!editForm) return;
 
-        const isVisible = editForm.classList.contains("visible");
+        const isVisible = editForm.classList.contains('visible');
         const shouldShow = show !== undefined ? show : !isVisible;
 
-        editForm.classList.toggle("visible", shouldShow);
-        if (shouldShow) editForm.querySelector(".edit-title").focus();
+        editForm.classList.toggle('visible', shouldShow);
+        if (shouldShow) editForm.querySelector('.edit-title').focus();
       }
 
       /* ============================================================
@@ -1554,31 +1469,31 @@
        ============================================================ */
       async function saveEdit(id) {
         const editForm = document.getElementById(`edit-form-${id}`);
-        const title = editForm.querySelector(".edit-title").value.trim();
-        const url = editForm.querySelector(".edit-url").value.trim();
-        const icon = editForm.querySelector(".edit-icon").value.trim() || "🔗";
+        const title = editForm.querySelector('.edit-title').value.trim();
+        const url = editForm.querySelector('.edit-url').value.trim();
+        const icon = editForm.querySelector('.edit-icon').value.trim() || '🔗';
 
         if (!title || !url) {
-          showToast("Title and URL are required.", "error");
+          showToast('Title and URL are required.', 'error');
           return;
         }
         if (!isValidUrl(url)) {
-          showToast("Invalid URL.", "error");
+          showToast('Invalid URL.', 'error');
           return;
         }
 
         try {
           await db
-            .collection("users")
+            .collection('users')
             .doc(currentUser.uid)
-            .collection("links")
+            .collection('links')
             .doc(id)
             .update({ title, url, icon });
 
-          showToast("✓ Link updated!");
+          showToast('✓ Link updated!');
           toggleEditForm(id, false);
         } catch (err) {
-          showToast("Error: " + err.message, "error");
+          showToast('Error: ' + err.message, 'error');
         }
       }
 
@@ -1586,19 +1501,14 @@
        DELETE LINK
        ============================================================ */
       async function deleteLink(id) {
-        if (!confirm("Delete this link?")) return;
+        if (!confirm('Delete this link?')) return;
 
         try {
-          await db
-            .collection("users")
-            .doc(currentUser.uid)
-            .collection("links")
-            .doc(id)
-            .delete();
+          await db.collection('users').doc(currentUser.uid).collection('links').doc(id).delete();
 
-          showToast("Link deleted.");
+          showToast('Link deleted.');
         } catch (err) {
-          showToast("Error: " + err.message, "error");
+          showToast('Error: ' + err.message, 'error');
         }
       }
 
@@ -1607,29 +1517,27 @@
        HTML5 Drag API — reorders links by updating `order` field.
        ============================================================ */
       function onDragStart(e) {
-        dragSrc = this.closest(".link-item-wrapper");
-        e.dataTransfer.effectAllowed = "move";
-        this.classList.add("dragging");
+        dragSrc = this.closest('.link-item-wrapper');
+        e.dataTransfer.effectAllowed = 'move';
+        this.classList.add('dragging');
       }
       function onDragOver(e) {
         e.preventDefault();
-        e.dataTransfer.dropEffect = "move";
-        this.closest(".link-item-wrapper").classList.add("drag-over");
+        e.dataTransfer.dropEffect = 'move';
+        this.closest('.link-item-wrapper').classList.add('drag-over');
       }
       function onDragLeave() {
-        this.closest(".link-item-wrapper").classList.remove("drag-over");
+        this.closest('.link-item-wrapper').classList.remove('drag-over');
       }
       async function onDrop(e) {
         e.preventDefault();
-        const dropTarget = this.closest(".link-item-wrapper");
-        dropTarget.classList.remove("drag-over");
+        const dropTarget = this.closest('.link-item-wrapper');
+        dropTarget.classList.remove('drag-over');
 
         if (dragSrc === dropTarget) return;
 
         /* Re-order: swap positions in DOM then persist */
-        const allWrappers = [
-          ...linksList.querySelectorAll(".link-item-wrapper"),
-        ];
+        const allWrappers = [...linksList.querySelectorAll('.link-item-wrapper')];
         const srcIdx = allWrappers.indexOf(dragSrc);
         const destIdx = allWrappers.indexOf(dropTarget);
 
@@ -1640,188 +1548,162 @@
         /* Persist new order to Firestore as a batch */
         const batch = db.batch();
         links.forEach((link, idx) => {
-          const ref = db
-            .collection("users")
-            .doc(currentUser.uid)
-            .collection("links")
-            .doc(link.id);
+          const ref = db.collection('users').doc(currentUser.uid).collection('links').doc(link.id);
           batch.update(ref, { order: idx });
         });
         await batch.commit();
       }
       function onDragEnd() {
-        this.classList.remove("dragging");
-        linksList
-          .querySelectorAll(".drag-over")
-          .forEach((el) => el.classList.remove("drag-over"));
+        this.classList.remove('dragging');
+        linksList.querySelectorAll('.drag-over').forEach((el) => el.classList.remove('drag-over'));
       }
 
       /* ============================================================
        SETTINGS — Color Swatches
        ============================================================ */
-      document.querySelectorAll(".color-swatch").forEach((swatch) => {
-        swatch.addEventListener("click", () => {
+      document.querySelectorAll('.color-swatch').forEach((swatch) => {
+        swatch.addEventListener('click', () => {
           updateColorSwatches(swatch.dataset.color);
-          document.getElementById("custom-color").value = swatch.dataset.color;
+          document.getElementById('custom-color').value = swatch.dataset.color;
         });
       });
 
-      document.getElementById("custom-color").addEventListener("input", (e) => {
+      document.getElementById('custom-color').addEventListener('input', (e) => {
         updateColorSwatches(e.target.value);
       });
 
       function updateColorSwatches(color) {
-        document.querySelectorAll(".color-swatch").forEach((s) => {
-          s.classList.toggle("selected", s.dataset.color === color);
+        document.querySelectorAll('.color-swatch').forEach((s) => {
+          s.classList.toggle('selected', s.dataset.color === color);
         });
       }
 
       /* ============================================================
        SAVE SETTINGS
        ============================================================ */
-      document
-        .getElementById("save-settings-btn")
-        .addEventListener("click", async () => {
-          const bio = document.getElementById("profile-bio").value.trim();
-          const theme = document.getElementById("custom-color").value;
-          const newName = document.getElementById("profile-name").value.trim();
-          const newUsername = document
-            .getElementById("profile-username")
-            .value.trim()
-            .toLowerCase();
-          const newPhotoURL = document
-            .getElementById("profile-photo-url")
-            .value.trim();
-          const usernameHint = document.getElementById("username-hint");
+      document.getElementById('save-settings-btn').addEventListener('click', async () => {
+        const bio = document.getElementById('profile-bio').value.trim();
+        const theme = document.getElementById('custom-color').value;
+        const newName = document.getElementById('profile-name').value.trim();
+        const newUsername = document.getElementById('profile-username').value.trim().toLowerCase();
+        const newPhotoURL = document.getElementById('profile-photo-url').value.trim();
+        const usernameHint = document.getElementById('username-hint');
 
-          /* Validate name */
-          if (!newName) {
-            showToast("Display name cannot be empty.", "error");
-            return;
-          }
+        /* Validate name */
+        if (!newName) {
+          showToast('Display name cannot be empty.', 'error');
+          return;
+        }
 
-          /* Validate username format */
-          if (!newUsername) {
-            showToast("Username cannot be empty.", "error");
-            return;
-          }
-          if (!/^[a-z0-9_]+$/.test(newUsername)) {
-            usernameHint.textContent =
-              "✕ Only lowercase letters, numbers, and underscores allowed";
-            usernameHint.style.color = "var(--danger)";
-            showToast(
-              "Username can only contain lowercase letters, numbers, and underscores.",
-              "error",
-            );
-            return;
-          }
-          if (newUsername.length < 3) {
-            showToast("Username must be at least 3 characters.", "error");
-            return;
-          }
+        /* Validate username format */
+        if (!newUsername) {
+          showToast('Username cannot be empty.', 'error');
+          return;
+        }
+        if (!/^[a-z0-9_]+$/.test(newUsername)) {
+          usernameHint.textContent = '✕ Only lowercase letters, numbers, and underscores allowed';
+          usernameHint.style.color = 'var(--danger)';
+          showToast(
+            'Username can only contain lowercase letters, numbers, and underscores.',
+            'error'
+          );
+          return;
+        }
+        if (newUsername.length < 3) {
+          showToast('Username must be at least 3 characters.', 'error');
+          return;
+        }
 
-          /* Check username uniqueness (only if changed) */
-          if (newUsername !== userData.username) {
-            try {
-              const existing = await db
-                .collection("users")
-                .where("username", "==", newUsername)
-                .limit(1)
-                .get();
-              if (!existing.empty) {
-                usernameHint.textContent = "✕ This username is already taken";
-                usernameHint.style.color = "var(--danger)";
-                showToast(
-                  'Username "' + newUsername + '" is already taken.',
-                  "error",
-                );
-                return;
-              }
-            } catch (err) {
-              showToast("Error checking username: " + err.message, "error");
+        /* Check username uniqueness (only if changed) */
+        if (newUsername !== userData.username) {
+          try {
+            const existing = await db
+              .collection('users')
+              .where('username', '==', newUsername)
+              .limit(1)
+              .get();
+            if (!existing.empty) {
+              usernameHint.textContent = '✕ This username is already taken';
+              usernameHint.style.color = 'var(--danger)';
+              showToast('Username "' + newUsername + '" is already taken.', 'error');
               return;
             }
-          }
-
-          /* Reset hint */
-          usernameHint.textContent =
-            "Lowercase letters, numbers, and underscores only";
-          usernameHint.style.color = "var(--muted)";
-
-          try {
-            const updateData = {
-              bio,
-              theme,
-              name: newName,
-              username: newUsername,
-            };
-            if (newPhotoURL) {
-              updateData.photoURL = newPhotoURL;
-            } else {
-              /* Clear custom photo, will fall back to Google photo */
-              updateData.photoURL = "";
-            }
-
-            await db
-              .collection("users")
-              .doc(currentUser.uid)
-              .update(updateData);
-            showToast("✓ Settings saved!");
-
-            /* Update sidebar immediately */
-            document.getElementById("sidebar-name").textContent = newName;
-            document.getElementById("sidebar-username").textContent =
-              "@" + newUsername;
-
-            /* Update avatar */
-            const photoSrc = newPhotoURL || currentUser.photoURL;
-            const avatarWrap = document.getElementById("sidebar-avatar-wrap");
-            const settingsPreview = document.getElementById(
-              "settings-avatar-preview",
-            );
-            if (photoSrc) {
-              avatarWrap.innerHTML = `<img src="${photoSrc}" alt="avatar" />`;
-              settingsPreview.innerHTML = `<img src="${photoSrc}" alt="avatar" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" />`;
-            } else {
-              avatarWrap.innerHTML = "<span>🌿</span>";
-              settingsPreview.innerHTML = "<span>🌿</span>";
-            }
-
-            /* Update public profile link */
-            const basePath = window.location.pathname.substring(
-              0,
-              window.location.pathname.lastIndexOf("/"),
-            );
-            const publicUrl = `${window.location.origin}${basePath}/profile.html?u=${newUsername}`;
-            const linkEl = document.getElementById("sidebar-public-link");
-            linkEl.href = publicUrl;
-            document.getElementById("copy-link-btn")._profileUrl = publicUrl;
-
-            /* Update local state */
-            userData.name = newName;
-            userData.username = newUsername;
-            userData.bio = bio;
-            userData.theme = theme;
-            userData.photoURL = newPhotoURL;
-
-            const savedEl = document.getElementById("settings-saved");
-            savedEl.classList.add("visible");
-            setTimeout(() => savedEl.classList.remove("visible"), 2500);
           } catch (err) {
-            showToast("Error saving settings: " + err.message, "error");
+            showToast('Error checking username: ' + err.message, 'error');
+            return;
           }
-        });
+        }
+
+        /* Reset hint */
+        usernameHint.textContent = 'Lowercase letters, numbers, and underscores only';
+        usernameHint.style.color = 'var(--muted)';
+
+        try {
+          const updateData = {
+            bio,
+            theme,
+            name: newName,
+            username: newUsername,
+          };
+          if (newPhotoURL) {
+            updateData.photoURL = newPhotoURL;
+          } else {
+            /* Clear custom photo, will fall back to Google photo */
+            updateData.photoURL = '';
+          }
+
+          await db.collection('users').doc(currentUser.uid).update(updateData);
+          showToast('✓ Settings saved!');
+
+          /* Update sidebar immediately */
+          document.getElementById('sidebar-name').textContent = newName;
+          document.getElementById('sidebar-username').textContent = '@' + newUsername;
+
+          /* Update avatar */
+          const photoSrc = newPhotoURL || currentUser.photoURL;
+          const avatarWrap = document.getElementById('sidebar-avatar-wrap');
+          const settingsPreview = document.getElementById('settings-avatar-preview');
+          if (photoSrc) {
+            avatarWrap.innerHTML = `<img src="${photoSrc}" alt="avatar" />`;
+            settingsPreview.innerHTML = `<img src="${photoSrc}" alt="avatar" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" />`;
+          } else {
+            avatarWrap.innerHTML = '<span>🌿</span>';
+            settingsPreview.innerHTML = '<span>🌿</span>';
+          }
+
+          /* Update public profile link */
+          const basePath = window.location.pathname.substring(
+            0,
+            window.location.pathname.lastIndexOf('/')
+          );
+          const publicUrl = `${window.location.origin}${basePath}/profile.html?u=${newUsername}`;
+          const linkEl = document.getElementById('sidebar-public-link');
+          linkEl.href = publicUrl;
+          document.getElementById('copy-link-btn')._profileUrl = publicUrl;
+
+          /* Update local state */
+          userData.name = newName;
+          userData.username = newUsername;
+          userData.bio = bio;
+          userData.theme = theme;
+          userData.photoURL = newPhotoURL;
+
+          const savedEl = document.getElementById('settings-saved');
+          savedEl.classList.add('visible');
+          setTimeout(() => savedEl.classList.remove('visible'), 2500);
+        } catch (err) {
+          showToast('Error saving settings: ' + err.message, 'error');
+        }
+      });
 
       /* ============================================================
        LOGOUT
        ============================================================ */
-      document
-        .getElementById("logout-btn")
-        .addEventListener("click", async () => {
-          if (unsubscribeLinks) unsubscribeLinks();
-          await auth.signOut();
-          window.location.href = "index.html";
-        });
+      document.getElementById('logout-btn').addEventListener('click', async () => {
+        if (unsubscribeLinks) unsubscribeLinks();
+        await auth.signOut();
+        window.location.href = 'index.html';
+      });
 
       /* ============================================================
        HELPERS
@@ -1836,12 +1718,12 @@
       }
 
       function escapeHtml(str) {
-        if (!str) return "";
+        if (!str) return '';
         return str
-          .replace(/&/g, "&amp;")
-          .replace(/</g, "&lt;")
-          .replace(/>/g, "&gt;")
-          .replace(/"/g, "&quot;");
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;');
       }
     </script>
   </body>
