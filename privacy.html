@@ -53,7 +53,7 @@
         background: var(--bg);
         color: var(--text-1);
         font-family:
-          'Sora',
+          "Sora",
           -apple-system,
           BlinkMacSystemFont,
           sans-serif;
@@ -64,7 +64,7 @@
       }
 
       body::after {
-        content: '';
+        content: "";
         position: fixed;
         inset: 0;
         background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
@@ -77,7 +77,7 @@
       h2,
       h3,
       h4 {
-        font-family: 'Outfit', sans-serif;
+        font-family: "Outfit", sans-serif;
         line-height: 1.05;
         letter-spacing: -0.03em;
         font-weight: 700;
@@ -135,7 +135,11 @@
       .orb-a {
         width: 700px;
         height: 700px;
-        background: radial-gradient(circle, rgba(27, 191, 154, 0.11) 0%, transparent 70%);
+        background: radial-gradient(
+          circle,
+          rgba(27, 191, 154, 0.11) 0%,
+          transparent 70%
+        );
         top: -260px;
         right: -180px;
         animation-duration: 18s;
@@ -143,7 +147,11 @@
       .orb-b {
         width: 500px;
         height: 500px;
-        background: radial-gradient(circle, rgba(27, 191, 154, 0.07) 0%, transparent 70%);
+        background: radial-gradient(
+          circle,
+          rgba(27, 191, 154, 0.07) 0%,
+          transparent 70%
+        );
         bottom: 60px;
         left: -160px;
         animation-duration: 22s;
@@ -211,7 +219,7 @@
         flex-shrink: 0;
       }
       .nav-logo-text {
-        font-family: 'Outfit', sans-serif;
+        font-family: "Outfit", sans-serif;
         font-size: 1.05rem;
         font-weight: 700;
         color: var(--text-1);
@@ -245,7 +253,7 @@
         border: 1px solid var(--border);
         border-radius: 100px;
         padding: 0.5rem 1.125rem;
-        font-family: 'Sora', sans-serif;
+        font-family: "Sora", sans-serif;
         font-size: 0.875rem;
         font-weight: 500;
         cursor: pointer;
@@ -267,7 +275,7 @@
         border: none;
         border-radius: 100px;
         padding: 0.5rem 1.25rem;
-        font-family: 'Sora', sans-serif;
+        font-family: "Sora", sans-serif;
         font-size: 0.875rem;
         font-weight: 600;
         cursor: pointer;
@@ -298,7 +306,7 @@
       }
 
       .legal-content h1 {
-        font-family: 'Outfit', sans-serif;
+        font-family: "Outfit", sans-serif;
         font-size: clamp(2.25rem, 6vw, 3.5rem);
         font-weight: 700;
         color: var(--text-1);
@@ -311,7 +319,7 @@
       }
 
       .legal-content h2 {
-        font-family: 'Outfit', sans-serif;
+        font-family: "Outfit", sans-serif;
         font-size: 1.25rem;
         font-weight: 600;
         color: var(--accent);
@@ -453,10 +461,30 @@
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
           >
-            <path d="M14 25V15" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" />
-            <path d="M14 15L7 8" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" />
-            <path d="M14 15L21 8" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" />
-            <path d="M14 10V4.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" />
+            <path
+              d="M14 25V15"
+              stroke="currentColor"
+              stroke-width="2.2"
+              stroke-linecap="round"
+            />
+            <path
+              d="M14 15L7 8"
+              stroke="currentColor"
+              stroke-width="2.2"
+              stroke-linecap="round"
+            />
+            <path
+              d="M14 15L21 8"
+              stroke="currentColor"
+              stroke-width="2.2"
+              stroke-linecap="round"
+            />
+            <path
+              d="M14 10V4.5"
+              stroke="currentColor"
+              stroke-width="2.2"
+              stroke-linecap="round"
+            />
             <circle cx="7" cy="7" r="2.4" fill="currentColor" opacity=".65" />
             <circle cx="21" cy="7" r="2.4" fill="currentColor" opacity=".65" />
             <circle cx="14" cy="3.5" r="2.4" fill="currentColor" />
@@ -481,15 +509,17 @@
 
       <h2 class="reveal d1">1. Information We Collect</h2>
       <p class="reveal d1">
-        When you sign in with Google, we receive and store the following information from your
-        Google account:
+        When you sign in with Google, we receive and store the following
+        information from your Google account:
       </p>
       <ul class="reveal d1">
         <li>Your name and email address</li>
         <li>Your profile photo URL</li>
         <li>A unique Google account identifier</li>
       </ul>
-      <p class="reveal d1">Additionally, we store data you provide while using Treelink:</p>
+      <p class="reveal d1">
+        Additionally, we store data you provide while using Treelink:
+      </p>
       <ul class="reveal d1">
         <li>Your chosen username and bio</li>
         <li>Links you add (titles, URLs, icons)</li>
@@ -509,50 +539,60 @@
       <h2 class="reveal d2">3. Data Storage & Security</h2>
       <p class="reveal d2">
         All data is stored securely on
-        <strong>Google Firebase</strong> (Firestore database). Firebase provides enterprise-grade
-        security, encryption in transit and at rest, and regular security audits. We do not sell,
-        trade, or share your personal information with third parties.
+        <strong>Google Firebase</strong> (Firestore database). Firebase provides
+        enterprise-grade security, encryption in transit and at rest, and
+        regular security audits. We do not sell, trade, or share your personal
+        information with third parties.
       </p>
 
       <h2 class="reveal d3">4. Cookies & Local Storage</h2>
       <p class="reveal d3">
-        Treelink uses cookies only as required by Firebase Authentication to maintain your login
-        session. We do not use tracking cookies or third-party advertising cookies.
+        Treelink uses cookies only as required by Firebase Authentication to
+        maintain your login session. We do not use tracking cookies or
+        third-party advertising cookies.
       </p>
 
       <h2 class="reveal d3">5. Third-Party Services</h2>
       <p class="reveal d3">We use the following third-party services:</p>
       <ul class="reveal d3">
-        <li><strong>Google Firebase</strong> — authentication, database, and hosting</li>
+        <li>
+          <strong>Google Firebase</strong> — authentication, database, and
+          hosting
+        </li>
         <li><strong>Google Fonts</strong> — web typography</li>
       </ul>
       <p class="reveal d3">
-        These services have their own privacy policies. We encourage you to review them.
+        These services have their own privacy policies. We encourage you to
+        review them.
       </p>
 
       <h2 class="reveal d3">6. Your Rights</h2>
       <p class="reveal d3">You have the right to:</p>
       <ul class="reveal d3">
-        <li>Access, update, or delete your personal data at any time through your dashboard</li>
+        <li>
+          Access, update, or delete your personal data at any time through your
+          dashboard
+        </li>
         <li>Delete your account by contacting us</li>
         <li>Request a copy of your stored data</li>
       </ul>
 
       <h2 class="reveal d3">7. Children's Privacy</h2>
       <p class="reveal d3">
-        Treelink is not intended for children under 13 years of age. We do not knowingly collect
-        personal information from children.
+        Treelink is not intended for children under 13 years of age. We do not
+        knowingly collect personal information from children.
       </p>
 
       <h2 class="reveal d3">8. Changes to This Policy</h2>
       <p class="reveal d3">
-        We may update this Privacy Policy from time to time. Changes will be posted on this page
-        with an updated date.
+        We may update this Privacy Policy from time to time. Changes will be
+        posted on this page with an updated date.
       </p>
 
       <h2 class="reveal d3">9. Contact</h2>
       <p class="reveal d3">
-        If you have any questions about this Privacy Policy, please reach out via our
+        If you have any questions about this Privacy Policy, please reach out
+        via our
         <a href="index.html">homepage</a>.
       </p>
     </main>
@@ -564,7 +604,9 @@
           <ul>
             <li><a href="index.html">Home</a></li>
             <li>
-              <a href="#" id="dashboard-link" style="display: none">Dashboard</a>
+              <a href="#" id="dashboard-link" style="display: none"
+                >Dashboard</a
+              >
             </li>
           </ul>
         </div>
@@ -580,7 +622,12 @@
           <h3>Connect</h3>
           <ul>
             <li>
-              <a href="https://github.com/aluukill" target="_blank" rel="noopener">GitHub</a>
+              <a
+                href="https://github.com/aluukill"
+                target="_blank"
+                rel="noopener"
+                >GitHub</a
+              >
             </li>
             <li>
               <a href="mailto:syedtanvirislam20@gmail.com">Get in Touch</a>
@@ -595,26 +642,28 @@
 
     <script>
       // Navbar scroll effect
-      const navbar = document.getElementById('navbar');
-      window.addEventListener('scroll', () => {
+      const navbar = document.getElementById("navbar");
+      window.addEventListener("scroll", () => {
         if (window.scrollY > 50) {
-          navbar.classList.add('scrolled');
+          navbar.classList.add("scrolled");
         } else {
-          navbar.classList.remove('scrolled');
+          navbar.classList.remove("scrolled");
         }
       });
 
       // Scroll reveal animations
-      const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
+      const observerOptions = { root: null, rootMargin: "0px", threshold: 0.1 };
       const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add('in');
+            entry.target.classList.add("in");
           }
         });
       }, observerOptions);
 
-      document.querySelectorAll('.reveal, .reveal-scale').forEach((el) => observer.observe(el));
+      document
+        .querySelectorAll(".reveal, .reveal-scale")
+        .forEach((el) => observer.observe(el));
     </script>
   </body>
 </html>

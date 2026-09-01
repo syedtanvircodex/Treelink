@@ -53,7 +53,7 @@
         background: var(--bg);
         color: var(--text-1);
         font-family:
-          'Sora',
+          "Sora",
           -apple-system,
           BlinkMacSystemFont,
           sans-serif;
@@ -64,7 +64,7 @@
       }
 
       body::after {
-        content: '';
+        content: "";
         position: fixed;
         inset: 0;
         background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
@@ -77,7 +77,7 @@
       h2,
       h3,
       h4 {
-        font-family: 'Outfit', sans-serif;
+        font-family: "Outfit", sans-serif;
         line-height: 1.05;
         letter-spacing: -0.03em;
         font-weight: 700;
@@ -135,7 +135,11 @@
       .orb-a {
         width: 700px;
         height: 700px;
-        background: radial-gradient(circle, rgba(27, 191, 154, 0.11) 0%, transparent 70%);
+        background: radial-gradient(
+          circle,
+          rgba(27, 191, 154, 0.11) 0%,
+          transparent 70%
+        );
         top: -260px;
         right: -180px;
         animation-duration: 18s;
@@ -143,7 +147,11 @@
       .orb-b {
         width: 500px;
         height: 500px;
-        background: radial-gradient(circle, rgba(27, 191, 154, 0.07) 0%, transparent 70%);
+        background: radial-gradient(
+          circle,
+          rgba(27, 191, 154, 0.07) 0%,
+          transparent 70%
+        );
         bottom: 60px;
         left: -160px;
         animation-duration: 22s;
@@ -211,7 +219,7 @@
         flex-shrink: 0;
       }
       .nav-logo-text {
-        font-family: 'Outfit', sans-serif;
+        font-family: "Outfit", sans-serif;
         font-size: 1.05rem;
         font-weight: 700;
         color: var(--text-1);
@@ -245,7 +253,7 @@
         border: 1px solid var(--border);
         border-radius: 100px;
         padding: 0.5rem 1.125rem;
-        font-family: 'Sora', sans-serif;
+        font-family: "Sora", sans-serif;
         font-size: 0.875rem;
         font-weight: 500;
         cursor: pointer;
@@ -267,7 +275,7 @@
         border: none;
         border-radius: 100px;
         padding: 0.5rem 1.25rem;
-        font-family: 'Sora', sans-serif;
+        font-family: "Sora", sans-serif;
         font-size: 0.875rem;
         font-weight: 600;
         cursor: pointer;
@@ -298,7 +306,7 @@
       }
 
       .legal-content h1 {
-        font-family: 'Outfit', sans-serif;
+        font-family: "Outfit", sans-serif;
         font-size: clamp(2.25rem, 6vw, 3.5rem);
         font-weight: 700;
         color: var(--text-1);
@@ -311,7 +319,7 @@
       }
 
       .legal-content h2 {
-        font-family: 'Outfit', sans-serif;
+        font-family: "Outfit", sans-serif;
         font-size: 1.25rem;
         font-weight: 600;
         color: var(--accent);
@@ -453,10 +461,30 @@
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
           >
-            <path d="M14 25V15" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" />
-            <path d="M14 15L7 8" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" />
-            <path d="M14 15L21 8" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" />
-            <path d="M14 10V4.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" />
+            <path
+              d="M14 25V15"
+              stroke="currentColor"
+              stroke-width="2.2"
+              stroke-linecap="round"
+            />
+            <path
+              d="M14 15L7 8"
+              stroke="currentColor"
+              stroke-width="2.2"
+              stroke-linecap="round"
+            />
+            <path
+              d="M14 15L21 8"
+              stroke="currentColor"
+              stroke-width="2.2"
+              stroke-linecap="round"
+            />
+            <path
+              d="M14 10V4.5"
+              stroke="currentColor"
+              stroke-width="2.2"
+              stroke-linecap="round"
+            />
             <circle cx="7" cy="7" r="2.4" fill="currentColor" opacity=".65" />
             <circle cx="21" cy="7" r="2.4" fill="currentColor" opacity=".65" />
             <circle cx="14" cy="3.5" r="2.4" fill="currentColor" />
@@ -481,15 +509,17 @@
 
       <h2 class="reveal d1">1. Acceptance of Terms</h2>
       <p class="reveal d1">
-        By accessing or using Treelink, you agree to be bound by these Terms of Service. If you do
-        not agree with any part of these terms, you may not use the service.
+        By accessing or using Treelink, you agree to be bound by these Terms of
+        Service. If you do not agree with any part of these terms, you may not
+        use the service.
       </p>
 
       <h2 class="reveal d1">2. Description of Service</h2>
       <p class="reveal d1">
-        Treelink is a free link-in-bio platform that allows you to create a personalized page
-        containing links to your online presence. The service is provided "as is" and may be
-        updated, modified, or discontinued at any time.
+        Treelink is a free link-in-bio platform that allows you to create a
+        personalized page containing links to your online presence. The service
+        is provided "as is" and may be updated, modified, or discontinued at any
+        time.
       </p>
 
       <h2 class="reveal d2">3. Account Responsibility</h2>
@@ -501,7 +531,9 @@
       </ul>
 
       <h2 class="reveal d2">4. Acceptable Use</h2>
-      <p class="reveal d2">You agree <strong>not</strong> to use Treelink to:</p>
+      <p class="reveal d2">
+        You agree <strong>not</strong> to use Treelink to:
+      </p>
       <ul class="reveal d2">
         <li>Post or link to illegal, harmful, or abusive content</li>
         <li>Impersonate another person or entity</li>
@@ -513,42 +545,46 @@
 
       <h2 class="reveal d2">5. Content Ownership</h2>
       <p class="reveal d2">
-        You retain ownership of the content you create on Treelink. By using the service, you grant
-        Treelink a non-exclusive license to display your content as part of your public profile
-        page.
+        You retain ownership of the content you create on Treelink. By using the
+        service, you grant Treelink a non-exclusive license to display your
+        content as part of your public profile page.
       </p>
 
       <h2 class="reveal d3">6. Termination</h2>
       <p class="reveal d3">
-        We reserve the right to suspend or terminate your account at any time if you violate these
-        terms or engage in behaviour that harms the service or other users. You may delete your
-        account at any time by contacting us.
+        We reserve the right to suspend or terminate your account at any time if
+        you violate these terms or engage in behaviour that harms the service or
+        other users. You may delete your account at any time by contacting us.
       </p>
 
       <h2 class="reveal d3">7. Limitation of Liability</h2>
       <p class="reveal d3">
-        Treelink is provided on an "as is" and "as available" basis. We make no warranties,
-        expressed or implied, regarding the reliability, availability, or accuracy of the service.
-        To the fullest extent permitted by law, Treelink shall not be liable for any indirect,
-        incidental, or consequential damages arising from your use of the service.
+        Treelink is provided on an "as is" and "as available" basis. We make no
+        warranties, expressed or implied, regarding the reliability,
+        availability, or accuracy of the service. To the fullest extent
+        permitted by law, Treelink shall not be liable for any indirect,
+        incidental, or consequential damages arising from your use of the
+        service.
       </p>
 
       <h2 class="reveal d3">8. Modifications to Terms</h2>
       <p class="reveal d3">
-        We may revise these Terms of Service at any time. Changes will be posted on this page with
-        an updated date. Your continued use of Treelink after changes constitutes acceptance of the
-        new terms.
+        We may revise these Terms of Service at any time. Changes will be posted
+        on this page with an updated date. Your continued use of Treelink after
+        changes constitutes acceptance of the new terms.
       </p>
 
       <h2 class="reveal d3">9. Governing Law</h2>
       <p class="reveal d3">
-        These terms shall be governed by and interpreted in accordance with applicable laws. Any
-        disputes arising from these terms shall be resolved through good-faith negotiation.
+        These terms shall be governed by and interpreted in accordance with
+        applicable laws. Any disputes arising from these terms shall be resolved
+        through good-faith negotiation.
       </p>
 
       <h2 class="reveal d3">10. Contact</h2>
       <p class="reveal d3">
-        If you have any questions about these Terms of Service, please reach out via our
+        If you have any questions about these Terms of Service, please reach out
+        via our
         <a href="index.html">homepage</a>.
       </p>
     </main>
@@ -560,7 +596,9 @@
           <ul>
             <li><a href="index.html">Home</a></li>
             <li>
-              <a href="#" id="dashboard-link" style="display: none">Dashboard</a>
+              <a href="#" id="dashboard-link" style="display: none"
+                >Dashboard</a
+              >
             </li>
           </ul>
         </div>
@@ -576,7 +614,12 @@
           <h3>Connect</h3>
           <ul>
             <li>
-              <a href="https://github.com/aluukill" target="_blank" rel="noopener">GitHub</a>
+              <a
+                href="https://github.com/aluukill"
+                target="_blank"
+                rel="noopener"
+                >GitHub</a
+              >
             </li>
             <li>
               <a href="mailto:syedtanvirislam20@gmail.com">Get in Touch</a>
@@ -591,26 +634,28 @@
 
     <script>
       // Navbar scroll effect
-      const navbar = document.getElementById('navbar');
-      window.addEventListener('scroll', () => {
+      const navbar = document.getElementById("navbar");
+      window.addEventListener("scroll", () => {
         if (window.scrollY > 50) {
-          navbar.classList.add('scrolled');
+          navbar.classList.add("scrolled");
         } else {
-          navbar.classList.remove('scrolled');
+          navbar.classList.remove("scrolled");
         }
       });
 
       // Scroll reveal animations
-      const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
+      const observerOptions = { root: null, rootMargin: "0px", threshold: 0.1 };
       const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add('in');
+            entry.target.classList.add("in");
           }
         });
       }, observerOptions);
 
-      document.querySelectorAll('.reveal, .reveal-scale').forEach((el) => observer.observe(el));
+      document
+        .querySelectorAll(".reveal, .reveal-scale")
+        .forEach((el) => observer.observe(el));
     </script>
   </body>
 </html>
