@@ -13,9 +13,6 @@
     />
 
     <style>
-      /* =====================
-       VARIABLES & RESET
-    ===================== */
       :root {
         --bg: #080807;
         --bg-2: #0f0f0e;
@@ -63,7 +60,6 @@
         -webkit-font-smoothing: antialiased;
       }
 
-      /* Noise texture overlay */
       body::after {
         content: "";
         position: fixed;
@@ -84,9 +80,6 @@
         font-weight: 700;
       }
 
-      /* =====================
-       SCROLL ANIMATIONS
-    ===================== */
       .reveal {
         opacity: 0;
         transform: translateY(36px);
@@ -127,9 +120,6 @@
         transition-delay: 0.34s;
       }
 
-      /* =====================
-       NAVBAR
-    ===================== */
       #navbar {
         position: fixed;
         top: 0;
@@ -259,9 +249,6 @@
         font-size: 1rem;
       }
 
-      /* =====================
-       BACKGROUND / ORBS
-    ===================== */
       .bg-layer {
         position: fixed;
         inset: 0;
@@ -343,9 +330,6 @@
         );
       }
 
-      /* =====================
-       HERO
-    ===================== */
       .hero-wrap {
         position: relative;
         z-index: 1;
@@ -479,9 +463,6 @@
         font-weight: 600;
       }
 
-      /* =====================
-       PHONE MOCKUP
-    ===================== */
       .hero-visual {
         position: relative;
         z-index: 1;
@@ -597,7 +578,6 @@
         flex-shrink: 0;
       }
 
-      /* Floating notification badges */
       .f-badge {
         position: absolute;
         background: rgba(18, 18, 17, 0.92);
@@ -656,9 +636,6 @@
         }
       }
 
-      /* =====================
-       MARQUEE
-    ===================== */
       .marquee-wrap {
         position: relative;
         z-index: 1;
@@ -710,9 +687,6 @@
         color: var(--accent);
       }
 
-      /* =====================
-       STATS
-    ===================== */
       .stats-wrap {
         position: relative;
         z-index: 1;
@@ -756,9 +730,6 @@
         font-weight: 500;
       }
 
-      /* =====================
-       STATEMENT
-    ===================== */
       .statement-wrap {
         position: relative;
         z-index: 1;
@@ -791,9 +762,6 @@
         color: var(--text-1);
       }
 
-      /* =====================
-       FEATURES BENTO
-    ===================== */
       .features-wrap {
         position: relative;
         z-index: 1;
@@ -820,7 +788,6 @@
         line-height: 1.75;
       }
 
-      /* Bento grid */
       .bento {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
@@ -899,7 +866,6 @@
         line-height: 1.65;
       }
 
-      /* Analytics mini chart */
       .mini-chart {
         display: flex;
         align-items: flex-end;
@@ -929,7 +895,6 @@
         background: rgba(27, 191, 154, 0.18);
       }
 
-      /* Link list preview */
       .mini-links {
         display: flex;
         flex-direction: column;
@@ -956,7 +921,6 @@
         flex-shrink: 0;
       }
 
-      /* Theme chips */
       .theme-chips {
         display: flex;
         gap: 6px;
@@ -976,9 +940,6 @@
         transform: scaleY(0.85);
       }
 
-      /* =====================
-       PREVIEW SECTION
-    ===================== */
       .preview-wrap {
         position: relative;
         z-index: 1;
@@ -1043,9 +1004,6 @@
         justify-content: center;
       }
 
-      /* =====================
-       STEPS
-    ===================== */
       .steps-wrap {
         position: relative;
         z-index: 1;
@@ -1102,9 +1060,6 @@
         line-height: 1.7;
       }
 
-      /* =====================
-       TESTIMONIALS
-    ===================== */
       .testimonials-wrap {
         position: relative;
         z-index: 1;
@@ -1180,9 +1135,6 @@
         color: var(--text-3);
       }
 
-      /* =====================
-       PRICING
-    ===================== */
       .pricing-wrap {
         position: relative;
         z-index: 1;
@@ -1307,9 +1259,6 @@
         color: var(--text-3);
       }
 
-      /* =====================
-       CTA
-    ===================== */
       .cta-wrap {
         position: relative;
         z-index: 1;
@@ -1371,9 +1320,6 @@
         min-height: 1.2em;
       }
 
-      /* =====================
-       FOOTER
-    ===================== */
       footer {
         position: relative;
         z-index: 1;
@@ -1445,9 +1391,6 @@
         color: var(--text-2);
       }
 
-      /* =====================
-       AUTH OVERLAY
-    ===================== */
       #auth-overlay {
         display: none;
         position: fixed;
@@ -1477,9 +1420,6 @@
         }
       }
 
-      /* =====================
-       RESPONSIVE
-    ===================== */
       @media (max-width: 1100px) {
         .hero-wrap {
           grid-template-columns: 1fr;
@@ -1575,7 +1515,6 @@
     </style>
   </head>
   <body>
-    <!-- ===== AUTH OVERLAY ===== -->
     <div id="auth-overlay">
       <div class="spinner"></div>
       <p
@@ -1589,7 +1528,6 @@
       </p>
     </div>
 
-    <!-- ===== BACKGROUND LAYER ===== -->
     <div class="bg-layer">
       <div class="orb orb-a"></div>
       <div class="orb orb-b"></div>
@@ -1597,7 +1535,6 @@
       <div class="grid-bg"></div>
     </div>
 
-    <!-- ===== NAVBAR ===== -->
     <nav id="navbar">
       <div class="nav-left">
         <a href="index.html" class="nav-logo">
@@ -1663,7 +1600,6 @@
       </div>
     </nav>
 
-    <!-- ===== HERO ===== -->
     <div class="hero-wrap">
       <div class="hero-content">
         <div class="hero-badge reveal">
@@ -1818,7 +1754,6 @@
       </div>
     </div>
 
-    <!-- ===== MARQUEE ===== -->
     <div class="marquee-wrap">
       <div class="marquee-track" aria-hidden="true">
         <div class="m-item">Artists</div>
@@ -1845,7 +1780,7 @@
         <div class="m-item"><span class="m-dot"></span></div>
         <div class="m-item">Influencers</div>
         <div class="m-item"><span class="m-dot"></span></div>
-        <!-- duplicate for seamless loop -->
+
         <div class="m-item">Artists</div>
         <div class="m-item"><span class="m-dot"></span></div>
         <div class="m-item">Musicians</div>
@@ -1873,7 +1808,6 @@
       </div>
     </div>
 
-    <!-- ===== STATS ===== -->
     <section class="stats-wrap">
       <div class="stats-grid">
         <div class="stat-item reveal">
@@ -1907,7 +1841,6 @@
       </div>
     </section>
 
-    <!-- ===== STATEMENT ===== -->
     <section class="statement-wrap">
       <div class="statement-inner">
         <p class="section-eyebrow reveal">The big idea</p>
@@ -1919,7 +1852,6 @@
       </div>
     </section>
 
-    <!-- ===== FEATURES BENTO ===== -->
     <section class="features-wrap" id="features">
       <div class="section-head reveal">
         <p class="section-eyebrow">Features</p>
@@ -1931,7 +1863,6 @@
       </div>
 
       <div class="bento">
-        <!-- Wide: Instant Setup -->
         <div class="bc bc-wide reveal">
           <div class="bc-icon">
             <svg
@@ -1953,7 +1884,6 @@
           </div>
         </div>
 
-        <!-- Analytics -->
         <div class="bc reveal d1" style="display: flex; flex-direction: column">
           <div class="bc-icon">
             <svg
@@ -1986,7 +1916,6 @@
           </div>
         </div>
 
-        <!-- Custom Themes -->
         <div class="bc reveal d2" style="display: flex; flex-direction: column">
           <div class="bc-icon">
             <svg
@@ -2019,7 +1948,6 @@
           </div>
         </div>
 
-        <!-- Unlimited Links -->
         <div class="bc reveal d1" style="display: flex; flex-direction: column">
           <div class="bc-icon">
             <svg
@@ -2058,7 +1986,6 @@
           </div>
         </div>
 
-        <!-- Wide: Mobile First -->
         <div class="bc bc-wide reveal d2">
           <div class="bc-icon">
             <svg
@@ -2081,7 +2008,6 @@
           </div>
         </div>
 
-        <!-- Security -->
         <div class="bc reveal d3">
           <div class="bc-icon">
             <svg
@@ -2104,7 +2030,6 @@
       </div>
     </section>
 
-    <!-- ===== PREVIEW ===== -->
     <section class="preview-wrap">
       <div class="preview-inner">
         <div class="preview-copy reveal">
@@ -2252,7 +2177,6 @@
       </div>
     </section>
 
-    <!-- ===== HOW IT WORKS ===== -->
     <section class="steps-wrap" id="how-it-works">
       <div class="section-head reveal">
         <p class="section-eyebrow">How it works</p>
@@ -2287,7 +2211,6 @@
       </div>
     </section>
 
-    <!-- ===== TESTIMONIALS ===== -->
     <section class="testimonials-wrap">
       <div class="testimonials-inner">
         <div class="section-head reveal">
@@ -2440,7 +2363,6 @@
       </div>
     </section>
 
-    <!-- ===== PRICING ===== -->
     <section class="pricing-wrap" id="pricing">
       <div class="section-head pricing-center reveal">
         <p class="section-eyebrow">Pricing</p>
@@ -2625,7 +2547,6 @@
       </div>
     </section>
 
-    <!-- ===== FINAL CTA ===== -->
     <section class="cta-wrap">
       <div class="cta-glow"></div>
       <div class="cta-inner">
@@ -2669,7 +2590,6 @@
       </div>
     </section>
 
-    <!-- ===== FOOTER ===== -->
     <footer>
       <div class="footer-top">
         <div>
@@ -2772,7 +2692,6 @@
       </div>
     </footer>
 
-    <!-- Firebase SDK -->
     <script
       data-cfasync="false"
       src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"
@@ -2782,7 +2701,6 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 
     <script>
-      // ===== FIREBASE =====
       const firebaseConfig = {
         apiKey: "AIzaSyCIQ4tXZo9mibJscDKA5kLY7ndMrYaawp4",
         authDomain: "treelink-53452.firebaseapp.com",
@@ -2867,7 +2785,6 @@
           ?.addEventListener("click", signInWithGoogle);
       });
 
-      // ===== NAVBAR SCROLL =====
       const navbar = document.getElementById("navbar");
       window.addEventListener(
         "scroll",
@@ -2877,7 +2794,6 @@
         { passive: true },
       );
 
-      // ===== SCROLL REVEAL =====
       const revealObs = new IntersectionObserver(
         (entries) => {
           entries.forEach((e) => {
@@ -2893,7 +2809,6 @@
         .querySelectorAll(".reveal, .reveal-scale")
         .forEach((el) => revealObs.observe(el));
 
-      // ===== COUNTER ANIMATION =====
       const counterObs = new IntersectionObserver(
         (entries) => {
           entries.forEach((e) => {
@@ -2916,7 +2831,6 @@
         .querySelectorAll(".counter")
         .forEach((el) => counterObs.observe(el));
 
-      // ===== 3D PHONE TILT =====
       const phone3d = document.getElementById("phone3d");
       const heroVis = document.querySelector(".hero-visual");
       if (phone3d && heroVis) {
@@ -2933,7 +2847,6 @@
         });
       }
 
-      // ===== BENTO SPOTLIGHT =====
       document.querySelectorAll(".bc").forEach((card) => {
         card.addEventListener("mousemove", (e) => {
           const r = card.getBoundingClientRect();

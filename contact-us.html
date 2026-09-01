@@ -83,7 +83,6 @@
         font-weight: 700;
       }
 
-      /* Scroll animations */
       .reveal {
         opacity: 0;
         transform: translateY(36px);
@@ -118,7 +117,6 @@
         transition-delay: 0.24s;
       }
 
-      /* Background orbs */
       .bg-layer {
         position: fixed;
         inset: 0;
@@ -169,7 +167,6 @@
         }
       }
 
-      /* Navbar */
       #navbar {
         position: fixed;
         top: 0;
@@ -291,7 +288,6 @@
         box-shadow: 0 8px 28px var(--accent-glow);
       }
 
-      /* Page Content */
       .page {
         position: relative;
         z-index: 1;
@@ -331,7 +327,6 @@
         line-height: 1.7;
       }
 
-      /* Contact Cards */
       .contact-grid {
         display: grid;
         grid-template-columns: 1fr;
@@ -432,7 +427,6 @@
         color: var(--accent);
       }
 
-      /* Specific card styles */
       .card-email {
         --card-accent: #ea4335;
         --card-icon-bg: rgba(234, 67, 53, 0.1);
@@ -466,7 +460,6 @@
         border-color: rgba(37, 211, 102, 0.4);
       }
 
-      /* Footer */
       footer {
         position: relative;
         z-index: 1;
@@ -530,7 +523,6 @@
         color: var(--accent);
       }
 
-      /* Responsive */
       @media (max-width: 767px) {
         #navbar {
           padding: 1rem 1.25rem;
@@ -747,7 +739,6 @@
     </footer>
 
     <script>
-      // Navbar scroll effect
       const navbar = document.getElementById("navbar");
       window.addEventListener("scroll", () => {
         if (window.scrollY > 50) {
@@ -757,7 +748,6 @@
         }
       });
 
-      // Scroll reveal animations
       const observerOptions = { root: null, rootMargin: "0px", threshold: 0.1 };
       const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {

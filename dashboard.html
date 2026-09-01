@@ -13,9 +13,6 @@
     />
 
     <style>
-      /* ============================================================
-       DESIGN TOKENS
-       ============================================================ */
       :root {
         --bg: #f5f7fb;
         --bg2: #edf1f7;
@@ -31,9 +28,6 @@
         --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
       }
 
-      /* ============================================================
-       RESET & BASE
-       ============================================================ */
       *,
       *::before,
       *::after {
@@ -55,9 +49,6 @@
         min-height: 100vh;
       }
 
-      /* ============================================================
-       LOADING SCREEN
-       ============================================================ */
       #loading-screen {
         position: fixed;
         inset: 0;
@@ -92,9 +83,6 @@
         }
       }
 
-      /* ============================================================
-       APP SHELL (hidden until auth confirmed)
-       ============================================================ */
       #app {
         display: none;
         min-height: 100vh;
@@ -104,9 +92,6 @@
         display: flex;
       }
 
-      /* ============================================================
-       SIDEBAR
-       ============================================================ */
       .sidebar {
         width: var(--sidebar-w);
         background: var(--bg2);
@@ -160,7 +145,6 @@
         font-weight: 700;
       }
 
-      /* User info in sidebar */
       .sidebar-user {
         padding: 1.25rem 1.5rem;
         display: flex;
@@ -200,7 +184,6 @@
         color: var(--muted);
       }
 
-      /* Sidebar nav links */
       .sidebar-nav {
         padding: 1rem 0.75rem;
         flex: 1;
@@ -230,7 +213,6 @@
         color: var(--accent);
       }
 
-      /* Public profile link pill */
       .sidebar-profile-link {
         margin: 0 1rem 1rem;
         background: rgba(34, 177, 147, 0.06);
@@ -289,7 +271,6 @@
         background: rgba(24, 128, 56, 0.08);
       }
 
-      /* Logout button */
       .sidebar-logout {
         margin: 0 1rem 1.5rem;
         background: transparent;
@@ -311,9 +292,6 @@
         color: var(--danger);
       }
 
-      /* ============================================================
-       SIDEBAR OVERLAY (mobile)
-       ============================================================ */
       #sidebar-overlay {
         display: none;
         position: fixed;
@@ -326,9 +304,6 @@
         display: block;
       }
 
-      /* ============================================================
-       MAIN CONTENT
-       ============================================================ */
       .main {
         flex: 1;
         padding: 0;
@@ -341,9 +316,6 @@
         }
       }
 
-      /* ============================================================
-       TOP BAR (mobile)
-       ============================================================ */
       .topbar {
         display: flex;
         align-items: center;
@@ -378,9 +350,6 @@
         font-size: 1.4rem;
       }
 
-      /* ============================================================
-       PAGE CONTENT WRAPPER
-       ============================================================ */
       .content {
         padding: 2rem 1.5rem;
         max-width: 780px;
@@ -392,9 +361,6 @@
         }
       }
 
-      /* ============================================================
-       PAGE SECTION HEADERS
-       ============================================================ */
       .section-header {
         display: flex;
         align-items: center;
@@ -410,9 +376,6 @@
         font-weight: 700;
       }
 
-      /* ============================================================
-       STATS ROW
-       ============================================================ */
       .stats-row {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
@@ -442,9 +405,6 @@
         font-weight: 500;
       }
 
-      /* ============================================================
-       BUTTONS
-       ============================================================ */
       .btn {
         display: inline-flex;
         align-items: center;
@@ -501,9 +461,6 @@
         font-size: 0.8rem;
       }
 
-      /* ============================================================
-       ADD LINK FORM
-       ============================================================ */
       .add-link-form {
         background: var(--bg2);
         border: 1px solid var(--border-color);
@@ -573,9 +530,6 @@
         font-size: 0.82rem;
       }
 
-      /* ============================================================
-       LINK ITEMS LIST
-       ============================================================ */
       #links-list {
         display: flex;
         flex-direction: column;
@@ -592,7 +546,7 @@
         gap: 0.75rem;
         transition: var(--transition);
         position: relative;
-        /* Drag handle support */
+
         cursor: grab;
       }
 
@@ -670,7 +624,6 @@
         flex-shrink: 0;
       }
 
-      /* Inline edit form (hidden by default) */
       .link-edit-form {
         display: none;
         padding: 1rem;
@@ -700,7 +653,6 @@
         border-color: var(--accent);
       }
 
-      /* Link item wrapper (holds item + edit form) */
       .link-item-wrapper {
         background: var(--bg2);
         border: 1px solid var(--border-color);
@@ -719,7 +671,6 @@
         border-radius: 0;
       }
 
-      /* Empty state */
       .empty-state {
         text-align: center;
         padding: 4rem 2rem;
@@ -735,9 +686,6 @@
         margin-bottom: 1.5rem;
       }
 
-      /* ============================================================
-       PROFILE SETTINGS SECTION
-       ============================================================ */
       .settings-section {
         margin-top: 3rem;
       }
@@ -795,9 +743,6 @@
         display: inline;
       }
 
-      /* ============================================================
-       TOAST NOTIFICATION
-       ============================================================ */
       #toast {
         position: fixed;
         bottom: 1.5rem;
@@ -830,9 +775,6 @@
         color: var(--danger);
       }
 
-      /* ============================================================
-       ANIMATIONS
-       ============================================================ */
       @keyframes fadeIn {
         from {
           opacity: 0;
@@ -849,9 +791,6 @@
         animation: fadeIn 0.3s ease both;
       }
 
-      /* ============================================================
-       RESPONSIVE ADJUSTMENTS
-       ============================================================ */
       @media (max-width: 899px) {
         #app {
           flex-direction: column;
@@ -861,39 +800,22 @@
   </head>
 
   <body>
-    <!-- ============================================================
-       LOADING SCREEN — shown while Firebase checks auth state
-       ============================================================ -->
     <div id="loading-screen">
       <div class="logo">🌿 Treelink</div>
       <div class="spinner"></div>
     </div>
 
-    <!-- ============================================================
-       TOAST NOTIFICATION
-       ============================================================ -->
     <div id="toast"></div>
 
-    <!-- ============================================================
-       APP SHELL — hidden until user is confirmed signed in
-       ============================================================ -->
     <div id="app">
-      <!-- ===========================================================
-         SIDEBAR OVERLAY (mobile tap-to-close)
-         =========================================================== -->
       <div id="sidebar-overlay"></div>
 
-      <!-- ===========================================================
-         SIDEBAR
-         =========================================================== -->
       <aside class="sidebar" id="sidebar">
-        <!-- Logo -->
         <div class="sidebar-logo">
           <div class="sidebar-logo-icon">🌿</div>
           <span class="sidebar-logo-text">Treelink</span>
         </div>
 
-        <!-- User profile snapshot -->
         <div class="sidebar-user">
           <div class="sidebar-avatar" id="sidebar-avatar-wrap">
             <span id="sidebar-avatar-emoji">🌿</span>
@@ -904,13 +826,11 @@
           </div>
         </div>
 
-        <!-- Navigation -->
         <nav class="sidebar-nav">
           <a href="#" class="active">🔗 &nbsp;My Links</a>
           <a href="#settings-section">⚙️ &nbsp;Settings</a>
         </nav>
 
-        <!-- Public profile URL -->
         <div class="sidebar-profile-link">
           <div class="profile-link-row">
             <a href="#" id="sidebar-public-link" target="_blank"
@@ -922,15 +842,10 @@
           </button>
         </div>
 
-        <!-- Logout -->
         <button class="sidebar-logout" id="logout-btn">↩ &nbsp;Sign Out</button>
       </aside>
 
-      <!-- ===========================================================
-         MAIN CONTENT AREA
-         =========================================================== -->
       <main class="main">
-        <!-- Mobile top bar -->
         <div class="topbar">
           <span class="topbar-logo">🌿 Treelink</span>
           <button class="menu-btn" id="menu-btn" aria-label="Open menu">
@@ -939,9 +854,6 @@
         </div>
 
         <div class="content">
-          <!-- ---------------------------------------------------------
-             STATS ROW
-             --------------------------------------------------------- -->
           <div class="stats-row">
             <div class="stat-card">
               <div class="stat-value" id="stat-links">0</div>
@@ -957,9 +869,6 @@
             </div>
           </div>
 
-          <!-- ---------------------------------------------------------
-             ADD NEW LINK FORM
-             --------------------------------------------------------- -->
           <div class="section-header">
             <h1 class="section-title">My Links</h1>
             <button class="btn btn-primary" id="toggle-form-btn">
@@ -967,10 +876,8 @@
             </button>
           </div>
 
-          <!-- Collapsible form -->
           <div class="add-link-form" id="add-link-form" style="display: none">
             <div class="form-row">
-              <!-- Title field -->
               <div class="form-group">
                 <label for="link-title">Link Title</label>
                 <input
@@ -980,7 +887,7 @@
                   maxlength="80"
                 />
               </div>
-              <!-- Icon field -->
+
               <div class="form-group">
                 <label for="link-icon">Icon (emoji)</label>
                 <input
@@ -992,7 +899,6 @@
               </div>
             </div>
 
-            <!-- URL field (full row) -->
             <div class="form-group" style="margin-bottom: 1rem">
               <label for="link-url">URL</label>
               <input
@@ -1011,20 +917,13 @@
             </div>
           </div>
 
-          <!-- ---------------------------------------------------------
-             LINKS LIST — populated dynamically from Firestore
-             --------------------------------------------------------- -->
           <div id="links-list"></div>
 
-          <!-- ---------------------------------------------------------
-             SETTINGS SECTION
-             --------------------------------------------------------- -->
           <div class="settings-section" id="settings-section">
             <div class="section-header">
               <h2 class="section-title">Profile Settings</h2>
             </div>
             <div class="settings-card">
-              <!-- Profile Photo -->
               <div class="form-group" style="margin-bottom: 1.25rem">
                 <label>Profile Photo</label>
                 <div
@@ -1060,7 +959,7 @@
                   </div>
                 </div>
               </div>
-              <!-- Display Name -->
+
               <div class="form-group" style="margin-bottom: 1.25rem">
                 <label for="profile-name">Display Name</label>
                 <input
@@ -1070,7 +969,7 @@
                   maxlength="50"
                 />
               </div>
-              <!-- Username -->
+
               <div class="form-group" style="margin-bottom: 1.25rem">
                 <label for="profile-username">Username</label>
                 <input
@@ -1090,7 +989,7 @@
                   Lowercase letters, numbers, and underscores only
                 </p>
               </div>
-              <!-- Bio -->
+
               <div class="form-group" style="margin-bottom: 1.25rem">
                 <label for="profile-bio">Short Bio</label>
                 <input
@@ -1100,11 +999,10 @@
                   maxlength="160"
                 />
               </div>
-              <!-- Theme color -->
+
               <div class="form-group" style="margin-bottom: 1rem">
                 <label>Accent Color</label>
                 <div class="color-picker-row">
-                  <!-- Preset swatches -->
                   <div
                     class="color-swatch selected"
                     style="background: #1a73e8"
@@ -1130,7 +1028,7 @@
                     style="background: #e85050"
                     data-color="#e85050"
                   ></div>
-                  <!-- Custom color picker -->
+
                   <input
                     type="color"
                     id="custom-color"
@@ -1148,23 +1046,14 @@
             </div>
           </div>
         </div>
-        <!-- /content -->
       </main>
     </div>
-    <!-- /app -->
 
-    <!-- ============================================================
-       FIREBASE SDK
-       ============================================================ -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 
     <script>
-      /* ============================================================
-       FIREBASE CONFIGURATION
-       Replace with your real credentials from Firebase console.
-       ============================================================ */
       const firebaseConfig = {
         apiKey: "AIzaSyCIQ4tXZo9mibJscDKA5kLY7ndMrYaawp4",
         authDomain: "treelink-53452.firebaseapp.com",
@@ -1178,20 +1067,13 @@
       const auth = firebase.auth();
       const db = firebase.firestore();
 
-      /* ============================================================
-       GLOBAL STATE
-       ============================================================ */
       let currentUser = null;
-      let userData = null; /* Firestore /users/{uid} doc */
-      let links = []; /* Array of link objects */
-      let unsubscribeLinks = null; /* Firestore real-time listener */
+      let userData = null;
+      let links = [];
+      let unsubscribeLinks = null;
 
-      /* Drag-and-drop state */
       let dragSrc = null;
 
-      /* ============================================================
-       DOM REFERENCES
-       ============================================================ */
       const loadingScreen = document.getElementById("loading-screen");
       const appShell = document.getElementById("app");
       const toast = document.getElementById("toast");
@@ -1202,10 +1084,6 @@
       const addLinkForm = document.getElementById("add-link-form");
       const formError = document.getElementById("form-error");
 
-      /* ============================================================
-       TOAST UTILITY
-       Shows a brief notification at the bottom of the screen.
-       ============================================================ */
       function showToast(msg, type = "success") {
         toast.textContent = msg;
         toast.className = `show ${type}`;
@@ -1215,9 +1093,6 @@
         }, 3000);
       }
 
-      /* ============================================================
-       SIDEBAR TOGGLE (mobile)
-       ============================================================ */
       menuBtn.addEventListener("click", () => {
         sidebar.classList.add("open");
         sidebarOverlay.classList.add("visible");
@@ -1227,43 +1102,31 @@
         sidebarOverlay.classList.remove("visible");
       });
 
-      /* ============================================================
-       AUTH STATE OBSERVER
-       ============================================================ */
       auth.onAuthStateChanged(async (user) => {
         if (!user) {
-          /* Not logged in → redirect to landing page */
           window.location.href = "index.html";
           return;
         }
 
         currentUser = user;
 
-        /* Load user document from Firestore */
         await loadUserData();
 
-        /* Start real-time listener for links collection */
         startLinksListener();
 
-        /* Show the app */
         loadingScreen.style.display = "none";
         appShell.classList.add("visible");
       });
 
-      /* ============================================================
-       LOAD USER DATA FROM FIRESTORE
-       ============================================================ */
       async function loadUserData() {
         const snap = await db.collection("users").doc(currentUser.uid).get();
         userData = snap.data();
 
-        /* Populate sidebar */
         document.getElementById("sidebar-name").textContent =
           userData.name || currentUser.displayName;
         document.getElementById("sidebar-username").textContent =
           "@" + (userData.username || "user");
 
-        /* Populate settings form fields */
         document.getElementById("profile-bio").value = userData.bio || "";
         document.getElementById("profile-name").value =
           userData.name || currentUser.displayName || "";
@@ -1272,7 +1135,6 @@
         document.getElementById("profile-photo-url").value =
           userData.photoURL || "";
 
-        /* Avatar: use custom photoURL, then Google photo, then fallback emoji */
         const photoSrc = userData.photoURL || currentUser.photoURL;
         const avatarWrap = document.getElementById("sidebar-avatar-wrap");
         const settingsPreview = document.getElementById(
@@ -1286,7 +1148,6 @@
              onerror="this.onerror=null; this.parentElement.innerHTML='🌿';" />`;
         }
 
-        /* Public profile URL */
         const basePath = window.location.pathname.substring(
           0,
           window.location.pathname.lastIndexOf("/"),
@@ -1296,7 +1157,6 @@
         linkEl.textContent = "🌐 Visit your link";
         linkEl.href = publicUrl;
 
-        /* Copy link button */
         const copyBtn = document.getElementById("copy-link-btn");
         copyBtn._profileUrl = publicUrl;
         copyBtn.addEventListener("click", async () => {
@@ -1310,7 +1170,6 @@
               copyBtn.textContent = "📋 Copy your profile link";
             }, 2000);
           } catch {
-            /* Fallback for older browsers */
             const ta = document.createElement("textarea");
             ta.value = copyBtn._profileUrl;
             document.body.appendChild(ta);
@@ -1321,19 +1180,12 @@
           }
         });
 
-        /* Preset color swatches — mark selected */
         updateColorSwatches(userData.theme || "#1A73E8");
         document.getElementById("custom-color").value =
           userData.theme || "#1A73E8";
       }
 
-      /* ============================================================
-       REAL-TIME LINKS LISTENER
-       Listens to /users/{uid}/links ordered by `order` field.
-       Updates the UI instantly whenever Firestore data changes.
-       ============================================================ */
       function startLinksListener() {
-        /* Unsubscribe any existing listener first */
         if (unsubscribeLinks) unsubscribeLinks();
 
         unsubscribeLinks = db
@@ -1356,9 +1208,6 @@
           );
       }
 
-      /* ============================================================
-       RENDER LINKS LIST
-       ============================================================ */
       function renderLinks() {
         if (links.length === 0) {
           linksList.innerHTML = `
@@ -1378,7 +1227,7 @@
           wrapper.dataset.index = index;
 
           wrapper.innerHTML = `
-          <!-- Main link row -->
+
           <div class="link-item"
                draggable="true"
                data-id="${link.id}">
@@ -1398,7 +1247,6 @@
             </div>
           </div>
 
-          <!-- Inline edit form (hidden by default) -->
           <div class="link-edit-form" id="edit-form-${link.id}">
             <input type="text" class="edit-title" placeholder="Title" value="${escapeHtml(link.title)}" maxlength="80" />
             <input type="url"  class="edit-url"   placeholder="URL"   value="${escapeHtml(link.url)}" />
@@ -1412,7 +1260,6 @@
 
           linksList.appendChild(wrapper);
 
-          /* ----- Drag-and-drop events ----- */
           const linkItem = wrapper.querySelector(".link-item");
           linkItem.addEventListener("dragstart", onDragStart);
           linkItem.addEventListener("dragover", onDragOver);
@@ -1421,7 +1268,6 @@
           linkItem.addEventListener("dragend", onDragEnd);
         });
 
-        /* ----- Button event delegation ----- */
         linksList.querySelectorAll(".edit-btn").forEach((btn) => {
           btn.addEventListener("click", () => toggleEditForm(btn.dataset.id));
         });
@@ -1438,9 +1284,6 @@
         });
       }
 
-      /* ============================================================
-       UPDATE STATS
-       ============================================================ */
       function updateStats() {
         const totalClicks = links.reduce((sum, l) => sum + (l.clicks || 0), 0);
         const topClicks = links.length
@@ -1452,9 +1295,6 @@
         document.getElementById("stat-top").textContent = topClicks || "—";
       }
 
-      /* ============================================================
-       FORM TOGGLE
-       ============================================================ */
       const toggleFormBtn = document.getElementById("toggle-form-btn");
       toggleFormBtn.addEventListener("click", () => {
         const isHidden = addLinkForm.style.display === "none";
@@ -1463,7 +1303,6 @@
         if (isHidden) {
           document.getElementById("link-title").focus();
         } else {
-          /* Reset form */
           clearAddForm();
         }
       });
@@ -1483,10 +1322,6 @@
         formError.textContent = "";
       }
 
-      /* ============================================================
-       SAVE NEW LINK
-       Adds a document to /users/{uid}/links collection.
-       ============================================================ */
       document
         .getElementById("save-link-btn")
         .addEventListener("click", async () => {
@@ -1495,7 +1330,6 @@
           const icon =
             document.getElementById("link-icon").value.trim() || "🔗";
 
-          /* Validate */
           if (!title) {
             formError.textContent = "Please enter a title.";
             return;
@@ -1522,7 +1356,7 @@
                 url,
                 icon,
                 clicks: 0,
-                order: links.length /* append at end */,
+                order: links.length,
                 createdAt: firebase.firestore.FieldValue.serverTimestamp(),
               });
 
@@ -1535,9 +1369,6 @@
           }
         });
 
-      /* ============================================================
-       TOGGLE EDIT FORM
-       ============================================================ */
       function toggleEditForm(id, show) {
         const editForm = document.getElementById(`edit-form-${id}`);
         if (!editForm) return;
@@ -1549,9 +1380,6 @@
         if (shouldShow) editForm.querySelector(".edit-title").focus();
       }
 
-      /* ============================================================
-       SAVE EDITED LINK
-       ============================================================ */
       async function saveEdit(id) {
         const editForm = document.getElementById(`edit-form-${id}`);
         const title = editForm.querySelector(".edit-title").value.trim();
@@ -1582,9 +1410,6 @@
         }
       }
 
-      /* ============================================================
-       DELETE LINK
-       ============================================================ */
       async function deleteLink(id) {
         if (!confirm("Delete this link?")) return;
 
@@ -1602,10 +1427,6 @@
         }
       }
 
-      /* ============================================================
-       DRAG-AND-DROP REORDERING
-       HTML5 Drag API — reorders links by updating `order` field.
-       ============================================================ */
       function onDragStart(e) {
         dragSrc = this.closest(".link-item-wrapper");
         e.dataTransfer.effectAllowed = "move";
@@ -1626,18 +1447,15 @@
 
         if (dragSrc === dropTarget) return;
 
-        /* Re-order: swap positions in DOM then persist */
         const allWrappers = [
           ...linksList.querySelectorAll(".link-item-wrapper"),
         ];
         const srcIdx = allWrappers.indexOf(dragSrc);
         const destIdx = allWrappers.indexOf(dropTarget);
 
-        /* Rearrange in-memory links array */
         const [moved] = links.splice(srcIdx, 1);
         links.splice(destIdx, 0, moved);
 
-        /* Persist new order to Firestore as a batch */
         const batch = db.batch();
         links.forEach((link, idx) => {
           const ref = db
@@ -1656,9 +1474,6 @@
           .forEach((el) => el.classList.remove("drag-over"));
       }
 
-      /* ============================================================
-       SETTINGS — Color Swatches
-       ============================================================ */
       document.querySelectorAll(".color-swatch").forEach((swatch) => {
         swatch.addEventListener("click", () => {
           updateColorSwatches(swatch.dataset.color);
@@ -1676,9 +1491,6 @@
         });
       }
 
-      /* ============================================================
-       SAVE SETTINGS
-       ============================================================ */
       document
         .getElementById("save-settings-btn")
         .addEventListener("click", async () => {
@@ -1694,13 +1506,11 @@
             .value.trim();
           const usernameHint = document.getElementById("username-hint");
 
-          /* Validate name */
           if (!newName) {
             showToast("Display name cannot be empty.", "error");
             return;
           }
 
-          /* Validate username format */
           if (!newUsername) {
             showToast("Username cannot be empty.", "error");
             return;
@@ -1720,7 +1530,6 @@
             return;
           }
 
-          /* Check username uniqueness (only if changed) */
           if (newUsername !== userData.username) {
             try {
               const existing = await db
@@ -1743,7 +1552,6 @@
             }
           }
 
-          /* Reset hint */
           usernameHint.textContent =
             "Lowercase letters, numbers, and underscores only";
           usernameHint.style.color = "var(--muted)";
@@ -1758,7 +1566,6 @@
             if (newPhotoURL) {
               updateData.photoURL = newPhotoURL;
             } else {
-              /* Clear custom photo, will fall back to Google photo */
               updateData.photoURL = "";
             }
 
@@ -1768,12 +1575,10 @@
               .update(updateData);
             showToast("✓ Settings saved!");
 
-            /* Update sidebar immediately */
             document.getElementById("sidebar-name").textContent = newName;
             document.getElementById("sidebar-username").textContent =
               "@" + newUsername;
 
-            /* Update avatar */
             const photoSrc = newPhotoURL || currentUser.photoURL;
             const avatarWrap = document.getElementById("sidebar-avatar-wrap");
             const settingsPreview = document.getElementById(
@@ -1787,7 +1592,6 @@
               settingsPreview.innerHTML = "<span>🌿</span>";
             }
 
-            /* Update public profile link */
             const basePath = window.location.pathname.substring(
               0,
               window.location.pathname.lastIndexOf("/"),
@@ -1797,7 +1601,6 @@
             linkEl.href = publicUrl;
             document.getElementById("copy-link-btn")._profileUrl = publicUrl;
 
-            /* Update local state */
             userData.name = newName;
             userData.username = newUsername;
             userData.bio = bio;
@@ -1812,9 +1615,6 @@
           }
         });
 
-      /* ============================================================
-       LOGOUT
-       ============================================================ */
       document
         .getElementById("logout-btn")
         .addEventListener("click", async () => {
@@ -1823,9 +1623,6 @@
           window.location.href = "index.html";
         });
 
-      /* ============================================================
-       HELPERS
-       ============================================================ */
       function isValidUrl(str) {
         try {
           new URL(str);
